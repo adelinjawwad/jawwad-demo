@@ -159,3 +159,58 @@ main.active {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
+.discord-button-container {
+  text-align: center;
+  margin: 50px 0;
+}
+
+#openDiscord {
+  padding: 15px 30px;
+  background: linear-gradient(to right, #8c52ff, #5e2a84);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2em;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#openDiscord:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Popup Discord */
+.discord-popup {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+}
+
+.popup-content {
+  position: relative;
+  margin: 5% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  background-color: #2a1c3a;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(140, 82, 255, 0.8);
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+

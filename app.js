@@ -64,11 +64,6 @@ function router() {
 window.addEventListener("hashchange", router);
 window.addEventListener("load", router);
 
-function toggleDiscord() {
-  const popup = document.getElementById("discordPopup");
-  popup.style.display = popup.style.display === "block" ? "none" : "block";
-}
-
 // Click to zoom
 document.addEventListener('click', (e) => {
   if (e.target.tagName === 'IMG' && e.target.closest('.grid')) {
@@ -82,3 +77,5 @@ document.addEventListener('click', (e) => {
 function closeOverlay() {
   document.getElementById('overlay').style.display = 'none';
 }
+
+
