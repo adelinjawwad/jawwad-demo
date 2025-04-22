@@ -2,8 +2,9 @@ const sections = {
   costume: {
     title: "Costume",
     images: [
-      "https://via.placeholder.com/300x400/6a00ff/ffffff?text=Costum+1",
-      "https://via.placeholder.com/300x400/6a00ff/ffffff?text=Costum+2"
+      "assets/img/costum1.png",
+      "assets/img/costum2.jpg",
+      "assets/img/costum3.jpg"
     ]
   },
   frizuri: {
@@ -53,10 +54,6 @@ function router() {
   if (hash && sections[hash]) {
     loadSection(hash);
   } else {
-    document.getElementById("content").innerHTML = `
-      <h2>Bine ai venit la Jawwad ART</h2>
-      <p>Selectează o categorie din meniu.</p>
-    `;
     document.getElementById("content").classList.add("active");
   }
 }
