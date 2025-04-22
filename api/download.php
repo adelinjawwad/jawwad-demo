@@ -1,0 +1,1 @@
+<?php $file = $_POST['file']; $filename = basename($file); $log = 'api/downloads.json'; $data = json_decode(file_get_contents($log), true); $data[$filename] = ($data[$filename] ?? 0) + 1; file_put_contents($log, json_encode($data)); header('Content-Type: application/zip'); header('Content-Disposition: attachment; filename=' . $filename); readfile('../' . $file); ?>
