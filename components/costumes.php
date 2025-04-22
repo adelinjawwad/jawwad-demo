@@ -1,1 +1,0 @@
-<div class='container'><h2>Costumes Gallery</h2><img src='assets/img/sample.jpg' style='width:500px; height:300px; object-fit:cover; cursor:pointer;' onclick='this.requestFullscreen();'></div>
