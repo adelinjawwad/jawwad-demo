@@ -88,45 +88,45 @@
                 case 'costumes':
                     title = 'Costumes';
                     items = [
-                        { title: 'Royal Armor Set', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Mage Robes', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Assassin Outfit', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Knight Armor', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Ranger Gear', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Royal Guard', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' }
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
                     ];
                     break;
                 case 'hairstyles':
                     title = 'Hairstyles';
                     items = [
-                        { title: 'Elven Braids', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Warrior Ponytail', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Mage Curls', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Royal Updo', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Wild Locks', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Short Crop', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' }
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
                     ];
                     break;
                 case 'weapons':
                     title = 'Weapons';
                     items = [
-                        { title: 'Dragonbone Sword', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Elven Bow', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Staff of Fire', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Dual Daggers', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Warhammer', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Crossbow', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
                     ];
                     break;
                 case 'others':
                     title = 'Other Assets';
                     items = [
-                        { title: 'Magic Effects Pack', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'UI Elements', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Environment Pack', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Creature Models', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Particle Effects', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Icon Set', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
+                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
                     ];
                     break;
                 case 'free':
@@ -194,3 +194,31 @@ let content = `
             closeModal();
         }
     });
+	
+	// Funcție pentru toggle (deschide/închide dropdown-ul)
+function toggleDropdown() {
+  var dropdown = document.querySelector('.dropdown');
+  var icon = dropdown.querySelector('.dropbtn i');
+  
+  // Toggle class-ul 'active' pe dropdown
+  dropdown.classList.toggle('active');
+  
+  // Dacă dropdown-ul este activ, rotiți săgeata
+  if (dropdown.classList.contains('active')) {
+    icon.style.transform = 'rotate(180deg)'; // Rotește săgeata când este deschis
+  } else {
+    icon.style.transform = 'rotate(0deg)'; // Revine la poziția inițială când este închis
+  }
+}
+
+// Închide meniul după ce se apasă un link
+document.querySelectorAll('.dropdown-content a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    var dropdown = document.querySelector('.dropdown');
+    var icon = dropdown.querySelector('.dropbtn i');
+    
+    // Îndepărtează clasa 'active' pentru a închide meniul
+    dropdown.classList.remove('active');
+    icon.style.transform = 'rotate(0deg)'; // Resetează săgeata la poziția inițială
+  });
+});

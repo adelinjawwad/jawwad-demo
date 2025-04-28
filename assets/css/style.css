@@ -63,3 +63,65 @@
         @keyframes fadeOut {
             to { opacity: 0; }
         }
+		
+img.object-cover {
+    object-fit: fill;
+}
+
+/* Stil pentru containerul dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Stil pentru butonul de dropdown */
+.dropbtn {
+  background: linear-gradient(135deg, #1a0b2e 0%, #4a1b6d 30%, #8a2c7e 60%, #e83a6d 100%);
+  color: #FFD700;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center; /* Pentru a alinia textul și iconița pe aceeași linie */
+}
+
+/* Săgeata la început - iconița de Font Awesome */
+.dropbtn i {
+  margin-left: 8px; /* Spațiu între text și săgeată */
+  transition: transform 0.3s ease;
+}
+
+/* Ascunde conținutul dropdown inițial */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%; /* Asigură că meniul se va deschide sub buton */
+  background: linear-gradient(135deg, #1a0b2e 0%, #4a1b6d 30%, #8a2c7e 60%, #e83a6d 100%);
+  min-width: 160px;
+  z-index: 1;
+  margin-top: 10px;
+}
+
+/* Arată conținutul dropdown când este activ */
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+/* Stil pentru linkurile din dropdown */
+.dropdown-content a {
+  color: #FFD700;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+/* Modifică culoarea la hover */
+.dropdown-content a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FFD700;
+}
+
