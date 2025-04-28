@@ -137,7 +137,7 @@
                         { title: 'God Awakening', img: 'assets/img/god_awakening_weapons.png', full: 'assets/img/god_awakening_weapons.png', free3: true },
                         { title: 'Silver Hunter', img: 'assets/img/silver_hunter_weapons.jpg', full: 'assets/img/silver_hunter_weapons.jpg', free4: true },
                         { title: 'Dark Crystal', img: 'assets/img/dark_crystal_weapons.jpg', full: 'assets/img/dark_crystal_weapons.jpg', free5: true },
-                        { title: 'More soon', img: 'assets/img/jawwad.png', full: 'assets/img/jawwad.png', free6: true },
+                        { title: 'More soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png', free6: true },
                     ];
                     break;
             }
