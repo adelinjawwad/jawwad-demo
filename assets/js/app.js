@@ -1,5 +1,41 @@
     // Save initial Home content
     const homeContentBackup = document.getElementById('home-content').outerHTML;
+	
+	const masterItems = {
+    costumes: [
+        { title: 'Costume Preview', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
+    ],
+    hairstyles: [
+        { title: 'Hairstyle Preview', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
+    ],
+    weapons: [
+        { title: 'Weapon Preview', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
+    ],
+    others: [
+        { title: 'Other Asset Preview', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
+    ],
+    free: [
+        { title: 'Antaras Weapons', img: 'assets/img/antaras_weapons.png', full: 'assets/img/antaras_weapons.png' },
+        { title: 'Dynasty Weapons', img: 'assets/img/dynasty_weapons.png', full: 'assets/img/dynasty_weapons.png' },
+        { title: 'God Awakening Weapons', img: 'assets/img/god_awakening_weapons.png', full: 'assets/img/god_awakening_weapons.png' },
+        { title: 'Silver Hunter Weapons', img: 'assets/img/silver_hunter_weapons.jpg', full: 'assets/img/silver_hunter_weapons.jpg' },
+        { title: 'Dark Crystal Weapons', img: 'assets/img/dark_crystal_weapons.jpg', full: 'assets/img/dark_crystal_weapons.jpg' }
+    ],
+    tutorials: [
+        { title: 'Installing Assets', youtube: 'dQw4w9WgXcQ' },
+        { title: 'Editing Textures', youtube: 'abcdEFGH123' }
+    ],
+};
+
+	
+	// Când pagina se încarcă, verificăm dacă există o pagină salvată
+window.addEventListener('DOMContentLoaded', () => {
+    const savedPage = localStorage.getItem('currentPage');
+    if (savedPage && savedPage !== 'home') {
+        loadContent(savedPage);
+    }
+});
+
 
     // Mobile menu toggle
     document.getElementById('mobile-menu-button').addEventListener('click', function() {
@@ -16,7 +52,7 @@
 
     // Copy Discord invite to clipboard
     function copyDiscordInvite() {
-        navigator.clipboard.writeText('https://discord.gg/jawwadart').then(() => {
+        navigator.clipboard.writeText('https://discord.gg/BBX8vfN4gQ').then(() => {
             showToast('Discord invite link copied!');
         });
     }
@@ -66,6 +102,104 @@
 
     // Dynamic content loading with fade animation
     function loadContent(section) {
+		
+		if (section === 'home') {
+  const contentArea = document.getElementById('content-area');
+  contentArea.innerHTML = homeContentBackup;
+  animateContent(); // ca să se facă fade-in
+  return;
+}
+		
+function renderContent(title, items, section) {
+  const contentArea = document.getElementById('content-area');
+
+  // Setează layout grid diferit în funcție de secțiune
+  let gridCols = 'grid-cols-1';
+  if (section === 'tutorials') gridCols = 'grid-cols-1 sm:grid-cols-2';
+  else if (section === 'tools') gridCols = 'grid-cols-1 sm:grid-cols-2';
+  else gridCols = 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+
+  let content = `
+    <section>
+      <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
+      <div class="grid ${gridCols} gap-6">
+        ${items.map(item => renderItem(item, section)).join('')}
+      </div>
+    </section>
+  `;
+
+  contentArea.innerHTML = content;
+  animateContent();
+}
+
+function renderItem(item, section) {
+  if (section === 'tools') {
+    return `
+      <div class="bg-black bg-opacity-30 rounded-lg p-6">
+        <div class="cursor-pointer mb-4" onclick="openModal('${item.full}')">
+          <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover rounded-lg hover:opacity-80 transition">
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-2">${item.title}</h3>
+        <p class="text-gray-300 mb-4">${item.desc}</p>
+        <div class="flex space-x-4">
+          <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg">
+            Price: ${item.price}
+          </div>
+          <a href="${item.discord}" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition">
+            <i class="fab fa-discord mr-2"></i> Contact
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  if (section === 'free') {
+    return `
+      <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden">
+        <div class="cursor-pointer" onclick="openModal('${item.full}')">
+          <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-medium text-white">${item.title}</h3>
+          </div>
+        </div>
+        ${item.download ? `
+          <div class="px-4 pb-4">
+            <button class="w-full py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded hover:from-green-600 hover:to-teal-700 transition">
+              <a href="${item.download}" download><i class="fas fa-download mr-2"></i> Download</a>
+            </button>
+            ${item.extra ? `<p class="mt-2 text-white">${item.extra}</p>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  if (section === 'tutorials') {
+    return `
+      <div class="bg-black bg-opacity-30 rounded-lg p-6">
+        <h3 class="text-xl font-bold text-white mb-4">${item.title}</h3>
+        <div class="w-full">
+          <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    `;
+  }
+
+  // default (standard content: costumes, weapons, hairstyles, others)
+  return `
+    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('${item.full}')">
+      <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-medium text-white">${item.title}</h3>
+      </div>
+    </div>
+  `;
+}
+
+		
+		// Salvăm pagina curentă
+localStorage.setItem('currentPage', section);
+
         document.getElementById('mobile-menu').classList.add('hidden');
         
         const contentArea = document.getElementById('content-area');
@@ -75,71 +209,89 @@
 
         setTimeout(() => {
             // Load new content
-            if (section === 'home') {
-                contentArea.innerHTML = homeContentBackup;
-                animateContent(); // make sure new buttons work again
-                return;
-            }
+if (section === 'home') {
+    contentArea.innerHTML = homeContentBackup;
+
+    // 1. Combinăm doar itemele non-tutoriale (costumes, hairstyles, weapons, others, free, tools)
+    const combinedItems = [
+        ...masterItems.costumes,
+        ...masterItems.hairstyles,
+        ...masterItems.weapons,
+        ...masterItems.others,
+        ...masterItems.free,
+        ...masterItems.tools
+    ];
+
+    // 2. Alegem 3 random din combinedItems
+    const randomNormalItems = combinedItems.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+    // 3. Alegem 1 random din tutorials
+    const randomTutorial = masterItems.tutorials[Math.floor(Math.random() * masterItems.tutorials.length)];
+
+    // 4. Injectăm în galerie
+
+    const galleryDiv = contentArea.querySelector('.grid');
+    galleryDiv.innerHTML = `
+        ${randomNormalItems.map(item => `
+            <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('${item.full}')">
+                <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-medium text-white">${item.title}</h3>
+                </div>
+            </div>
+        `).join('')}
+
+        <!-- Tutorialul random -->
+        <div class="bg-black bg-opacity-30 rounded-lg p-4 col-span-full">
+            <h3 class="text-lg font-medium text-white mb-4">${randomTutorial.title}</h3>
+            <div class="w-full">
+                <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${randomTutorial.youtube}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    `;
+
+    animateContent();
+    return;
+}
+
+
 
             let title = '';
             let items = [];
 
             switch(section) {
-                case 'costumes':
-                    title = 'Costumes';
-                    items = [
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
-                    ];
-                    break;
-                case 'hairstyles':
-                    title = 'Hairstyles';
-                    items = [
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
-                    ];
-                    break;
-                case 'weapons':
-                    title = 'Weapons';
-                    items = [
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                    ];
-                    break;
-                case 'others':
-                    title = 'Other Assets';
-                    items = [
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                        { title: 'Coming soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' },
-                    ];
-                    break;
-                case 'free':
-                    title = 'Free Stuff';
-                    items = [
-                        { title: 'Antaras', img: 'assets/img/antaras_weapons.png', full: 'assets/img/antaras_weapons.png', free1: true },
-                        { title: 'Dynasty', img: 'assets/img/dynasty_weapons.png', full: 'assets/img/dynasty_weapons.png', free2: true },
-                        { title: 'God Awakening', img: 'assets/img/god_awakening_weapons.png', full: 'assets/img/god_awakening_weapons.png', free3: true },
-                        { title: 'Silver Hunter', img: 'assets/img/silver_hunter_weapons.jpg', full: 'assets/img/silver_hunter_weapons.jpg', free4: true },
-                        { title: 'Dark Crystal', img: 'assets/img/dark_crystal_weapons.jpg', full: 'assets/img/dark_crystal_weapons.jpg', free5: true },
-                        { title: 'More soon', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png', free6: true },
-                    ];
-                    break;
+case 'costumes':
+case 'hairstyles':
+case 'weapons':
+case 'others':
+case 'free':
+  title = section.charAt(0).toUpperCase() + section.slice(1);
+  fetch(`assets/data/${section}.json`)
+    .then(res => res.json())
+    .then(data => {
+      renderContent(title, data, section);
+    });
+  return;
+
+					
+case 'tutorials':
+  title = 'Tutorials';
+  fetch('assets/data/tutorials.json')
+    .then(res => res.json())
+    .then(data => {
+      renderContent(title, data, section); // ✅ folosește funcția unificată
+    });
+  return;
+
+case 'tools':
+    title = 'Tools';
+    fetch('assets/data/tools.json')
+      .then(response => response.json())
+      .then(data => {
+        items = data;
+        renderContent(title, data, section);
+      });
+    return;
             }
 
 // Funcția modificată pentru a accepta orice text suplimentar
@@ -157,21 +309,59 @@ function createDownloadButton(item, downloadLink, extraText = '') {
 let content = `
     <section>
         <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid ${
+  section === 'tutorials'
+    ? 'grid-cols-1'
+    : section === 'tools'
+    ? 'grid-cols-1 sm:grid-cols-2'
+    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+} gap-6">
             ${items.map(item => `
-                <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden">
-                    <div class="cursor-pointer" onclick="openModal('${item.full}')">
+                ${section === 'tutorials' ? `
+                    <div class="bg-black bg-opacity-30 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">${item.title}</h3>
+                        <div class="w-full">
+                            <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                ` : section === 'tools' ? `
+                    <div class="bg-black bg-opacity-30 rounded-lg p-6">
+                        <div class="cursor-pointer mb-4" onclick="openModal('${item.full}')">
+    <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover rounded-lg hover:opacity-80 transition">
+</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">${item.title}</h3>
+                        <p class="text-gray-300 mb-4">${item.desc}</p>
+                        <div class="flex space-x-4">
+                            <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg">
+                                Price: ${item.price}
+                            </div>
+                            <a href="${item.discord}" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition">
+                                <i class="fab fa-discord mr-2"></i> Contact
+                            </a>
+                        </div>
+                    </div>
+                ` : section === 'free' ? `
+                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden">
+                        <div class="cursor-pointer" onclick="openModal('${item.full}')">
+                            <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-medium text-white">${item.title}</h3>
+                            </div>
+                        </div>
+                        ${createDownloadButton(item.free1, 'assets/downloads/antaras_weapons.rar')}
+                        ${createDownloadButton(item.free2, 'assets/downloads/dynasty_weapons.rar', 'Password: jawwad@wk')}
+                        ${createDownloadButton(item.free3, 'assets/downloads/god_awakening_weapons.rar')}
+                        ${createDownloadButton(item.free4, 'assets/downloads/silver_hunter_weapons.rar', '<a href="https://vimeo.com/534330489" target="_blank">In game preview here</a>')}
+                        ${createDownloadButton(item.free5, 'assets/downloads/dark_crystal_weapons.rar')}
+                    </div>
+                ` : `
+                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('${item.full}')">
                         <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
                         <div class="p-4">
                             <h3 class="text-lg font-medium text-white">${item.title}</h3>
                         </div>
                     </div>
-                    ${createDownloadButton(item.free1, 'assets/downloads/antaras_weapons.rar')}
-                    ${createDownloadButton(item.free2, 'assets/downloads/dynasty_weapons.rar', 'Password: jawwad@wk')}
-                    ${createDownloadButton(item.free3, 'assets/downloads/god_awakening_weapons.rar')}
-                    ${createDownloadButton(item.free4, 'assets/downloads/silver_hunter_weapons.rar', '<a href="https://vimeo.com/534330489" target="_blank">In game preview here</a>')}
-                    ${createDownloadButton(item.free5, 'assets/downloads/dark_crystal_weapons.rar')}
-                </div>
+                `}
             `).join('')}
         </div>
     </section>

@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Antaras",
+    "img": "assets/img/antaras_weapons.png",
+    "full": "assets/img/antaras_weapons.png",
+    "download": "assets/downloads/antaras_weapons.rar"
+  },
+  {
+    "title": "Dynasty",
+    "img": "assets/img/dynasty_weapons.png",
+    "full": "assets/img/dynasty_weapons.png",
+    "download": "assets/downloads/dynasty_weapons.rar",
+    "extra": "Password: jawwad@wk"
+  },
+  {
+    "title": "Silver Hunter",
+    "img": "assets/img/silver_hunter_weapons.jpg",
+    "full": "assets/img/silver_hunter_weapons.jpg",
+    "download": "assets/downloads/silver_hunter_weapons.rar",
+    "extra": "<a href='https://vimeo.com/534330489' target='_blank'>In game preview here</a>"
+  },
+  {
+    "title": "God Awakening",
+    "img": "assets/img/god_awakening_weapons.png",
+    "full": "assets/img/god_awakening_weapons.png",
+    "download": "assets/downloads/god_awakening_weapons.rar"
+  },
+  {
+    "title": "Dark Crystal",
+    "img": "assets/img/dark_crystal_weapons.jpg",
+    "full": "assets/img/dark_crystal_weapons.jpg",
+    "download": "assets/downloads/dark_crystal_weapons.rar"
+  },
+  {
+    "title": "More soon",
+    "img": "assets/img/jawwad_mini.png",
+    "full": "assets/img/jawwad.png",
+    "download": ""
+  }
+]
