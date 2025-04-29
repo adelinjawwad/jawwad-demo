@@ -104,10 +104,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function loadContent(section) {
 		
 		if (section === 'home') {
-  const contentArea = document.getElementById('content-area');
-  contentArea.innerHTML = homeContentBackup;
-  animateContent(); // ca să se facă fade-in
-  return;
+  localStorage.setItem('currentPage', 'home');
 }
 		
 function renderContent(title, items, section) {
@@ -218,19 +215,23 @@ if (section === 'home') {
         ...masterItems.hairstyles,
         ...masterItems.weapons,
         ...masterItems.others,
-        ...masterItems.free,
-        ...masterItems.tools
+        ...masterItems.free
     ];
 
     // 2. Alegem 3 random din combinedItems
     const randomNormalItems = combinedItems.sort(() => 0.5 - Math.random()).slice(0, 3);
 
     // 3. Alegem 1 random din tutorials
-    const randomTutorial = masterItems.tutorials[Math.floor(Math.random() * masterItems.tutorials.length)];
+    const hasTutorials = masterItems.tutorials && masterItems.tutorials.length > 0;
+const randomTutorial = hasTutorials
+  ? masterItems.tutorials[Math.floor(Math.random() * masterItems.tutorials.length)]
+  : null;
+
 
     // 4. Injectăm în galerie
 
-    const galleryDiv = contentArea.querySelector('.grid');
+    const galleryDiv = contentArea.querySelector('#home-content .grid');
+
     galleryDiv.innerHTML = `
         ${randomNormalItems.map(item => `
             <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('${item.full}')">
@@ -241,21 +242,19 @@ if (section === 'home') {
             </div>
         `).join('')}
 
-        <!-- Tutorialul random -->
-        <div class="bg-black bg-opacity-30 rounded-lg p-4 col-span-full">
-            <h3 class="text-lg font-medium text-white mb-4">${randomTutorial.title}</h3>
-            <div class="w-full">
-                <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${randomTutorial.youtube}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
+${hasTutorials ? `
+  <div class="bg-black bg-opacity-30 rounded-lg p-4 col-span-full">
+    <h3 class="text-lg font-medium text-white mb-4">${randomTutorial.title}</h3>
+    <div class="w-full">
+      <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${randomTutorial.youtube}" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+` : ''}
     `;
 
     animateContent();
     return;
 }
-
-
-
             let title = '';
             let items = [];
 
@@ -293,82 +292,6 @@ case 'tools':
       });
     return;
             }
-
-// Funcția modificată pentru a accepta orice text suplimentar
-function createDownloadButton(item, downloadLink, extraText = '') {
-    return item ? `
-        <div class="px-4 pb-4">
-            <button class="w-full py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded hover:from-green-600 hover:to-teal-700 transition">
-                <a href="${downloadLink}" download><i class="fas fa-download mr-2"></i> Download</a>
-            </button>
-            ${extraText ? `<p class="mt-2 text-white">${extraText}</p>` : ''}
-        </div>
-    ` : '';
-}
-
-let content = `
-    <section>
-        <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
-        <div class="grid ${
-  section === 'tutorials'
-    ? 'grid-cols-1'
-    : section === 'tools'
-    ? 'grid-cols-1 sm:grid-cols-2'
-    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-} gap-6">
-            ${items.map(item => `
-                ${section === 'tutorials' ? `
-                    <div class="bg-black bg-opacity-30 rounded-lg p-6">
-                        <h3 class="text-xl font-bold text-white mb-4">${item.title}</h3>
-                        <div class="w-full">
-                            <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                ` : section === 'tools' ? `
-                    <div class="bg-black bg-opacity-30 rounded-lg p-6">
-                        <div class="cursor-pointer mb-4" onclick="openModal('${item.full}')">
-    <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover rounded-lg hover:opacity-80 transition">
-</div>
-                        <h3 class="text-2xl font-bold text-white mb-2">${item.title}</h3>
-                        <p class="text-gray-300 mb-4">${item.desc}</p>
-                        <div class="flex space-x-4">
-                            <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg">
-                                Price: ${item.price}
-                            </div>
-                            <a href="${item.discord}" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition">
-                                <i class="fab fa-discord mr-2"></i> Contact
-                            </a>
-                        </div>
-                    </div>
-                ` : section === 'free' ? `
-                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden">
-                        <div class="cursor-pointer" onclick="openModal('${item.full}')">
-                            <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-white">${item.title}</h3>
-                            </div>
-                        </div>
-                        ${createDownloadButton(item.free1, 'assets/downloads/antaras_weapons.rar')}
-                        ${createDownloadButton(item.free2, 'assets/downloads/dynasty_weapons.rar', 'Password: jawwad@wk')}
-                        ${createDownloadButton(item.free3, 'assets/downloads/god_awakening_weapons.rar')}
-                        ${createDownloadButton(item.free4, 'assets/downloads/silver_hunter_weapons.rar', '<a href="https://vimeo.com/534330489" target="_blank">In game preview here</a>')}
-                        ${createDownloadButton(item.free5, 'assets/downloads/dark_crystal_weapons.rar')}
-                    </div>
-                ` : `
-                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('${item.full}')">
-                        <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-medium text-white">${item.title}</h3>
-                        </div>
-                    </div>
-                `}
-            `).join('')}
-        </div>
-    </section>
-`;
-
-            contentArea.innerHTML = content;
-            animateContent();
         }, 300); // wait for fade-out
     }
 
