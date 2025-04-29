@@ -1,6 +1,6 @@
     // Save initial Home content
     const homeContentBackup = document.getElementById('home-content').outerHTML;
-	
+
 	const masterItems = {
     costumes: [
         { title: 'Costume Preview', img: 'assets/img/jawwad_mini.png', full: 'assets/img/jawwad.png' }
@@ -27,7 +27,6 @@
     ],
 };
 
-	
 	// Când pagina se încarcă, verificăm dacă există o pagină salvată
 window.addEventListener('DOMContentLoaded', () => {
     const savedPage = localStorage.getItem('currentPage');
@@ -221,13 +220,6 @@ if (section === 'home') {
     // 2. Alegem 3 random din combinedItems
     const randomNormalItems = combinedItems.sort(() => 0.5 - Math.random()).slice(0, 3);
 
-    // 3. Alegem 1 random din tutorials
-    const hasTutorials = masterItems.tutorials && masterItems.tutorials.length > 0;
-const randomTutorial = hasTutorials
-  ? masterItems.tutorials[Math.floor(Math.random() * masterItems.tutorials.length)]
-  : null;
-
-
     // 4. Injectăm în galerie
 
     const galleryDiv = contentArea.querySelector('#home-content .grid');
@@ -241,15 +233,6 @@ const randomTutorial = hasTutorials
                 </div>
             </div>
         `).join('')}
-
-${hasTutorials ? `
-  <div class="bg-black bg-opacity-30 rounded-lg p-4 col-span-full">
-    <h3 class="text-lg font-medium text-white mb-4">${randomTutorial.title}</h3>
-    <div class="w-full">
-      <iframe class="w-full rounded-lg" style="height: 400px;" src="https://www.youtube.com/embed/${randomTutorial.youtube}" frameborder="0" allowfullscreen></iframe>
-    </div>
-  </div>
-` : ''}
     `;
 
     animateContent();
@@ -278,7 +261,7 @@ case 'tutorials':
   fetch('assets/data/tutorials.json')
     .then(res => res.json())
     .then(data => {
-      renderContent(title, data, section); // ✅ folosește funcția unificată
+      renderContent(title, data, section);
     });
   return;
 

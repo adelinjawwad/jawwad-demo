@@ -1,31 +1,31 @@
 [
   {
-    "title": "Coming soon",
+    "title": "Renders #1",
+    "img": "assets/img/renders1.png",
+    "full": "assets/img/renders1.png"
+  },
+  {
+    "title": "Coming soon2",
     "img": "assets/img/jawwad_mini.png",
     "full": "assets/img/jawwad.png"
   },
   {
-    "title": "Coming soon",
+    "title": "Coming soon3",
     "img": "assets/img/jawwad_mini.png",
     "full": "assets/img/jawwad.png"
   },
   {
-    "title": "Coming soon",
+    "title": "Coming soon4",
     "img": "assets/img/jawwad_mini.png",
     "full": "assets/img/jawwad.png"
   },
   {
-    "title": "Coming soon",
+    "title": "Coming soon5",
     "img": "assets/img/jawwad_mini.png",
     "full": "assets/img/jawwad.png"
   },
   {
-    "title": "Coming soon",
-    "img": "assets/img/jawwad_mini.png",
-    "full": "assets/img/jawwad.png"
-  },
-  {
-    "title": "Coming soon",
+    "title": "Coming soon6",
     "img": "assets/img/jawwad_mini.png",
     "full": "assets/img/jawwad.png"
   }
