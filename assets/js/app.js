@@ -101,6 +101,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic content loading with fade animation
     function loadContent(section) {
+  section = section.split('?')[0]; // 🧼 asta e cheia
+
 		
 		if (section === 'home') {
   localStorage.setItem('currentPage', 'home');
@@ -240,7 +242,7 @@ if (section === 'home') {
 }
             let title = '';
             let items = [];
-
+section = section.split('?')[0];
             switch(section) {
 case 'costumes':
 case 'hairstyles':
@@ -248,7 +250,7 @@ case 'weapons':
 case 'others':
 case 'free':
   title = section.charAt(0).toUpperCase() + section.slice(1);
-  fetch(`assets/data/${section}.json`)
+  fetch(`assets/data/${section.replace(/\?.*$/, '')}.json?v=${Date.now()}`)
     .then(res => res.json())
     .then(data => {
       renderContent(title, data, section);
@@ -318,3 +320,9 @@ document.querySelectorAll('.dropdown-content a').forEach(function(link) {
     icon.style.transform = 'rotate(0deg)'; // Resetează săgeata la poziția inițială
   });
 });
+
+function forceReload() {
+  const currentPage = localStorage.getItem('currentPage') || 'home';
+  console.log('🔄 Forcing reload of:', currentPage);
+  loadContent(currentPage + '?nocache=' + Date.now());
+}
