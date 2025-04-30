@@ -38,6 +38,9 @@ function showRelevantFields() {
     document.getElementById('toolsFields').classList.remove('hidden');
     document.getElementById('sharedFields').classList.remove('hidden');
   }
+  if (cat === 'free') {
+  document.getElementById('freeFields').classList.remove('hidden');
+	}
 }
 
 function loadItems() {
@@ -107,10 +110,6 @@ function addItem() {
   newItem.desc = desc;
 }
 
-  if (cat === 'free') {
-  document.getElementById('freeFields').classList.remove('hidden');
-}
-
   if (cat === 'tutorials') {
     const youtube = document.getElementById('newYoutube').value.trim();
     const desc = document.getElementById('newTutorialDesc').value.trim();
@@ -160,6 +159,7 @@ function editItem(index) {
   document.getElementById('newDesc').value = item.desc || '';
   document.getElementById('newPrice').value = item.price || '';
   document.getElementById('newDiscord').value = item.discord || '';
+  document.getElementById('newFreeDesc').value = item.desc || '';
   editIndex = index;
 }
 
