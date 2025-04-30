@@ -105,9 +105,9 @@ function addItem() {
     newItem.full = full;
   }
   
-  if (cat === 'free') {
-  const desc = document.getElementById('newFreeDesc').value.trim();
-  newItem.desc = desc;
+if (cat === 'free') {
+  const extra = document.getElementById('newFreeDesc').value.trim();
+  newItem.extra = extra;
 }
 
   if (cat === 'tutorials') {
@@ -159,7 +159,7 @@ function editItem(index) {
   document.getElementById('newDesc').value = item.desc || '';
   document.getElementById('newPrice').value = item.price || '';
   document.getElementById('newDiscord').value = item.discord || '';
-  document.getElementById('newFreeDesc').value = item.desc || '';
+  document.getElementById('newFreeDesc').value = item.extra || '';
   editIndex = index;
 }
 
