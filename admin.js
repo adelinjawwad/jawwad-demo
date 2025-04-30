@@ -68,7 +68,8 @@ function displayItems() {
           <small class="text-sm text-gray-400">
             ${item.img ? item.img : ''}
             ${item.youtube ? ' (YouTube: ' + item.youtube + ')' : ''}
-            ${item.desc ? '<br>' + item.desc : ''}
+            ${item.desc ? item.desc + '<br>' : ''}
+			${item.extra ? item.extra : ''}
           </small>
         </div>
         <div class="flex space-x-2">
