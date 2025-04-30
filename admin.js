@@ -1,21 +1,51 @@
+
 // 🔒 SIMPLE PASSWORD PROTECTION
-const ADMIN_PASS = 'jawwad123';  // 🔑 Setează parola ta aici
+const ADMIN_PASS = 'jawwad123';
 
 function checkPassword() {
   const input = document.getElementById('adminPassword').value;
   const errorMsg = document.getElementById('loginError');
   if (input === ADMIN_PASS) {
     document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminTopbar').classList.remove('hidden');
   } else {
     errorMsg.classList.remove('hidden');
   }
 }
 
+function logout() {
+  location.reload();
+}
+
 let currentCategory = '';
 let currentItems = [];
+let editIndex = -1;
+
+function showRelevantFields() {
+  const cat = document.getElementById('categorySelect').value;
+  document.getElementById('sharedFields').classList.add('hidden');
+  document.getElementById('tutorialFields').classList.add('hidden');
+  document.getElementById('toolsFields').classList.add('hidden');
+  document.getElementById('freeFields').classList.add('hidden');
+
+  if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
+    document.getElementById('sharedFields').classList.remove('hidden');
+  }
+  if (cat === 'tutorials') {
+    document.getElementById('tutorialFields').classList.remove('hidden');
+  }
+  if (cat === 'tools') {
+    document.getElementById('toolsFields').classList.remove('hidden');
+    document.getElementById('sharedFields').classList.remove('hidden');
+  }
+}
 
 function loadItems() {
   currentCategory = document.getElementById('categorySelect').value;
+  if (!currentCategory) {
+    alert('Selectează o categorie mai întâi!');
+    return;
+  }
   fetch(`assets/data/${currentCategory}.json`)
     .then(res => res.json())
     .then(data => {
@@ -38,7 +68,14 @@ function displayItems() {
             ${item.desc ? '<br>' + item.desc : ''}
           </small>
         </div>
-        <button onclick="deleteItem(${index})" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Delete</button>
+        <div class="flex space-x-2">
+          <button onclick="editItem(${index})" class="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded flex items-center">
+            <i class="fas fa-edit mr-1"></i> Edit
+          </button>
+          <button onclick="deleteItem(${index})" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded flex items-center">
+            <i class="fas fa-trash mr-1"></i> Delete
+          </button>
+        </div>
       </div>
     `;
   });
@@ -46,15 +83,15 @@ function displayItems() {
 
 function addItem() {
   const title = document.getElementById('newTitle').value.trim();
-
-  if (!title) {
-    alert('Completează titlul!');
+  const cat = currentCategory;
+  if (!title || !cat) {
+    alert('Completează titlul și selectează categoria!');
     return;
   }
 
   let newItem = { title };
 
-  if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(currentCategory)) {
+  if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
     const img = document.getElementById('newImg').value.trim();
     const full = document.getElementById('newFull').value.trim();
     if (!img || !full) {
@@ -64,8 +101,17 @@ function addItem() {
     newItem.img = img;
     newItem.full = full;
   }
+  
+  if (cat === 'free') {
+  const desc = document.getElementById('newFreeDesc').value.trim();
+  newItem.desc = desc;
+}
 
-  if (currentCategory === 'tutorials') {
+  if (cat === 'free') {
+  document.getElementById('freeFields').classList.remove('hidden');
+}
+
+  if (cat === 'tutorials') {
     const youtube = document.getElementById('newYoutube').value.trim();
     const desc = document.getElementById('newTutorialDesc').value.trim();
     if (!youtube) {
@@ -76,7 +122,7 @@ function addItem() {
     newItem.desc = desc;
   }
 
-  if (currentCategory === 'tools') {
+  if (cat === 'tools') {
     const img = document.getElementById('newImg').value.trim();
     const full = document.getElementById('newFull').value.trim();
     const desc = document.getElementById('newDesc').value.trim();
@@ -93,9 +139,28 @@ function addItem() {
     newItem.discord = discord;
   }
 
-  currentItems.push(newItem);
+  if (editIndex > -1) {
+    currentItems[editIndex] = newItem;
+    editIndex = -1;
+  } else {
+    currentItems.push(newItem);
+  }
+
   displayItems();
   clearInputs();
+}
+
+function editItem(index) {
+  const item = currentItems[index];
+  document.getElementById('newTitle').value = item.title || '';
+  document.getElementById('newImg').value = item.img || '';
+  document.getElementById('newFull').value = item.full || '';
+  document.getElementById('newYoutube').value = item.youtube || '';
+  document.getElementById('newTutorialDesc').value = item.desc || '';
+  document.getElementById('newDesc').value = item.desc || '';
+  document.getElementById('newPrice').value = item.price || '';
+  document.getElementById('newDiscord').value = item.discord || '';
+  editIndex = index;
 }
 
 function deleteItem(index) {
@@ -133,4 +198,6 @@ function clearInputs() {
   document.getElementById('newDesc').value = '';
   document.getElementById('newPrice').value = '';
   document.getElementById('newDiscord').value = '';
+  document.getElementById('newFreeDesc').value = '';
+  editIndex = -1;
 }
