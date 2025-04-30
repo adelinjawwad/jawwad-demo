@@ -67,8 +67,8 @@ function displayItems() {
           <strong>${item.title}</strong><br>
           <small class="text-sm text-gray-400">
             ${item.img ? item.img : ''}
-            ${item.youtube ? ' (YouTube: ' + item.youtube + ')' : ''}
-            ${item.desc ? item.desc + '<br>' : ''}<br />
+            ${item.youtube ? ' (YouTube: ' + item.youtube + ')' : ''}<br>
+            ${item.desc ? item.desc + '<br>' : ''}
 			${item.extra ? item.extra : ''}
           </small>
         </div>
