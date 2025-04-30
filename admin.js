@@ -97,6 +97,13 @@ function addItem() {
   if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
     const img = document.getElementById('newImg').value.trim();
     const full = document.getElementById('newFull').value.trim();
+	
+	  // Doar pentru free adăugăm extra
+  let extra = '';
+  if (cat === 'free') {
+    extra = document.getElementById('newFreeDesc').value.trim();
+  }
+	
     if (!img || !full) {
       alert('Completează toate câmpurile!');
       return;
