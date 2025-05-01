@@ -1,14 +1,14 @@
 [
   {
     "title": "Antaras",
-    "img": "assets/img/antaras_weapons.png",
-    "full": "assets/img/antaras_weapons.png",
+    "img": "assets/img/antaras_weapons.jpg",
+    "full": "assets/img/antaras_weapons.jpg",
     "download": "assets/downloads/antaras_weapons.rar"
   },
   {
     "title": "Dynasty",
-    "img": "assets/img/dynasty_weapons.png",
-    "full": "assets/img/dynasty_weapons.png",
+    "img": "assets/img/dynasty_weapons.jpg",
+    "full": "assets/img/dynasty_weapons.jpg",
     "download": "assets/downloads/dynasty_weapons.rar",
     "extra": "Password: jawwad@wk"
   },
@@ -21,8 +21,8 @@
   },
   {
     "title": "God Awakening",
-    "img": "assets/img/god_awakening_weapons.png",
-    "full": "assets/img/god_awakening_weapons.png",
+    "img": "assets/img/god_awakening_weapons.jpg",
+    "full": "assets/img/god_awakening_weapons.jpg",
     "download": "assets/downloads/god_awakening_weapons.rar"
   },
   {
@@ -33,8 +33,8 @@
   },
   {
     "title": "More soon",
-    "img": "assets/img/jawwad_mini.png",
-    "full": "assets/img/jawwad.png",
+    "img": "assets/img/jawwad_mini.jpg",
+    "full": "assets/img/jawwad.jpg",
     "download": ""
   }
 ]

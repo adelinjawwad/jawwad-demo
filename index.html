@@ -1,152 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang=en>
+  <head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1">
     <title>Jawwad ART</title>
-	<link rel="stylesheet" href="assets/css/style.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="min-h-screen">
-    <!-- Navigation -->
+    <link href="assets/css/style.min.css?v=1.0" rel=stylesheet>
+    <script src=https://cdn.tailwindcss.com></script>
+    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
+  </head>
+  <body class=min-h-screen>
     <nav class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">Jawwad ART</span>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('home')"><i class="fas fa-house mr-2"></i> Home</a>
-<div class="dropdown">
-  <button class="dropbtn" onclick="toggleDropdown()">
-    Menu <i class="fa fa-chevron-down"></i> <!-- Săgeata de la Font Awesome -->
-  </button>
-  <div class="dropdown-content">
-    <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('costumes')">Costumes</a>
-    <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('hairstyles')">Hairstyles</a>
-    <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('weapons')">Weapons</a>
-    <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('others')">Others</a>
-  </div>
-</div>
-<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tutorials')">
-    <i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials
-</a>
-<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tools')">
-    <i class="fas fa-tools mr-2"></i> Tools
-</a>
-                            <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('free')"><i class="fas fa-gift mr-2"></i> Free Stuff</a>
-                            <button onclick="copyDiscordTag()" class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-md hover:from-purple-600 hover:to-pink-700 transition flex items-center">
-                                <i class="fab fa-discord mr-2"></i> Contact
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="-mr-2 flex md:hidden">
-                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class=flex-shrink-0><span class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">Jawwad ART</span></div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-4"><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("home")'><i class="fas fa-house mr-2"></i> Home</a>
+                <div class=dropdown><button class=dropbtn onclick=toggleDropdown()> Menu <i class="fa fa-chevron-down"></i></button>
+                  <div class=dropdown-content><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("costumes")'>Costumes</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("hairstyles")'>Hairstyles</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("weapons")'>Weapons</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("others")'>Others</a></div>
+                </div><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("tutorials")'><i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials </a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("tools")'><i class="fas fa-tools mr-2"></i> Tools </a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("free")'><i class="fas fa-gift mr-2"></i> Free Stuff</a><button onclick=copyDiscordTag() class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-md hover:from-purple-600 hover:to-pink-700 transition flex items-center"><i class="fab fa-discord mr-2"></i> Contact </button>
+              </div>
             </div>
+          </div>
+          <div class="-mr-2 flex md:hidden"><button type=button id=mobile-menu-button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"><svg class="h-6 w-6" xmlns=http://www.w3.org/2000/svg fill=none viewBox="0 0 24 24" stroke=currentColor>
+                <path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M4 6h16M4 12h16M4 18h16" />
+              </svg></button></div>
         </div>
-        
-        <!-- Mobile menu -->
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black bg-opacity-90">
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick="loadContent('home')">Home</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick="loadContent('costumes')">Costumes</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick="loadContent('hairstyles')">Hairstyles</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick="loadContent('weapons')">Weapons</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick="loadContent('others')">Others</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick="loadContent('free')">Free Stuff</a>
-                <button onclick="copyDiscordTag()" class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md flex items-center">
-                    <i class="fab fa-discord mr-2"></i> Contact
-                </button>
-            </div>
-        </div>
+      </div>
+      <div class="md:hidden hidden" id=mobile-menu>
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black bg-opacity-90"><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick='loadContent("home")'>Home</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick='loadContent("costumes")'>Costumes</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick='loadContent("hairstyles")'>Hairstyles</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick='loadContent("weapons")'>Weapons</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick='loadContent("others")'>Others</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md" onclick='loadContent("free")'>Free Stuff</a><button onclick=copyDiscordTag() class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-md flex items-center"><i class="fab fa-discord mr-2"></i> Contact </button></div>
+      </div>
     </nav>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-4 right-4 hidden">
-        <div class="toast bg-green-600 text-white px-4 py-3 rounded-md shadow-lg flex items-center">
-            <i class="fas fa-check-circle mr-2"></i>
-            <span id="toast-message">Copied to clipboard!</span>
-        </div>
+    <div id=toast class="fixed bottom-4 right-4 hidden">
+      <div class="toast bg-green-600 text-white px-4 py-3 rounded-md shadow-lg flex items-center"><i class="fas fa-check-circle mr-2"></i><span id=toast-message>Copied to clipboard!</span></div>
     </div>
-
-    <!-- Main Content -->
     <main class="pt-20 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <!-- Dynamic Content Area -->
-        <div id="content-area">
-            <!-- Home content will be loaded here by default -->
-            <section id="home-content">
-                <div class="text-center mb-12">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">Jawwad ART</h1>
-                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">Discover assets for your projects.<br /> High-quality costumes, hairstyles, weapons and more!</p>
-                    
-                    <button onclick="toggleDiscordInvite()" class="mt-8 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition flex items-center mx-auto">
-                        <i class="fab fa-discord mr-2"></i> Join our Discord server
-                    </button>
-                    
-                    <div id="discord-invite" class="mt-4 hidden max-w-md mx-auto bg-black bg-opacity-50 p-4 rounded-lg">
-                        <p class="text-gray-300 mb-2">Join my discord for chat, updates and support:</p>
-                        <div class="flex items-center justify-between bg-gray-800 p-3 rounded">
-                            <code class="text-purple-300">https://discord.gg/BBX8vfN4gQ</code>
-                            <button onclick="copyDiscordInvite()" class="text-pink-400 hover:text-pink-300">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">Featured works</h2>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- These would be your random preview items -->
-                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('assets/img/jawwad.png')">
-                        <img src="assets/img/jawwad_mini.png" alt="Costume Preview" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-medium text-white">Coming soon</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('assets/img/jawwad.png')">
-                        <img src="assets/img/jawwad_mini.png" alt="Hairstyle Preview" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-medium text-white">Coming soon</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick="openModal('assets/img/jawwad.png')">
-                        <img src="assets/img/jawwad_mini.png" alt="Weapon Preview" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-medium text-white">Coming soon</h3>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Other content sections will be loaded here dynamically -->
-        </div>
-    </main>
-
-<button onclick="forceReload()" class="fixed bottom-4 right-4 bg-pink-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-pink-700 transition z-50">
-  🔁 Refresh content
-</button>
-
-    <!-- Image Modal -->
-    <div id="image-modal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
-        <div class="modal-content relative max-w-4xl w-full">
-            <button onclick="closeModal()" class="absolute -top-10 right-0 text-white hover:text-pink-300 text-2xl">
-                <i class="fas fa-times"></i>
-            </button>
-            <img id="modal-image" src="" alt="Full size preview" class="w-full max-h-[90vh] object-contain rounded-lg">
-        </div>
+      <div id=content-area>
+        <section id=home-content>
+          <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">Jawwad ART</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Discover assets for your projects.<br> High-quality costumes, hairstyles, weapons and more!</p><button onclick=toggleDiscordInvite() class="mt-8 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition flex items-center mx-auto"><i class="fab fa-discord mr-2"></i> Join our Discord server </button>
+            <div id=discord-invite class="mt-4 hidden max-w-md mx-auto bg-black bg-opacity-50 p-4 rounded-lg">
+              <p class="text-gray-300 mb-2">Join my discord for chat, updates and support:</p>
+              <div class="flex items-center justify-between bg-gray-800 p-3 rounded"><code class=text-purple-300>https://discord.gg/BBX8vfN4gQ</code><button onclick=copyDiscordInvite() class="text-pink-400 hover:text-pink-300"><i class="fas fa-copy"></i></button></div>
+            </div>
+          </div>
+          <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">Featured works</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick='openModal("assets/img/jawwad.jpg")'><img src=assets/img/jawwad_mini.jpg alt="Costume Preview" class="w-full h-64 object-cover">
+              <div class=p-4>
+                <h3 class="text-lg font-medium text-white">Coming soon</h3>
+              </div>
+            </div>
+            <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick='openModal("assets/img/jawwad.jpg")'><img src=assets/img/jawwad_mini.jpg alt="Hairstyle Preview" class="w-full h-64 object-cover">
+              <div class=p-4>
+                <h3 class="text-lg font-medium text-white">Coming soon</h3>
+              </div>
+            </div>
+            <div class="gallery-item bg-black bg-opacity-30 rounded-lg overflow-hidden cursor-pointer" onclick='openModal("assets/img/jawwad.jpg")'><img src=assets/img/jawwad_mini.jpg alt="Weapon Preview" class="w-full h-64 object-cover">
+              <div class=p-4>
+                <h3 class="text-lg font-medium text-white">Coming soon</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main><button onclick=forceReload() class="fixed bottom-4 right-4 bg-pink-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-pink-700 transition z-50"> 🔁 Refresh content </button>
+    <div id=image-modal class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+      <div class="modal-content relative max-w-4xl w-full"><button onclick=closeModal() class="absolute -top-10 right-0 text-white hover:text-pink-300 text-2xl"><i class="fas fa-times"></i></button><img id=modal-image src="" alt="Full size preview" class="w-full max-h-[90vh] object-contain rounded-lg"></div>
     </div>
-  <script src="assets/js/app.js"></script>
-</body>
+    <script src="assets/js/app.min.js?v=1.0"></script>
+  </body>
 </html>

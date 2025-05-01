@@ -64,9 +64,9 @@ function displayItems() {
     container.innerHTML += `
       <div class="bg-gray-800 p-4 rounded flex justify-between items-center">
         <div>
-          <strong>${item.title}</strong><br>
-          <small class="text-sm text-gray-400">
-            ${item.img ? item.img : ''}
+<strong>${item.title}</strong><br>
+<small class="text-sm text-gray-400">
+  ${item.img ? `<img src="${item.img}" class="w-24 h-16 object-cover rounded mt-2 mb-2"><br>${item.img}<br>` : ''}
             ${item.youtube ? ' (YouTube: ' + item.youtube + ')' : ''}<br>
             ${item.desc ? item.desc + '<br>' : ''}
 			${item.extra ? item.extra : ''}
@@ -83,7 +83,9 @@ function displayItems() {
       </div>
     `;
   });
+  document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
 }
+
 
 function addItem() {
   const title = document.getElementById('newTitle').value.trim();
@@ -182,6 +184,7 @@ function saveData() {
   if (!currentCategory) {
     alert('Selectează și încarcă o categorie mai întâi!');
     return;
+	showToast();
   }
 
   const jsonStr = JSON.stringify(currentItems, null, 2);
@@ -208,4 +211,12 @@ function clearInputs() {
   document.getElementById('newDiscord').value = '';
   document.getElementById('newFreeDesc').value = '';
   editIndex = -1;
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.remove('hidden');
+  setTimeout(() => {
+    toast.classList.add('hidden');
+  }, 2000);
 }
