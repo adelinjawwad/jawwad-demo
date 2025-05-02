@@ -125,4 +125,6 @@ img.object-cover {
   color: #FFD700;
 }
 
-
+html {
+  scroll-behavior: smooth;
+}
