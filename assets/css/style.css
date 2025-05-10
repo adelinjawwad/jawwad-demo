@@ -1,1 +1,157 @@
-@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);.dropdown,.nav-link{position:relative}.dropbtn,.dropdown-content a{font-family:Arial,sans-serif;color:gold}body{font-family:Poppins,sans-serif;background:linear-gradient(135deg,#1a0b2e 0,#4a1b6d 30%,#8a2c7e 60%,#e83a6d 100%);background-attachment:fixed;min-height:100vh;color:#f1f1f1}.gallery-item{transition:.3s;box-shadow:0 10px 20px rgba(0,0,0,.3)}.gallery-item:hover{transform:translateY(-5px);box-shadow:0 15px 30px rgba(0,0,0,.4)}.modal-overlay{background:rgba(0,0,0,.9);backdrop-filter:blur(5px)}.dropbtn,.dropdown-content{background:linear-gradient(135deg,#1a0b2e 0,#4a1b6d 30%,#8a2c7e 60%,#e83a6d 100%)}.modal-content{animation:.3s ease-out fadeIn}@keyframes fadeIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}.nav-link::after{content:'';position:absolute;width:0;height:2px;bottom:-2px;left:0;background-color:#e83a6d;transition:width .3s}.nav-link:hover::after{width:100%}.toast{animation:.3s ease-out slideIn,.5s 2.5s forwards fadeOut}@keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes fadeOut{to{opacity:0}}img.object-cover{object-fit:fill}.dropdown{display:inline-block}.dropbtn{padding:10px 20px;font-size:16px;border:none;cursor:pointer;display:flex;align-items:center}.dropbtn i{margin-left:8px;transition:transform .3s}.dropdown-content{display:none;position:absolute;top:100%;min-width:160px;z-index:1;margin-top:10px}.dropdown.active .dropdown-content{display:block}.dropdown-content a{padding:12px 16px;text-decoration:none;display:block;transition:background-color .3s}.dropdown-content a:hover{background-color:rgba(255,255,255,.2);color:gold}
+body {
+	font-family: 'Poppins', sans-serif;
+	background: linear-gradient(135deg, #1a0b2e 0%, #4a1b6d 30%, #8a2c7e 60%, #e83a6d 100%);
+	background-attachment: fixed;
+	min-height: 100vh;
+	color: #f1f1f1;
+}
+
+.gallery-item {
+	transition: transform 0.3s ease;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.modal-overlay {
+	background: rgba(0, 0, 0, 0.9);
+	backdrop-filter: blur(5px);
+}
+
+.modal-content {
+	animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.nav-link {
+	position: relative;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 2px;
+	bottom: -2px;
+	left: 0;
+	background-color: #e83a6d;
+	transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+	width: 100%;
+}
+
+.toast {
+	animation: slideIn 0.3s ease-out, fadeOut 0.5s ease 2.5s forwards;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	to {
+		opacity: 0;
+	}
+}
+
+/* Stil pentru containerul dropdown */
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+/* Stil pentru butonul de dropdown */
+.dropbtn {
+	background: linear-gradient(135deg, #1a0b2e 0%, #4a1b6d 30%, #8a2c7e 60%, #e83a6d 100%);
+	color: #FFD700;
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+	font-family: 'Poppins', sans-serif;
+	display: flex;
+	align-items: center;
+	/* Pentru a alinia textul și iconița pe aceeași linie */
+}
+
+/* Săgeata la început - iconița de Font Awesome */
+.dropbtn i {
+	margin-left: 8px;
+	/* Spațiu între text și săgeată */
+	transition: transform 0.3s ease;
+}
+
+/* Ascunde conținutul dropdown inițial */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	top: 100%;
+	/* Asigură că meniul se va deschide sub buton */
+	background: linear-gradient(135deg, #1a0b2e 0%, #4a1b6d 30%, #8a2c7e 60%, #e83a6d 100%);
+	min-width: 160px;
+	z-index: 1;
+	margin-top: 10px;
+}
+
+/* Arată conținutul dropdown când este activ */
+.dropdown.active .dropdown-content {
+	display: block;
+}
+
+/* Stil pentru linkurile din dropdown */
+.dropdown-content a {
+	color: #FFD700;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	font-family: 'Poppins', sans-serif;
+	transition: background-color 0.3s ease;
+}
+
+/* Modifică culoarea la hover */
+.dropdown-content a:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	color: #FFD700;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+.dropdown-content {
+	display: block;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-10px);
+	transition: transform 0.3s ease;
+}
+
+.dropdown.active .dropdown-content {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
