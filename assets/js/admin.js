@@ -1,20 +1,19 @@
-
 // 🔒 SIMPLE PASSWORD PROTECTION
 const ADMIN_PASS = 'jawwad123';
 
 function checkPassword() {
-  const input = document.getElementById('adminPassword').value;
-  const errorMsg = document.getElementById('loginError');
-  if (input === ADMIN_PASS) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminTopbar').classList.remove('hidden');
-  } else {
-    errorMsg.classList.remove('hidden');
-  }
+	const input = document.getElementById('adminPassword').value;
+	const errorMsg = document.getElementById('loginError');
+	if (input === ADMIN_PASS) {
+		document.getElementById('loginScreen').style.display = 'none';
+		document.getElementById('adminTopbar').classList.remove('hidden');
+	} else {
+		errorMsg.classList.remove('hidden');
+	}
 }
 
 function logout() {
-  location.reload();
+	location.reload();
 }
 
 let currentCategory = '';
@@ -22,46 +21,46 @@ let currentItems = [];
 let editIndex = -1;
 
 function showRelevantFields() {
-  const cat = document.getElementById('categorySelect').value;
-  document.getElementById('sharedFields').classList.add('hidden');
-  document.getElementById('tutorialFields').classList.add('hidden');
-  document.getElementById('toolsFields').classList.add('hidden');
-  document.getElementById('freeFields').classList.add('hidden');
+	const cat = document.getElementById('categorySelect').value;
+	document.getElementById('sharedFields').classList.add('hidden');
+	document.getElementById('tutorialFields').classList.add('hidden');
+	document.getElementById('toolsFields').classList.add('hidden');
+	document.getElementById('freeFields').classList.add('hidden');
 
-  if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
-    document.getElementById('sharedFields').classList.remove('hidden');
-  }
-  if (cat === 'tutorials') {
-    document.getElementById('tutorialFields').classList.remove('hidden');
-  }
-  if (cat === 'tools') {
-    document.getElementById('toolsFields').classList.remove('hidden');
-    document.getElementById('sharedFields').classList.remove('hidden');
-  }
-  if (cat === 'free') {
-  document.getElementById('freeFields').classList.remove('hidden');
+	if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
+		document.getElementById('sharedFields').classList.remove('hidden');
+	}
+	if (cat === 'tutorials') {
+		document.getElementById('tutorialFields').classList.remove('hidden');
+	}
+	if (cat === 'tools') {
+		document.getElementById('toolsFields').classList.remove('hidden');
+		document.getElementById('sharedFields').classList.remove('hidden');
+	}
+	if (cat === 'free') {
+		document.getElementById('freeFields').classList.remove('hidden');
 	}
 }
 
 function loadItems() {
-  currentCategory = document.getElementById('categorySelect').value;
-  if (!currentCategory) {
-    alert('Selectează o categorie mai întâi!');
-    return;
-  }
-  fetch(`assets/data/${currentCategory}.json`)
-    .then(res => res.json())
-    .then(data => {
-      currentItems = data;
-      displayItems();
-    });
+	currentCategory = document.getElementById('categorySelect').value;
+	if (!currentCategory) {
+		alert('Selectează o categorie mai întâi!');
+		return;
+	}
+	fetch(`assets/data/${currentCategory}.json`)
+		.then(res => res.json())
+		.then(data => {
+			currentItems = data;
+			displayItems();
+		});
 }
 
 function displayItems() {
-  const container = document.getElementById('itemsContainer');
-  container.innerHTML = '';
-  currentItems.forEach((item, index) => {
-    container.innerHTML += `
+	const container = document.getElementById('itemsContainer');
+	container.innerHTML = '';
+	currentItems.forEach((item, index) => {
+		container.innerHTML += `
       <div class="bg-gray-800 p-4 rounded flex justify-between items-center">
         <div>
 <strong>${item.title}</strong><br>
@@ -82,141 +81,145 @@ function displayItems() {
         </div>
       </div>
     `;
-  });
-  document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
+	});
+	document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
 }
 
 
 function addItem() {
-  const title = document.getElementById('newTitle').value.trim();
-  const cat = currentCategory;
-  if (!title || !cat) {
-    alert('Completează titlul și selectează categoria!');
-    return;
-  }
+	const title = document.getElementById('newTitle').value.trim();
+	const cat = currentCategory;
+	if (!title || !cat) {
+		alert('Completează titlul și selectează categoria!');
+		return;
+	}
 
-  let newItem = { title };
+	let newItem = {
+		title
+	};
 
-  if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
-    const img = document.getElementById('newImg').value.trim();
-    const full = document.getElementById('newFull').value.trim();
-	
-	  // Doar pentru free adăugăm extra
-  let extra = '';
-  if (cat === 'free') {
-    extra = document.getElementById('newFreeDesc').value.trim();
-  }
-	
-    if (!img || !full) {
-      alert('Completează toate câmpurile!');
-      return;
-    }
-    newItem.img = img;
-    newItem.full = full;
-  }
-  
-if (cat === 'free') {
-  const extra = document.getElementById('newFreeDesc').value.trim();
-  newItem.extra = extra;
-}
+	if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
+		const img = document.getElementById('newImg').value.trim();
+		const full = document.getElementById('newFull').value.trim();
 
-  if (cat === 'tutorials') {
-    const youtube = document.getElementById('newYoutube').value.trim();
-    const desc = document.getElementById('newTutorialDesc').value.trim();
-    if (!youtube) {
-      alert('Completează YouTube ID!');
-      return;
-    }
-    newItem.youtube = youtube;
-    newItem.desc = desc;
-  }
+		// Doar pentru free adăugăm extra
+		let extra = '';
+		if (cat === 'free') {
+			extra = document.getElementById('newFreeDesc').value.trim();
+		}
 
-  if (cat === 'tools') {
-    const img = document.getElementById('newImg').value.trim();
-    const full = document.getElementById('newFull').value.trim();
-    const desc = document.getElementById('newDesc').value.trim();
-    const price = document.getElementById('newPrice').value.trim();
-    const discord = document.getElementById('newDiscord').value.trim();
-    if (!img || !full || !desc || !price || !discord) {
-      alert('Completează toate câmpurile!');
-      return;
-    }
-    newItem.img = img;
-    newItem.full = full;
-    newItem.desc = desc;
-    newItem.price = price;
-    newItem.discord = discord;
-  }
+		if (!img || !full) {
+			alert('Completează toate câmpurile!');
+			return;
+		}
+		newItem.img = img;
+		newItem.full = full;
+	}
 
-  if (editIndex > -1) {
-    currentItems[editIndex] = newItem;
-    editIndex = -1;
-  } else {
-    currentItems.push(newItem);
-  }
+	if (cat === 'free') {
+		const extra = document.getElementById('newFreeDesc').value.trim();
+		newItem.extra = extra;
+	}
 
-  displayItems();
-  clearInputs();
+	if (cat === 'tutorials') {
+		const youtube = document.getElementById('newYoutube').value.trim();
+		const desc = document.getElementById('newTutorialDesc').value.trim();
+		if (!youtube) {
+			alert('Completează YouTube ID!');
+			return;
+		}
+		newItem.youtube = youtube;
+		newItem.desc = desc;
+	}
+
+	if (cat === 'tools') {
+		const img = document.getElementById('newImg').value.trim();
+		const full = document.getElementById('newFull').value.trim();
+		const desc = document.getElementById('newDesc').value.trim();
+		const price = document.getElementById('newPrice').value.trim();
+		const discord = document.getElementById('newDiscord').value.trim();
+		if (!img || !full || !desc || !price || !discord) {
+			alert('Completează toate câmpurile!');
+			return;
+		}
+		newItem.img = img;
+		newItem.full = full;
+		newItem.desc = desc;
+		newItem.price = price;
+		newItem.discord = discord;
+	}
+
+	if (editIndex > -1) {
+		currentItems[editIndex] = newItem;
+		editIndex = -1;
+	} else {
+		currentItems.push(newItem);
+	}
+
+	displayItems();
+	clearInputs();
 }
 
 function editItem(index) {
-  const item = currentItems[index];
-  document.getElementById('newTitle').value = item.title || '';
-  document.getElementById('newImg').value = item.img || '';
-  document.getElementById('newFull').value = item.full || '';
-  document.getElementById('newYoutube').value = item.youtube || '';
-  document.getElementById('newTutorialDesc').value = item.desc || '';
-  document.getElementById('newDesc').value = item.desc || '';
-  document.getElementById('newPrice').value = item.price || '';
-  document.getElementById('newDiscord').value = item.discord || '';
-  document.getElementById('newFreeDesc').value = item.extra || '';
-  editIndex = index;
+	const item = currentItems[index];
+	document.getElementById('newTitle').value = item.title || '';
+	document.getElementById('newImg').value = item.img || '';
+	document.getElementById('newFull').value = item.full || '';
+	document.getElementById('newYoutube').value = item.youtube || '';
+	document.getElementById('newTutorialDesc').value = item.desc || '';
+	document.getElementById('newDesc').value = item.desc || '';
+	document.getElementById('newPrice').value = item.price || '';
+	document.getElementById('newDiscord').value = item.discord || '';
+	document.getElementById('newFreeDesc').value = item.extra || '';
+	editIndex = index;
 }
 
 function deleteItem(index) {
-  if (confirm('Sigur vrei să ștergi acest item?')) {
-    currentItems.splice(index, 1);
-    displayItems();
-  }
+	if (confirm('Sigur vrei să ștergi acest item?')) {
+		currentItems.splice(index, 1);
+		displayItems();
+	}
 }
 
 function saveData() {
-  if (!currentCategory) {
-    alert('Selectează și încarcă o categorie mai întâi!');
-    return;
-	showToast();
-  }
+	if (!currentCategory) {
+		alert('Selectează și încarcă o categorie mai întâi!');
+		return;
+		showToast();
+	}
 
-  const jsonStr = JSON.stringify(currentItems, null, 2);
-  const blob = new Blob([jsonStr], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
+	const jsonStr = JSON.stringify(currentItems, null, 2);
+	const blob = new Blob([jsonStr], {
+		type: "application/json"
+	});
+	const url = URL.createObjectURL(blob);
 
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${currentCategory}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = `${currentCategory}.json`;
+	a.click();
+	URL.revokeObjectURL(url);
 
-  alert(`Fișierul ${currentCategory}.json a fost descărcat! Urcă-l manual pe GitHub în folderul assets/data.`);
+	alert(`Fișierul ${currentCategory}.json a fost descărcat! Urcă-l manual pe GitHub în folderul assets/data.`);
 }
 
 function clearInputs() {
-  document.getElementById('newTitle').value = '';
-  document.getElementById('newImg').value = '';
-  document.getElementById('newFull').value = '';
-  document.getElementById('newYoutube').value = '';
-  document.getElementById('newTutorialDesc').value = '';
-  document.getElementById('newDesc').value = '';
-  document.getElementById('newPrice').value = '';
-  document.getElementById('newDiscord').value = '';
-  document.getElementById('newFreeDesc').value = '';
-  editIndex = -1;
+	document.getElementById('newTitle').value = '';
+	document.getElementById('newImg').value = '';
+	document.getElementById('newFull').value = '';
+	document.getElementById('newYoutube').value = '';
+	document.getElementById('newTutorialDesc').value = '';
+	document.getElementById('newDesc').value = '';
+	document.getElementById('newPrice').value = '';
+	document.getElementById('newDiscord').value = '';
+	document.getElementById('newFreeDesc').value = '';
+	editIndex = -1;
 }
 
 function showToast() {
-  const toast = document.getElementById('toast');
-  toast.classList.remove('hidden');
-  setTimeout(() => {
-    toast.classList.add('hidden');
-  }, 2000);
+	const toast = document.getElementById('toast');
+	toast.classList.remove('hidden');
+	setTimeout(() => {
+		toast.classList.add('hidden');
+	}, 2000);
 }

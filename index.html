@@ -1,57 +1,70 @@
 <!doctype html>
 <html lang=en>
   <head>
-	<meta charset=UTF-8>
-	<meta name=viewport content="width=device-width,initial-scale=1">
-	<title>Jawwad ART</title>
-	<meta name="description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
-	<meta name="theme-color" content="#000000">
-	<meta property="og:title" content="Jawwad ART - High Quality Assets">
-	<meta property="og:description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
-	<meta property="og:image" content="https://adelinjawwad.github.io/jawwad-demo/assets/img/site_preview.png">
-	<meta property="og:url" content="https://adelinjawwad.github.io/jawwad-demo/">
-	<meta property="og:type" content="website">
-	<link href="assets/css/style.min.css?v=1.1" rel=stylesheet>
-	<script src="https://cdn.tailwindcss.com" defer></script>
-	<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
-	<link rel="icon" type="image/png" href="assets/ico/favicon-96x96.png" sizes="96x96" />
-	<link rel="icon" type="image/svg+xml" href="assets/ico/favicon.svg" />
-	<link rel="shortcut icon" href="assets/ico/favicon.ico" />
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png" />
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>Jawwad ART</title>
+    <meta name="description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:title" content="Jawwad ART - High Quality Assets">
+    <meta property="og:description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
+    <meta property="og:image" content="https://adelinjawwad.github.io/jawwad-demo/assets/img/site_preview.png">
+    <meta property="og:url" content="https://adelinjawwad.github.io/jawwad-demo/">
+    <meta property="og:type" content="website">
+    <link href="assets/css/style.min.css?v=1.1" rel=stylesheet>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
+    <link rel="icon" type="image/png" href="assets/ico/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="assets/ico/favicon.svg" />
+    <link rel="shortcut icon" href="assets/ico/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class=min-h-screen>
-	<nav class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-50">
-	  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="flex items-center justify-between h-16">
-		  <div class="flex items-center">
-			<div class=flex-shrink-0><span class="text-2xl font-bold bg-grwadient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent" aria-label="Jawwad ART Logo">Jawwad ART</span></div>
-			<div class="hidden md:block">
-			  <div class="ml-10 flex items-baseline space-x-4"><a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadWelcome()"><i class="fa-solid fa-house"></i> Welcome</a>
-				<div class=dropdown><button class=dropbtn onclick=toggleDropdown()> Menu <i class="fa fa-chevron-down"></i></button>
-				  <div class=dropdown-content><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("costumes")'>Costumes</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("hairstyles")'>Hairstyles</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("weapons")'>Weapons</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("others")'>Others</a></div>
-				</div><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("tutorials")'><i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials </a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("tools")'><i class="fas fa-tools mr-2"></i> Tools </a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("free")'><i class="fas fa-gift mr-2"></i> Free Stuff</a><button onclick=copyDiscordTag() class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center"><i class="fab fa-discord mr-2"></i> Contact </button>
-			  </div>
-			</div>
-		  </div>
-		  <div class="-mr-2 flex md:hidden"><button type=button id=mobile-menu-button class="inline-flex items-center justify-center p-2 rounded-none text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"><svg class="h-6 w-6" xmlns=http://www.w3.org/2000/svg fill=none viewBox="0 0 24 24" stroke=currentColor>
-				<path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M4 6h16M4 12h16M4 18h16" />
-			  </svg></button></div>
-		</div>
-	  </div>
-	  <div class="md:hidden hidden" id=mobile-menu>
-		<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black bg-opacity-90"><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick='loadContent("costumes")'>Costumes</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick='loadContent("hairstyles")'>Hairstyles</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick='loadContent("weapons")'>Weapons</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick='loadContent("others")'>Others</a><a href=# class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick='loadContent("free")'>Free Stuff</a><a href="#" onclick="loadContent('tutorials')">Tutorials</a><br /><a href="#" onclick="loadContent('tools')">Tools</a><button onclick=copyDiscordTag() class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none flex items-center"><i class="fab fa-discord mr-2"></i> Contact </button></div>
-	  </div>
-	</nav>
-	<div id=toast class="fixed bottom-4 right-4 hidden">
-	  <div class="toast bg-green-600 text-white px-4 py-3 rounded-none shadow-lg flex items-center"><i class="fas fa-check-circle mr-2"></i><span id=toast-message>Copied to clipboard!</span></div>
-	</div>
-	<main class="pt-20 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-	  <div id="content-area"></div>
-	</main>
-	<div id=image-modal class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
-	  <div class="modal-content relative max-w-4xl w-full"><button onclick=closeModal() class="absolute -top-10 right-0 text-white hover:text-pink-300 text-2xl"><i class="fas fa-times"></i></button><img id=modal-image src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full size preview" loading="lazy" class="w-full max-h-[90vh] object-contain rounded-none"></div>
-	</div>
-	<script src="assets/js/app.min.js?v=1.1"></script>
+    <nav class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class=flex-shrink-0><span class="text-2xl font-bold bg-grwadient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent" aria-label="Jawwad ART Logo">Jawwad ART</span></div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-4"><a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadWelcome()"><i class="fa-solid fa-house"></i> Welcome</a>
+                <div class=dropdown><button class=dropbtn onclick=toggleDropdown()> Menu <i class="fa fa-chevron-down"></i></button>
+                  <div class=dropdown-content><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("costumes")'>Costumes</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("hairstyles")'>Hairstyles</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("weapons")'>Weapons</a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("others")'>Others</a></div>
+                </div><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("tutorials")'><i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials </a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("tools")'><i class="fas fa-tools mr-2"></i> Tools </a><a href=# class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick='loadContent("free")'><i class="fas fa-gift mr-2"></i> Free Stuff</a><button onclick=copyDiscordTag() class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center"><i class="fab fa-discord mr-2"></i> Contact </button>
+              </div>
+            </div>
+          </div>
+          <div class="-mr-2 flex md:hidden"><button type=button id=mobile-menu-button class="inline-flex items-center justify-center p-2 rounded-none text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"><svg class="h-6 w-6" xmlns=http://www.w3.org/2000/svg fill=none viewBox="0 0 24 24" stroke=currentColor>
+                <path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M4 6h16M4 12h16M4 18h16" />
+              </svg></button></div>
+        </div>
+      </div>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black bg-opacity-90">
+          <!-- Link-ul "Welcome" pe mobil -->
+          <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadWelcome()">
+            <i class="fa-solid fa-house"></i> Welcome </a>
+          <!-- Dropdown pentru "Menu" -->
+          <div class="dropdown">
+            <button class="dropbtn px-3 py-2 text-sm font-medium text-white hover:bg-gray-800 rounded-none" onclick="toggleDropdown()"> Menu <i class="fa fa-chevron-down"></i>
+            </button>
+            <div class="dropdown-content bg-black bg-opacity-90">
+              <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('costumes')">Costumes</a>
+              <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('hairstyles')">Hairstyles</a>
+              <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('weapons')">Weapons</a>
+              <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('others')">Others</a>
+            </div>
+          </div>
+          <!-- Alte linkuri -->
+          <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('tutorials')">Tutorials</a>
+          <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('tools')">Tools</a>
+          <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('free')">Free Stuff</a>
+          <!-- Buton de contact cu Discord -->
+          <button onclick="copyDiscordTag()" class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none flex items-center">
+            <i class="fab fa-discord mr-2"></i> Contact </button>
+        </div>
+      </div>
+    </nav><div id=toast class="fixed bottom-4 right-4 hidden"><div class="toast bg-green-600 text-white px-4 py-3 rounded-none shadow-lg flex items-center"><i class="fas fa-check-circle mr-2"></i><span id=toast-message>Copied to clipboard!</span></div></div><main class="pt-20 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"><div id="content-area"></div></main><div id=image-modal class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4"><div class="modal-content relative max-w-4xl w-full"><button onclick=closeModal() class="absolute -top-10 right-0 text-white hover:text-pink-300 text-2xl">
+          <i class="fas fa-times"></i></button><img id=modal-image src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full size preview" loading="lazy" class="w-full max-h-[90vh] object-contain rounded-none"></div></div><script src="assets/js/app.min.js?v=1.1"></script>
   </body>
 </html>
