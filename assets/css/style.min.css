@@ -63,10 +63,6 @@
         @keyframes fadeOut {
             to { opacity: 0; }
         }
-		
-img.object-cover {
-    object-fit: fill;
-}
 
 /* Stil pentru containerul dropdown */
 .dropdown {
@@ -82,7 +78,7 @@ img.object-cover {
   font-size: 16px;
   border: none;
   cursor: pointer;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center; /* Pentru a alinia textul și iconița pe aceeași linie */
 }
@@ -115,7 +111,7 @@ img.object-cover {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   transition: background-color 0.3s ease;
 }
 
