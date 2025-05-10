@@ -198,55 +198,77 @@ function renderContent(title, items, section) {
 }
 
 function renderItem(item, section) {
-	if (section === 'tools') {
-		return `
-	  <div class="bg-black bg-opacity-30 rounded-none p-6">
-		<div class="cursor-pointer mb-4" onclick="openModal('${item.full}')">
-		  <img src="${item.img}" alt="${item.title}" class="w-full h-64 object-cover rounded-none hover:opacity-80 transition">
-		</div>
-		<h3 class="text-2xl font-bold text-white mb-2">${item.title}</h3>
-		<p class="text-gray-300 mb-4">${item.desc}</p>
-		<div class="flex space-x-4">
-		  <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-none">Price: ${item.price}</div>
-		  <a href="${item.discord}" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-none hover:from-purple-600 hover:to-pink-700 transition">
-			<i class="fab fa-discord mr-2"></i> Contact
-		  </a>
-		</div>
-	  </div>`;
-	}
+  // Template pentru imagine + buton preview (îl folosim peste tot)
+  const imageWithPreviewButton = `
+    <div class="relative">
+      <img src="${item.img}" alt="${item.title}" class="w-full h-72 object-cover rounded-none">
+      <button onclick="openModal('${item.full}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
+        <i class="fas fa-expand"></i>
+      </button>
+    </div>
+  `;
 
-	if (section === 'free') {
-		return `
-	<div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-none shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openModal('${item.full}')">
-	  <img src="${item.img}" alt="${item.title}" class="w-full h-72 object-cover rounded-none">
-	  <div class="p-4">
-		<h3 class="text-lg font-medium text-white">${item.title}</h3>
-	  </div>
-	  ${item.download ? `
-		<div class="px-4 pb-4">
-		  <button class="w-full py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-none hover:from-green-600 hover:to-teal-700 transition">
-			<a href="${item.download}" download onclick="event.stopPropagation()">
-			  <i class="fas fa-download mr-2"></i> Download
-			</a>
-		  </button>
-		  ${item.extra ? `<p class="mt-2 text-white ">${item.extra}</p>` : ''}
-		</div>` : ''}
-	</div>`;
-	}
+// === TOOLS ===
+if (section === 'tools') {
+  return `
+    <div class="bg-black bg-opacity-30 rounded-none p-6">
 
-	if (section === 'tutorials') {
-		return `
-	  <div class="bg-black bg-opacity-30 rounded-none p-6">
-		<h3 class="text-xl font-bold text-white mb-4">${item.title}</h3>
-		<iframe class="w-full rounded-none" style="height: 400px;" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
-	  </div>`;
-	}
+      <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
 
-	return `
-	<div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-none shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 cursor-pointer" onclick="openModal('${item.full}')">
-	  <img src="${item.img}" alt="${item.title}" class="w-full h-72 object-cover rounded-none">
-	  <div class="p-4"><h3 class="text-lg font-medium text-white">${item.title}</h3></div>
-	</div>`;
+      <div class="mb-4">
+        ${imageWithPreviewButton}
+      </div>
+
+      <p class="text-gray-300 mb-4">${item.desc}</p>
+
+      <div class="flex space-x-4">
+        <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-none">
+          Price: ${item.price}
+        </div>
+        <a href="${item.discord}" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-none hover:from-purple-600 hover:to-pink-700 transition">
+          <i class="fab fa-discord mr-2"></i> Contact
+        </a>
+      </div>
+
+    </div>
+  `;
+}
+
+
+  // === FREE ===
+  if (section === 'free') {
+    return `
+      <div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-none shadow-lg overflow-hidden transition duration-300">
+        ${imageWithPreviewButton}
+        <div class="p-4"><h3 class="text-lg font-medium text-white">${item.title}</h3></div>
+        ${item.download ? `
+          <div class="px-4 pb-4">
+            <a href="${item.download}" download class="block w-full py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white text-center rounded-none hover:from-green-600 hover:to-teal-700 transition">
+              <i class="fas fa-download mr-2"></i> Download
+            </a>
+            ${item.extra ? `<p class="mt-2 text-white">${item.extra}</p>` : ''}
+          </div>` : ''}
+      </div>
+    `;
+  }
+
+  // === TUTORIALS ===
+  if (section === 'tutorials') {
+    return `
+      <div class="bg-black bg-opacity-30 rounded-none p-6">
+        <h3 class="text-xl font-bold text-white mb-4">${item.title}</h3>
+        <iframe class="w-full rounded-none" style="height: 400px;" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    `;
+  }
+
+  // === DEFAULT (costumes, weapons, hairstyles, others) ===
+  return `
+    <div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-none shadow-lg overflow-hidden transition duration-300">
+      ${imageWithPreviewButton}
+      <div class="p-4"><h3 class="text-lg font-medium text-white">${item.title}</h3></div>
+    </div>
+  `;
 }
 
 function animateContent() {
