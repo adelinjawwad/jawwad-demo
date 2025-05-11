@@ -1,0 +1,21 @@
+/* Tot ce e img / button să nu mai aibă colțuri rotunde */
+#itemsContainer img,
+#itemsContainer button,
+#itemsContainer div {
+  border-radius: 0 !important;
+}
+
+#itemsContainer img {
+  width: 100%;
+  height: 288px; /* echivalent cu h-72 din Tailwind (18rem = 288px) */
+  object-fit: cover;
+}
+
+#itemsContainer > div {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+#itemsContainer > div:hover {
+  transform: scale(1.05);
+}
