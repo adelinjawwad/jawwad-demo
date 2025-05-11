@@ -155,35 +155,3 @@ html {
 	visibility: visible;
 	transform: translateY(0);
 }
-
-/* Admin panel card styling */
-.admin-card {
-  background: linear-gradient(135deg, #1a0b2e 0%, #4a1b6d 30%, #8a2c7e 60%, #e83a6d 100%);
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  padding: 16px;
-}
-
-.admin-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-}
-
-.admin-card h3 {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.admin-card small {
-  font-size: 0.85rem;
-  color: #ddd;
-  word-break: break-all;
-}
-
-.admin-card img {
-  border-radius: 8px;
-  margin-bottom: 8px;
-}

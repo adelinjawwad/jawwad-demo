@@ -10,20 +10,20 @@
 		<!-- 🔒 Login Screen -->
 		<div id="loginScreen" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50">
 			<h2 class="text-2xl mb-4 font-bold">Admin Login</h2>
-			<input type="password" id="adminPassword" placeholder="Enter password" class="p-2 bg-gray-800 text-white mb-4">
-			<button onclick="checkPassword()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2">Login</button>
+			<input type="password" id="adminPassword" placeholder="Enter password" class="p-2 rounded bg-gray-800 text-white mb-4">
+			<button onclick="checkPassword()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded">Login</button>
 			<p id="loginError" class="text-red-400 mt-2 hidden">Incorrect password!</p>
 		</div>
 		<!-- 🛠️ Admin Topbar -->
-		<div id="adminTopbar" class="hidden mb-6 flex justify-between items-center bg-gray-800 p-3 shadow">
+		<div id="adminTopbar" class="hidden mb-6 flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow">
 			<span class="text-green-400">
 				<i class="fas fa-user-shield mr-2"></i>Logged in as Admin </span>
-			<button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-1 flex items-center">
+			<button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded flex items-center">
 				<i class="fas fa-sign-out-alt mr-1"></i> Logout </button>
 		</div>
 		<h1 class="text-3xl font-bold mb-6">Admin Panel</h1>
 		<label class="block mb-2">Select Category:</label>
-		<select id="categorySelect" onchange="showRelevantFields()" class="bg-gray-800 text-white p-2 mb-4">
+		<select id="categorySelect" onchange="showRelevantFields()" class="bg-gray-800 text-white p-2 rounded mb-4">
 			<option value="">-- Select --</option>
 			<option value="costumes">Costumes</option>
 			<option value="hairstyles">Hairstyles</option>
@@ -33,49 +33,40 @@
 			<option value="tutorials">Tutorials</option>
 			<option value="tools">Tools</option>
 		</select>
-<<<<<<< HEAD
-<<<<<<< HEAD
-		<div class="searchbar"><input type="text" id="searchInput" placeholder="Search..." class="bg-gray-900 text-white p-2 w-full mt-2"></div>
-		<br />
-=======
->>>>>>> parent of 3e5a4f0 (lil bro)
-=======
-		<input type="text" id="searchInput" placeholder="Search..." class="bg-gray-900 text-white p-2 w-full mt-2">
->>>>>>> parent of e1496df (finalkkt)
-		<button onclick="loadItems()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 mb-6">Load Items</button>
+		<button onclick="loadItems()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded mb-6">Load Items</button>
 		<div id="itemsContainer" class="space-y-4"></div>
 		<p id="itemsCount" class="text-gray-400 mt-2"></p>
 		<hr class="my-6 border-gray-600">
 		<h2 class="text-2xl font-semibold mb-4">Add / Edit Item</h2>
-		<input id="newTitle" placeholder="Title" class="w-full mb-2 p-2 bg-gray-800 text-white">
+		<input id="newTitle" placeholder="Title" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
 		<!-- Shared fields -->
 		<!-- Extra desc for Free stuff -->
 		<div id="freeFields" class="hidden">
-			<textarea id="newFreeDesc" placeholder="Description / Password / Preview link (pentru free)" class="w-full mb-2 p-2 bg-gray-800 text-white"></textarea>
+			<textarea id="newFreeDesc" placeholder="Description / Password / Preview link (pentru free)" class="w-full mb-2 p-2 rounded bg-gray-800 text-white"></textarea>
 		</div>
 		<div id="sharedFields" class="hidden">
-			<input id="newImg" placeholder="Image URL" class="w-full mb-2 p-2 bg-gray-800 text-white">
-			<input id="newFull" placeholder="Full Image URL" class="w-full mb-2 p-2 bg-gray-800 text-white">
+			<input id="newImg" placeholder="Image URL" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
+			<input id="newFull" placeholder="Full Image URL" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
 		</div>
 		<!-- Tutorials fields -->
 		<div id="tutorialFields" class="hidden">
-			<input id="newYoutube" placeholder="YouTube Video ID" class="w-full mb-2 p-2 bg-gray-800 text-white">
-			<textarea id="newTutorialDesc" placeholder="Description / Password (optional)" class="w-full mb-2 p-2 bg-gray-800 text-white"></textarea>
+			<input id="newYoutube" placeholder="YouTube Video ID" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
+			<textarea id="newTutorialDesc" placeholder="Description / Password (optional)" class="w-full mb-2 p-2 rounded bg-gray-800 text-white"></textarea>
 		</div>
 		<!-- Tools fields -->
 		<div id="toolsFields" class="hidden">
-			<textarea id="newDesc" placeholder="Description" class="w-full mb-2 p-2 bg-gray-800 text-white"></textarea>
-			<input id="newPrice" placeholder="Price" class="w-full mb-2 p-2 bg-gray-800 text-white">
-			<input id="newDiscord" placeholder="Discord Contact Link" class="w-full mb-2 p-2 bg-gray-800 text-white">
+			<textarea id="newDesc" placeholder="Description" class="w-full mb-2 p-2 rounded bg-gray-800 text-white"></textarea>
+			<input id="newPrice" placeholder="Price" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
+			<input id="newDiscord" placeholder="Discord Contact Link" class="w-full mb-2 p-2 rounded bg-gray-800 text-white">
 		</div>
 		<div class="flex space-x-2">
-			<button onclick="addItem()" class="bg-green-600 hover:bg-green-700 px-4 py-2 mt-2">Add Item</button>
-			<button onclick="clearInputs()" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 mt-2">Clear</button>
+			<button onclick="addItem()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded mt-2">Add Item</button>
+			<button onclick="clearInputs()" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded mt-2">Clear</button>
 		</div>
 		<hr class="my-6 border-gray-600">
-		<button onclick="saveData()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 mt-6">💾 Save and Download JSON</button>
+		<button onclick="saveData()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded mt-6">💾 Save and Download JSON</button>
 		<script src="assets/js/admin.min.js?v=1.1"></script>
 		<!-- Toast notification -->
-		<div id="toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 shadow hidden z-50"> Saved successfully! </div>
+		<div id="toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow hidden z-50"> Saved successfully! </div>
 	</body>
 </html>
