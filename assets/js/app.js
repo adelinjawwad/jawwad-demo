@@ -201,8 +201,8 @@ function renderItem(item, section) {
   // Template pentru imagine + buton preview (îl folosim peste tot)
   const imageWithPreviewButton = `
     <div class="relative">
-      <img src="${item.img}" alt="${item.title}" class="w-full h-72 object-cover rounded-none">
-      <button onclick="openModal('${item.full}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
+      <img src="${item.img}" alt="${item.title}" class="w-full h-72 object-cover rounded-none transition duration-300 hover:brightness-110">
+	  <button onclick="openModal('${item.full}')" class="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition duration-200" title="Preview image">
         <i class="fas fa-expand"></i>
       </button>
     </div>
@@ -238,9 +238,9 @@ if (section === 'tools') {
   // === FREE ===
   if (section === 'free') {
     return `
-      <div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-none shadow-lg overflow-hidden transition duration-300">
+      <div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-md overflow-hidden transform hover:scale-[1.02] hover:shadow-2xl transition duration-300">
         ${imageWithPreviewButton}
-        <div class="p-4"><h3 class="text-lg font-medium text-white">${item.title}</h3></div>
+        <div class="p-4"><h3 class="text-xl font-semibold text-white tracking-wide mb-2">${item.title}</h3></div>
         ${item.download ? `
           <div class="px-4 pb-4">
             <a href="${item.download}" download class="block w-full py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white text-center rounded-none hover:from-green-600 hover:to-teal-700 transition">
@@ -264,9 +264,9 @@ if (section === 'tools') {
 
   // === DEFAULT (costumes, weapons, hairstyles, others) ===
   return `
-    <div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-none shadow-lg overflow-hidden transition duration-300">
+    <div class="gallery-item bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-md overflow-hidden transform hover:scale-[1.02] hover:shadow-2xl transition duration-300">
       ${imageWithPreviewButton}
-      <div class="p-4"><h3 class="text-lg font-medium text-white">${item.title}</h3></div>
+      <div class="p-4"><h3 class="text-xl font-semibold text-white tracking-wide mb-2">${item.title}</h3></div>
     </div>
   `;
 }
@@ -274,6 +274,7 @@ if (section === 'tools') {
 function animateContent() {
 	const contentArea = document.getElementById('content-area');
 	contentArea.classList.remove('opacity-0');
+	contentArea.classList.add('opacity-100');
 }
 
 // ===== WELCOME PAGE =====
