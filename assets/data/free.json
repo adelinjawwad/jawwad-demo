@@ -10,14 +10,15 @@
     "img": "assets/img/dynasty_weapons.jpg",
     "full": "assets/img/dynasty_weapons.jpg",
     "download": "assets/downloads/dynasty_weapons.rar",
-    "extra": "Password: jawwad@wk"
+    "extra": "jawwad@wk"
   },
   {
     "title": "Silver Hunter",
     "img": "assets/img/silver_hunter_weapons.jpg",
     "full": "assets/img/silver_hunter_weapons.jpg",
     "download": "assets/downloads/silver_hunter_weapons.rar",
-    "extra": "<a href='https://vimeo.com/534330489' target='_blank'>In game preview here</a>"
+    "preview": "https://vimeo.com/534330489",
+    "extra": ""
   },
   {
     "title": "God Awakening",
@@ -30,11 +31,5 @@
     "img": "assets/img/dark_crystal_weapons.jpg",
     "full": "assets/img/dark_crystal_weapons.jpg",
     "download": "assets/downloads/dark_crystal_weapons.rar"
-  },
-  {
-    "title": "More soon",
-    "img": "assets/img/jawwad_mini.jpg",
-    "full": "assets/img/jawwad.jpg",
-    "download": ""
   }
 ]

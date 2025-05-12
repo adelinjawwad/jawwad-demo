@@ -155,3 +155,21 @@ html {
 	visibility: visible;
 	transform: translateY(0);
 }
+
+aside a.active {
+  background-color: #ec4899 !important; /* pink-500 */
+  color: white !important;
+}
+
+.asset-card-media {
+  width: 100%;
+  height: 320px; /* Poți ajusta aici cât vrei să fie de mare toate */
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.asset-card-iframe {
+  width: 100%;
+  height: 320px;
+  border-radius: 0;
+}
