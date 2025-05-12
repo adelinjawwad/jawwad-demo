@@ -3,8 +3,16 @@
     "title": "MDE Path Changer",
     "img": "assets/img/mde_path_changer.png",
     "full": "assets/img/mde_path_changer.png",
-    "desc": "The ultimate tool for managing your .MDE file paths with ease and precision. With MDE Path Changer, you can seamlessly modify the paths for your .MDE files in seconds. Whether you need to adjust paths for multiple locations at once or set a single, unified path, this tool streamlines the process, making your workflow faster and more efficient.Designed with simplicity and user control in mind, MDE Path Changer comes with a license restriction to prevent unauthorized resale, ensuring that it remains a valuable asset to each user.",
+    "desc": "Easily manage and edit .MDE file paths in seconds. Whether updating multiple paths or setting a single location, this tool speeds up your workflow. Designed for simplicity and control, it includes license protection against unauthorized resale.",
     "price": "50€",
+    "discord": "https://discord.gg/BBX8vfN4gQ"
+  },
+  {
+    "title": "Granny 2.9 Mesh Removal Tool",
+    "img": "assets/img/premium_mesh_remover.png",
+    "full": "assets/img/premium_mesh_remover.png",
+    "desc": "A lightweight utility designed to delete unwanted meshes from Granny 2.9 .gr2 files. It allows users to select and remove meshes easily while preserving file integrity and game compatibility. Ideal for cleaning or optimizing models.",
+    "price": "40€",
     "discord": "https://discord.gg/BBX8vfN4gQ"
   }
 ]
