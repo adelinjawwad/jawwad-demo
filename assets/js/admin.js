@@ -45,7 +45,7 @@ function showRelevantFields() {
 function loadItems() {
 	currentCategory = document.getElementById('categorySelect').value;
 	if (!currentCategory) {
-		showToast('Selectează o categorie mai întâi!');
+		showToast('Selectează o categorie mai întâi!', 'error');
 		return;
 	}
 	fetch(`assets/data/${currentCategory}.json`)
@@ -129,7 +129,7 @@ function addItem() {
 	const title = document.getElementById('newTitle').value.trim();
 	const cat = currentCategory;
 	if (!title || !cat) {
-		showToast('Completează titlul și selectează categoria!');
+		showToast('Completează titlul și selectează categoria!', 'error');
 		return;
 	}
 
@@ -148,7 +148,7 @@ function addItem() {
 		}
 
 		if (!img || !full) {
-			showToast('Completează toate câmpurile!');
+			showToast('Completează toate câmpurile!', 'error');
 			return;
 		}
 		newItem.img = img;
@@ -164,7 +164,7 @@ function addItem() {
 		const youtube = document.getElementById('newYoutube').value.trim();
 		const desc = document.getElementById('newTutorialDesc').value.trim();
 		if (!youtube) {
-			showToast('Completează YouTube ID!');
+			showToast('Completează YouTube ID!', 'error');
 			return;
 		}
 		newItem.youtube = youtube;
@@ -178,7 +178,7 @@ function addItem() {
 		const price = document.getElementById('newPrice').value.trim();
 		const discord = document.getElementById('newDiscord').value.trim();
 		if (!img || !full || !desc || !price || !discord) {
-			showToast('Completează toate câmpurile!');
+			showToast('Completează toate câmpurile!', 'error');
 			return;
 		}
 		newItem.img = img;
@@ -254,7 +254,7 @@ function saveData() {
 	a.click();
 	URL.revokeObjectURL(url);
 
-	showToast(`Fișierul ${currentCategory}.json a fost descărcat! Urcă-l manual pe GitHub în folderul assets/data.`, 'success');
+	showToast(`Fișierul ${currentCategory}.json a fost descărcat!`, 'success');
 }
 
 function clearInputs() {
