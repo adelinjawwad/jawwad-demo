@@ -224,7 +224,7 @@ function showToast() {
 	}, 2000);
 }
 
-fetch('assets/data/downloads.json')
+fetch('assets/downloads/downloads.json')
   .then(res => res.json())
   .then(files => {
     const list = document.getElementById('downloads-list');
