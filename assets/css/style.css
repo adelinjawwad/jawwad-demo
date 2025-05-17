@@ -217,3 +217,7 @@ aside a.active {
 .animate-fade-in-delay-2 {
   animation: fade-in 1.8s ease-in forwards;
 }
+
+#table-wrapper.open {
+  max-height: 999px;
+}
