@@ -223,3 +223,19 @@ function showToast() {
 		toast.classList.add('hidden');
 	}, 2000);
 }
+
+fetch('assets/data/downloads.json')
+  .then(res => res.json())
+  .then(files => {
+    const list = document.getElementById('downloads-list');
+    files.forEach(name => {
+      const url = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${name}`;
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <a href="${url}" download class="text-blue-400 hover:underline">
+          ${name}
+        </a>
+      `;
+      list.appendChild(li);
+    });
+  });

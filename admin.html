@@ -21,6 +21,16 @@
 			<button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded flex items-center">
 				<i class="fas fa-sign-out-alt mr-1"></i> Logout </button>
 		</div>
+		<table id="downloads-table" class="w-full text-sm text-left text-white border border-gray-700 rounded-md overflow-hidden">
+  <thead class="bg-gray-800 text-gray-300 uppercase text-xs">
+    <tr>
+      <th class="px-4 py-3 border-b border-gray-700">Fișier</th>
+      <th class="px-4 py-3 border-b border-gray-700">Acțiuni</th>
+    </tr>
+  </thead>
+  <tbody id="downloads-list" class="divide-y divide-gray-700 bg-gray-900"></tbody>
+</table>
+
 		<h1 class="text-3xl font-bold mb-6">Admin Panel</h1>
 		<label class="block mb-2">Select Category:</label>
 		<select id="categorySelect" onchange="showRelevantFields()" class="bg-gray-800 text-white p-2 rounded mb-4">
