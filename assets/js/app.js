@@ -381,3 +381,17 @@ function renderAboutMePage() {
     animateContent();
   }, 300);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const expanded = mobileMenu.getAttribute('aria-expanded') === 'true';
+      mobileMenu.setAttribute('aria-expanded', !expanded);
+    });
+  }
+});
+
