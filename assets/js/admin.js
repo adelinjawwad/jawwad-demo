@@ -45,7 +45,7 @@ function showRelevantFields() {
 function loadItems() {
 	currentCategory = document.getElementById('categorySelect').value;
 	if (!currentCategory) {
-		alert('Selectează o categorie mai întâi!');
+		showToast('Selectează o categorie mai întâi!');
 		return;
 	}
 	fetch(`assets/data/${currentCategory}.json`)
@@ -56,41 +56,80 @@ function loadItems() {
 		});
 }
 
+function getYoutubeId(url) {
+  const regExp = /^.*(youtu\.be\/|v=|\/embed\/|watch\?v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
 function displayItems() {
-	const container = document.getElementById('itemsContainer');
-	container.innerHTML = '';
-	currentItems.forEach((item, index) => {
-		container.innerHTML += `
-      <div class="bg-gray-800 p-4 rounded flex justify-between items-center">
-        <div>
-<strong>${item.title}</strong><br>
-<small class="text-sm text-gray-400">
-  ${item.img ? `<img src="${item.img}" class="w-24 h-16 object-cover rounded mt-2 mb-2"><br>${item.img}<br>` : ''}
-            ${item.youtube ? ' (YouTube: ' + item.youtube + ')' : ''}<br>
+  const container = document.getElementById('itemsContainer');
+  container.innerHTML = '';
+  currentItems.forEach((item, index) => {
+    container.innerHTML += `
+      <div style="
+        background-color: #2d3748;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      ">
+        <div style="max-width: 100%;">
+          <strong style="font-size: 1.25rem; color: #edf2f7;">${item.title}</strong><br>
+          ${item.img ? `<img src="${item.img}" style="width: 100%; max-height: 250px; object-fit: cover; margin: 0.75rem 0;">` : ''}
+          <small style="font-size: 0.875rem; color: #a0aec0; line-height: 1.4;">
+${item.youtube ? `
+  <img src="https://img.youtube.com/vi/${item.youtube}/hqdefault.jpg" style="width: 100%; max-height: 200px; object-fit: cover; margin: 0.75rem 0; border-radius: 0.25rem;">
+  <br><a href="https://www.youtube.com/watch?v=${item.youtube}" target="_blank" style="color: #63b3ed; text-decoration: underline;">Vezi pe YouTube</a><br>
+` : ''}
             ${item.desc ? item.desc + '<br>' : ''}
-			${item.extra ? item.extra : ''}
+            ${item.extra ? item.extra : ''}
           </small>
         </div>
-        <div class="flex space-x-2">
-          <button onclick="editItem(${index})" class="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded flex items-center">
-            <i class="fas fa-edit mr-1"></i> Edit
+        <div style="display: flex; gap: 1rem; margin-top: 0.75rem;">
+          <button onclick="editItem(${index})" style="
+            background-color: #ecc94b;
+            color: #1a202c;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: background-color 0.3s ease;
+          "
+          onmouseover="this.style.backgroundColor='#d69e2e'"
+          onmouseout="this.style.backgroundColor='#ecc94b'">
+            <i class="fas fa-edit"></i> Edit
           </button>
-          <button onclick="deleteItem(${index})" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded flex items-center">
-            <i class="fas fa-trash mr-1"></i> Delete
+          <button onclick="deleteItem(${index})" style="
+            background-color: #e53e3e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: background-color 0.3s ease;
+          "
+          onmouseover="this.style.backgroundColor='#9b2c2c'"
+          onmouseout="this.style.backgroundColor='#e53e3e'">
+            <i class="fas fa-trash"></i> Delete
           </button>
         </div>
       </div>
     `;
-	});
-	document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
+  });
+  document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
 }
-
 
 function addItem() {
 	const title = document.getElementById('newTitle').value.trim();
 	const cat = currentCategory;
 	if (!title || !cat) {
-		alert('Completează titlul și selectează categoria!');
+		showToast('Completează titlul și selectează categoria!');
 		return;
 	}
 
@@ -109,7 +148,7 @@ function addItem() {
 		}
 
 		if (!img || !full) {
-			alert('Completează toate câmpurile!');
+			showToast('Completează toate câmpurile!');
 			return;
 		}
 		newItem.img = img;
@@ -125,7 +164,7 @@ function addItem() {
 		const youtube = document.getElementById('newYoutube').value.trim();
 		const desc = document.getElementById('newTutorialDesc').value.trim();
 		if (!youtube) {
-			alert('Completează YouTube ID!');
+			showToast('Completează YouTube ID!');
 			return;
 		}
 		newItem.youtube = youtube;
@@ -139,7 +178,7 @@ function addItem() {
 		const price = document.getElementById('newPrice').value.trim();
 		const discord = document.getElementById('newDiscord').value.trim();
 		if (!img || !full || !desc || !price || !discord) {
-			alert('Completează toate câmpurile!');
+			showToast('Completează toate câmpurile!');
 			return;
 		}
 		newItem.img = img;
@@ -181,11 +220,26 @@ function deleteItem(index) {
 	}
 }
 
+function showToast(message, type = 'success') {
+	const toast = document.getElementById('toast');
+	toast.textContent = message;
+	toast.classList.remove('hidden', 'bg-green-600', 'bg-red-600');
+
+	if (type === 'success') {
+		toast.classList.add('bg-green-600');
+	} else if (type === 'error') {
+		toast.classList.add('bg-red-600');
+	}
+
+	setTimeout(() => {
+		toast.classList.add('hidden');
+	}, 3000);
+}
+
 function saveData() {
 	if (!currentCategory) {
-		alert('Selectează și încarcă o categorie mai întâi!');
+		showToast('Selectează și încarcă o categorie mai întâi!', 'error');
 		return;
-		showToast();
 	}
 
 	const jsonStr = JSON.stringify(currentItems, null, 2);
@@ -200,7 +254,7 @@ function saveData() {
 	a.click();
 	URL.revokeObjectURL(url);
 
-	alert(`Fișierul ${currentCategory}.json a fost descărcat! Urcă-l manual pe GitHub în folderul assets/data.`);
+	showToast(`Fișierul ${currentCategory}.json a fost descărcat! Urcă-l manual pe GitHub în folderul assets/data.`, 'success');
 }
 
 function clearInputs() {
@@ -216,26 +270,55 @@ function clearInputs() {
 	editIndex = -1;
 }
 
-function showToast() {
-	const toast = document.getElementById('toast');
-	toast.classList.remove('hidden');
-	setTimeout(() => {
-		toast.classList.add('hidden');
-	}, 2000);
-}
+const toggleBtn = document.getElementById('toggle-table-btn');
+const tableWrapper = document.getElementById('table-wrapper');
+const downloadsList = document.getElementById('downloads-list');
 
+// Funcție pentru toggling
+toggleBtn.addEventListener('click', () => {
+  const isOpen = tableWrapper.classList.contains('open');
+
+  if (isOpen) {
+    tableWrapper.classList.remove('open');
+    tableWrapper.style.maxHeight = '0px';
+    toggleBtn.innerText = '📁 Afișează fișiere';
+  } else {
+    tableWrapper.classList.add('open');
+    tableWrapper.style.maxHeight = tableWrapper.scrollHeight + 'px';
+    toggleBtn.innerText = '📂 Ascunde fișiere';
+  }
+});
+
+// Fetch + populare tabel + copiere link
 fetch('assets/downloads/downloads.json')
   .then(res => res.json())
   .then(files => {
-    const list = document.getElementById('downloads-list');
     files.forEach(name => {
-      const url = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${name}`;
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <a href="${url}" download class="text-blue-400 hover:underline">
-          ${name}
-        </a>
+      const fullUrl = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${name}`;
+      const shortUrl = `https://adelinjawwad.github.io/jawwad-demo/short.html?file=${encodeURIComponent(name)}`;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="px-4 py-3">
+          <a href="${fullUrl}" download class="text-blue-400 hover:underline">${name}</a>
+        </td>
+        <td class="px-4 py-3">
+          <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-xs" data-url="${shortUrl}">
+            Copy link
+          </button>
+        </td>
       `;
-      list.appendChild(li);
+      downloadsList.appendChild(tr);
+    });
+
+    // Adaugă event listeners pentru butoanele de copiere
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const link = btn.getAttribute('data-url');
+        navigator.clipboard.writeText(link).then(() => {
+          btn.innerText = 'Copied!';
+          setTimeout(() => btn.innerText = 'Copy link', 2000);
+        });
+      });
     });
   });
