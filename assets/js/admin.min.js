@@ -262,6 +262,7 @@ function clearInputs() {
 	document.getElementById('newPrice').value = '';
 	document.getElementById('newDiscord').value = '';
 	document.getElementById('newFreeDesc').value = '';
+	document.getElementById('newDownload').value = '';
 	editIndex = -1;
 }
 
