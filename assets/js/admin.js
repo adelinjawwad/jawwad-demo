@@ -67,57 +67,31 @@ function displayItems() {
 	container.innerHTML = '';
 	currentItems.forEach((item, index) => {
 		container.innerHTML += `
-      <div style="
-        background-color: #2d3748;
-        padding: 1.25rem;
-        margin-bottom: 1rem;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      ">
-        <div style="max-width: 100%;">
-          <strong style="font-size: 1.25rem; color: #edf2f7;">${item.title}</strong><br>
+      <div class="item-card">
+        <div class="item-card-content">
+          <strong>${item.title}</strong><br>
           ${item.img ? `<img src="${item.img}" style="width: 100%; max-height: 250px; object-fit: cover; margin: 0.75rem 0;">` : ''}
-          <small style="font-size: 0.875rem; color: #a0aec0; line-height: 1.4;">
-${item.youtube ? `
-  <img src="https://img.youtube.com/vi/${item.youtube}/hqdefault.jpg" style="width: 100%; max-height: 200px; object-fit: cover; margin: 0.75rem 0; border-radius: 0.25rem;">
-  <br><a href="https://www.youtube.com/watch?v=${item.youtube}" target="_blank" style="color: #63b3ed; text-decoration: underline;">Vezi pe YouTube</a><br>
-` : ''}
+          <small>
+            ${item.youtube ? `
+              <img src="https://img.youtube.com/vi/${item.youtube}/hqdefault.jpg" class="youtube-thumb" />
+              <br><a href="https://www.youtube.com/watch?v=${item.youtube}" target="_blank" style="color: #63b3ed; text-decoration: underline;">Vezi pe YouTube</a><br>
+            ` : ''}
             ${item.desc ? item.desc + '<br>' : ''}
-            ${item.extra ? item.extra : ''}
+            ${item.extra ? `
+              <button class="btn-extra">Parola: ${item.extra}</button>
+            ` : ''}
           </small>
         </div>
-        <div style="display: flex; gap: 1rem; margin-top: 0.75rem;">
-          <button onclick="editItem(${index})" style="
-            background-color: #ecc94b;
-            color: #1a202c;
-            padding: 0.5rem 1rem;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: background-color 0.3s ease;
-          "
-          onmouseover="this.style.backgroundColor='#d69e2e'"
-          onmouseout="this.style.backgroundColor='#ecc94b'">
+        <div class="item-actions">
+          <button onclick="editItem(${index})" class="btn-edit">
             <i class="fas fa-edit"></i> Edit
           </button>
-          <button onclick="deleteItem(${index})" style="
-            background-color: #e53e3e;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: background-color 0.3s ease;
-          "
-          onmouseover="this.style.backgroundColor='#9b2c2c'"
-          onmouseout="this.style.backgroundColor='#e53e3e'">
+          <button onclick="deleteItem(${index})" class="btn-delete">
             <i class="fas fa-trash"></i> Delete
           </button>
+          <a href="${item.download}" target="_blank" class="btn-download">
+            <i class="fas fa-download"></i> Download
+          </a>
         </div>
       </div>
     `;
@@ -141,6 +115,7 @@ function addItem() {
 	if (['costumes', 'hairstyles', 'weapons', 'others', 'free', 'tools'].includes(cat)) {
 		const img = document.getElementById('newImg').value.trim();
 		const full = document.getElementById('newFull').value.trim();
+		newItem.download = document.getElementById('newDownload').value.trim();
 		newItem.img = img;
 		newItem.full = full;
 
@@ -205,8 +180,8 @@ function editItem(index) {
 	document.getElementById('newDesc').value = item.desc || '';
 	document.getElementById('newPrice').value = item.price || '';
 	document.getElementById('newPreview').value = item.preview || '';
-	document.getElementById('newDiscord').value = item.discord || '';
 	document.getElementById('newFreeDesc').value = item.extra || '';
+	document.getElementById('newDownload').value = item.download || '';
 	editIndex = index;
 }
 
@@ -272,7 +247,6 @@ function clearInputs() {
 	document.getElementById('newTutorialDesc').value = '';
 	document.getElementById('newDesc').value = '';
 	document.getElementById('newPrice').value = '';
-	document.getElementById('newDiscord').value = '';
 	document.getElementById('newFreeDesc').value = '';
 	document.getElementById('newDownload').value = '';
 	editIndex = -1;

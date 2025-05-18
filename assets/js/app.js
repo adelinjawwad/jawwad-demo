@@ -405,15 +405,14 @@ function renderAboutMePage() {
 	}, 300);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-	const mobileMenuButton = document.getElementById('mobile-menu-button');
-	const mobileMenu = document.getElementById('mobile-menu');
+document.addEventListener("DOMContentLoaded", function () {
+  const menuBtn = document.querySelector(".menu-btn");
+  const navbarMenu = document.querySelector(".navbar-menu");
 
-	if (mobileMenuButton && mobileMenu) {
-		mobileMenuButton.addEventListener('click', () => {
-			mobileMenu.classList.toggle('hidden');
-			const expanded = mobileMenu.getAttribute('aria-expanded') === 'true';
-			mobileMenu.setAttribute('aria-expanded', !expanded);
-		});
-	}
+  if (menuBtn && navbarMenu) {
+    menuBtn.addEventListener("click", () => {
+      navbarMenu.classList.toggle("active");
+      menuBtn.classList.toggle("active");
+    });
+  }
 });
