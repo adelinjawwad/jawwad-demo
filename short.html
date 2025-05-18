@@ -2,43 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Download</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Preparing Download</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background: #0f0f0f;
-      color: white;
+      background: radial-gradient(circle at top left, #1a1a1a, #0f0f0f);
+      color: #f0f0f0;
       font-family: 'Poppins', sans-serif;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
       text-align: center;
+      background: #1c1c1c;
+      padding: 2rem;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
     }
 
     .loader {
-      width: 80px;
-      height: 8px;
-      background: #333;
-      border-radius: 4px;
-      overflow: hidden;
       position: relative;
-      margin-bottom: 24px;
+      width: 100%;
+      height: 12px;
+      border-radius: 8px;
+      background: #2f2f2f;
+      overflow: hidden;
+      margin: 2rem 0;
     }
 
     .loader::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -40%;
-      width: 40%;
       height: 100%;
-      background: #4ade80;
-      border-radius: 4px;
-      animation: slide 1.5s infinite linear;
+      width: 40%;
+      background: linear-gradient(to right, #4ade80, #22c55e);
+      border-radius: 8px;
+      animation: slide 1.5s infinite;
     }
 
     @keyframes slide {
@@ -47,23 +59,31 @@
     }
 
     .message {
-      font-size: 1.25rem;
-      color: #ccc;
-      margin-bottom: 12px;
+      font-size: 1rem;
+      color: #aaa;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
     }
 
     .countdown {
       font-size: 3rem;
       font-weight: 600;
       color: #4ade80;
-      margin-bottom: 40px;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.6; }
     }
 
     .complete-message {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 500;
       color: #4ade80;
     }
 
@@ -76,12 +96,28 @@
       stroke-linejoin: round;
       fill: none;
     }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      .countdown {
+        font-size: 2.5rem;
+      }
+
+      .complete-message {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div id="loader" class="loader"></div>
-  <div id="message" class="message">Your download will start in</div>
-  <div id="countdown" class="countdown">3</div>
+  <div class="container">
+    <div id="loader" class="loader"></div>
+    <div id="message" class="message">Preparing your download. Starting in</div>
+    <div id="countdown" class="countdown">3</div>
+  </div>
 
   <script>
     const fileName = new URLSearchParams(window.location.search).get('file');
@@ -91,7 +127,7 @@
 
     if (!fileName) {
       loaderEl.style.display = 'none';
-      messageEl.textContent = "Missing file parameter in URL.";
+      messageEl.textContent = "Error: Missing file parameter.";
       countdownEl.style.display = 'none';
     } else {
       let counter = 3;
@@ -111,9 +147,9 @@
             <svg class="checkmark" viewBox="0 0 24 24">
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            Download complete. See you next time!
+            Download started. Thank you!
           `;
-          document.body.appendChild(completeMsg);
+          document.querySelector('.container').appendChild(completeMsg);
         } else if (counter === -1) {
           clearInterval(interval);
           const downloadUrl = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${fileName}`;
