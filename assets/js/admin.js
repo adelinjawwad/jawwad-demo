@@ -22,12 +22,13 @@ let editIndex = -1;
 
 function showRelevantFields() {
 	const cat = document.getElementById('categorySelect').value;
+
 	document.getElementById('sharedFields').classList.add('hidden');
 	document.getElementById('tutorialFields').classList.add('hidden');
 	document.getElementById('toolsFields').classList.add('hidden');
 	document.getElementById('freeFields').classList.add('hidden');
 
-	if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
+	if (['costumes', 'hairstyles', 'weapons', 'others', 'tools', 'free'].includes(cat)) {
 		document.getElementById('sharedFields').classList.remove('hidden');
 	}
 	if (cat === 'tutorials') {
@@ -35,7 +36,6 @@ function showRelevantFields() {
 	}
 	if (cat === 'tools') {
 		document.getElementById('toolsFields').classList.remove('hidden');
-		document.getElementById('sharedFields').classList.remove('hidden');
 	}
 	if (cat === 'free') {
 		document.getElementById('freeFields').classList.remove('hidden');
@@ -140,6 +140,7 @@ function addItem() {
 	if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
 		const img = document.getElementById('newImg').value.trim();
 		const full = document.getElementById('newFull').value.trim();
+		
 
 		// Doar pentru free adăugăm extra
 		let extra = '';
@@ -153,6 +154,11 @@ function addItem() {
 		}
 		newItem.img = img;
 		newItem.full = full;
+	}
+
+	if (['costumes', 'hairstyles', 'weapons', 'others'].includes(cat)) {
+  	newItem.price = document.getElementById('newPrice').value.trim();
+  	newItem.preview = document.getElementById('newPreview').value.trim();
 	}
 
 	if (cat === 'free') {

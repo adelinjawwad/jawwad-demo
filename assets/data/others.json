@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "title": "Bartender",
+    "img": "assets/img/bartender.png",
+    "full": "assets/img/bartender.png",
+    "price": "6€",
+    "preview": "https://gyazo.com/e72c99ba1cc0598e47cf15079391a278"
+  }
+]

@@ -209,9 +209,6 @@ const imageWithPreviewButton = item.img ? `
           <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-none">
             Price: ${item.price}
           </div>
-          <a href="${item.discord}" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-none hover:from-purple-600 hover:to-pink-700 transition">
-            <i class="fab fa-discord mr-2"></i> Contact
-          </a>
         </div>
       </div>
     `;
@@ -261,6 +258,18 @@ ${item.preview ? `
     <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
       <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
       ${imageWithPreviewButton}
+      <div class="flex flex-wrap gap-2 mt-4">
+        ${item.price ? `
+          <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm rounded-none">
+            Price: ${item.price}
+          </div>
+        ` : ''}
+        ${item.preview ? `
+          <a href="${item.preview}" target="_blank" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+            <i class="fas fa-eye"></i> Preview
+          </a>
+        ` : ''}
+      </div>
     </div>
   `;
 }

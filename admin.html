@@ -64,21 +64,24 @@
 		<div id="freeFields" class="hidden mb-4">
 			<textarea id="newFreeDesc" placeholder="Description / Password / Preview link (pentru free)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
 		</div>
-		<div id="sharedFields" class="hidden mb-4">
-			<input id="newImg" placeholder="Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-			<input id="newFull" placeholder="Full Image URL" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-		</div>
+<!-- 🔄 Shared fields pt Costumes, Hairstyles, Others, Tools -->
+<div id="sharedFields" class="hidden mb-4">
+  <input id="newImg" placeholder="Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+  <input id="newFull" placeholder="Full Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+  <input id="newPrice" placeholder="Price (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+  <input id="newPreview" placeholder="Preview Link (opțional)" class="w-full p-3 bg-gray-800 text-white" />
+</div>
+		
 		<!-- Tutorials fields -->
 		<div id="tutorialFields" class="hidden mb-4">
 			<input id="newYoutube" placeholder="YouTube Video ID" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
 			<textarea id="newTutorialDesc" placeholder="Description / Password (optional)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
 		</div>
-		<!-- Tools fields -->
-		<div id="toolsFields" class="hidden mb-4">
-			<textarea id="newDesc" placeholder="Description" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
-			<input id="newPrice" placeholder="Price" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-			<input id="newDiscord" placeholder="Discord Contact Link" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-		</div>
+
+<!-- 🔧 Tools fields -->
+<div id="toolsFields" class="hidden mb-4">
+  <textarea id="newDesc" placeholder="Description" class="w-full mb-3 p-3 bg-gray-800 text-white"></textarea>
+</div>
 		<div class="flex space-x-4">
 			<button onclick="addItem()" class="bg-green-600 hover:bg-green-700 px-6 py-3 font-semibold shadow-md transition duration-300">
 			Add Item
