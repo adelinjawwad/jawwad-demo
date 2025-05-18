@@ -1,122 +1,157 @@
 // ======= FUNCȚII UTILE =======
 function copyDiscordTag() {
-  navigator.clipboard.writeText("1.3afb").then(() => showToast("Discord tag copied to clipboard!"));
+	navigator.clipboard.writeText("1.3afb").then(() => showToast("Discord tag copied to clipboard!"));
 }
 
 function copyPassword(pass) {
-  navigator.clipboard.writeText(pass).then(() => showToast('Password copied to clipboard!'));
+	navigator.clipboard.writeText(pass).then(() => showToast('Password copied to clipboard!'));
 }
 
 function copyDiscordInvite() {
-  navigator.clipboard.writeText("https://discord.gg/BBX8vfN4gQ").then(() => showToast("Discord invite link copied!"));
+	navigator.clipboard.writeText("https://discord.gg/BBX8vfN4gQ").then(() => showToast("Discord invite link copied!"));
 }
 
 function toggleDiscordInvite() {
-  document.getElementById("discord-invite").classList.toggle("hidden");
+	document.getElementById("discord-invite").classList.toggle("hidden");
 }
 
 function showToast(message) {
-  const toast = document.getElementById("toast");
-  document.getElementById("toast-message").textContent = message;
-  toast.classList.remove("hidden");
-  setTimeout(() => toast.classList.add("hidden"), 3000);
+	const toast = document.getElementById("toast");
+	const box = toast.querySelector(".toast-box");
+	const messageSpan = document.getElementById("toast-message");
+
+	messageSpan.textContent = message;
+	toast.classList.remove("hidden");
+	box.classList.remove("hide");
+	box.classList.add("show");
+
+	setTimeout(() => {
+		box.classList.remove("show");
+		box.classList.add("hide");
+		setTimeout(() => {
+			toast.classList.add("hidden");
+		}, 500); // durata animației floatOut
+	}, 2500);
 }
 
 function openModal(src) {
-  const modal = document.getElementById("image-modal");
-  document.getElementById("modal-image").src = src;
-  modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
+	const modal = document.getElementById("image-modal");
+	document.getElementById("modal-image").src = src;
+	modal.classList.remove("hidden");
+	document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
-  document.getElementById("image-modal").classList.add("hidden");
-  document.body.style.overflow = "auto";
+	document.getElementById("image-modal").classList.add("hidden");
+	document.body.style.overflow = "auto";
 }
 
 function toggleDropdown() {
-  const dropdown = document.querySelector(".dropdown");
-  const icon = dropdown.querySelector(".dropbtn i");
-  dropdown.classList.toggle("active");
-  icon.style.transform = dropdown.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
+	const dropdown = document.querySelector(".dropdown");
+	const icon = dropdown.querySelector(".dropbtn i");
+	dropdown.classList.toggle("active");
+	icon.style.transform = dropdown.classList.contains("active") ? "rotate(180deg)" : "rotate(0deg)";
 }
 
 function animateContent() {
-  document.getElementById("content-area").classList.remove("opacity-0");
+	document.getElementById("content-area").classList.remove("opacity-0");
 }
 
 // ======= PAGINA WELCOME =======
 function renderWelcomeContent() {
-  localStorage.setItem("currentPage", "welcome");
-  const contentArea = document.getElementById("content-area");
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  document.getElementById("mobile-menu").classList.add("hidden");
+	localStorage.setItem("currentPage", "welcome");
+	const contentArea = document.getElementById("content-area");
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
+	document.getElementById("mobile-menu").classList.add("hidden");
 
-  setTimeout(() => {
-    contentArea.innerHTML = `
+	setTimeout(() => {
+		contentArea.innerHTML = `
       <section class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">Jawwad ART</h1>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">Discover assets for your projects.<br> High-quality costumes, hairstyles, weapons and more!</p>
-        <button onclick="toggleDiscordInvite()" class="mt-8 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition flex items-center mx-auto">
-          <i class="fab fa-discord mr-2"></i> Join our Discord server
-        </button>
-        <button onclick="loadContent('about')" class="mt-6 px-6 py-3 bg-black text-white rounded hover:bg-pink-700 transition">
+<h1 class="subtle-gradient-text text-5xl md:text-6xl font-semibold mb-5">
+  Jawwad ART
+</h1>
+<p class="motto-subtle text-gray-400 max-w-3xl mx-auto text-center text-lg md:text-xl">
+  Discover assets for your projects.<br>
+  <span class="highlight-subtle">High-quality costumes, hairstyles, weapons and more!</span>
+</p>
+
+<!-- Discord Button -->
+<button onclick="toggleDiscordInvite()" class="discord-button">
+  <i class="fab fa-discord mr-2"></i> Join our Discord server
+</button>
+
+<!-- Discord Invite Box -->
+<div id="discord-invite" class="discord-box hidden">
+  <p class="text-gray-300 mb-2">Join my Discord for chat, updates and support:</p>
+  <div class="flex items-center justify-between bg-gray-800 p-3 rounded">
+    <code class="text-purple-300">https://discord.gg/BBX8vfN4gQ</code>
+    <button onclick="copyDiscordInvite()" class="copy-btn" title="Copy to clipboard">
+      <i class="fas fa-copy"></i>
+    </button>
+  </div>
+</div>
+<button onclick="loadContent('about')" class="btn-premium">
   <i class="fas fa-user mr-2"></i> About Me
 </button>
-        <div id="discord-invite" class="mt-4 hidden max-w-md mx-auto bg-black bg-opacity-50 p-4 rounded-lg">
-          <p class="text-gray-300 mb-2">Join my discord for chat, updates and support:</p>
-          <div class="flex items-center justify-between bg-gray-800 p-3 rounded">
-            <code class="text-purple-300">https://discord.gg/BBX8vfN4gQ</code>
-            <button onclick="copyDiscordInvite()" class="text-pink-400 hover:text-pink-300">
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-        </div>
+        <br />
+<div class="animated-info-box">
+  <div class="animated-header">
+    <div class="animated-icon">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="animated-title">Important Information</div>
+  </div>
+  <ul class="animated-list">
+    <li><i class="fas fa-check-circle"></i> MSM files are always included.</li>
+    <li><i class="fas fa-check-circle"></i> Icons are always included.</li>
+    <li><i class="fas fa-check-circle"></i> Granny 2.11 is required for all models.</li>
+  </ul>
+</div>
       </section>
     `;
-    animateContent();
-  }, 300);
+		animateContent();
+	}, 300);
 }
 
 // ======= ÎNCARCĂ CATEGORIE SIMPLĂ =======
 function loadContent(section) {
-  section = section.split("?")[0];
-  localStorage.setItem("currentPage", section);
-  const contentArea = document.getElementById("content-area");
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  document.getElementById("mobile-menu").classList.add("hidden");
+	section = section.split("?")[0];
+	localStorage.setItem("currentPage", section);
+	const contentArea = document.getElementById("content-area");
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
+	document.getElementById("mobile-menu").classList.add("hidden");
 
-  setTimeout(() => {
-    if (section === "welcome") {
-      renderWelcomeContent();
-      return;
-    }
-if (section === "about") {
-  renderAboutMePage();
-  return;
-}
+	setTimeout(() => {
+		if (section === "welcome") {
+			renderWelcomeContent();
+			return;
+		}
+		if (section === "about") {
+			renderAboutMePage();
+			return;
+		}
 
-    const title = section.charAt(0).toUpperCase() + section.slice(1);
-    const jsonUrl = section === 'tutorials'
-      ? 'assets/data/tutorials.json'
-      : section === 'tools'
-      ? 'assets/data/tools.json'
-      : `assets/data/${section}.json`;
+		const title = section.charAt(0).toUpperCase() + section.slice(1);
+		const jsonUrl = section === 'tutorials' ?
+			'assets/data/tutorials.json' :
+			section === 'tools' ?
+			'assets/data/tools.json' :
+			`assets/data/${section}.json`;
 
-    fetch(`${jsonUrl}?v=${Date.now()}`)
-      .then(res => res.json())
-      .then(data => renderContent(title, data, section));
-  }, 300);
+		fetch(`${jsonUrl}?v=${Date.now()}`)
+			.then(res => res.json())
+			.then(data => renderContent(title, data, section));
+	}, 300);
 }
 
 function renderContent(title, items, section) {
-  const contentArea = document.getElementById("content-area");
+	const contentArea = document.getElementById("content-area");
 
-  const gridCols = ['tutorials', 'tools'].includes(section)
-    ? "grid-cols-1 sm:grid-cols-2"
-    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+	const gridCols = ['tutorials', 'tools'].includes(section) ?
+		"grid-cols-1 sm:grid-cols-2" :
+		"grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
 
-  const content = `
+	const content = `
     <section>
       <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
       <div class="grid ${gridCols} gap-6">
@@ -125,39 +160,39 @@ function renderContent(title, items, section) {
     </section>
   `;
 
-  contentArea.innerHTML = content;
-  animateContent();
+	contentArea.innerHTML = content;
+	animateContent();
 }
 
 // ======= PAGINA UNIVERSALĂ: ASSETS =======
 function loadAllAssets() {
-  localStorage.setItem("currentPage", "assets");
-  const contentArea = document.getElementById("content-area");
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  document.getElementById("mobile-menu").classList.add("hidden");
+	localStorage.setItem("currentPage", "assets");
+	const contentArea = document.getElementById("content-area");
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
+	document.getElementById("mobile-menu").classList.add("hidden");
 
-  const categories = ['costumes', 'hairstyles', 'weapons', 'others', 'free'];
-  const categoryTitles = {
-    costumes: "Costumes",
-    hairstyles: "Hairstyles",
-    weapons: "Weapons",
-    others: "Others",
-    free: "Free stuff"
-  };
+	const categories = ['costumes', 'hairstyles', 'weapons', 'others', 'free'];
+	const categoryTitles = {
+		costumes: "Costumes",
+		hairstyles: "Hairstyles",
+		weapons: "Weapons",
+		others: "Others",
+		free: "Free stuff"
+	};
 
-  setTimeout(async () => {
-    let fullContent = '';
-    let floatingLinks = '';
+	setTimeout(async () => {
+		let fullContent = '';
+		let floatingLinks = '';
 
-    for (const category of categories) {
-      const res = await fetch(`assets/data/${category}.json?v=${Date.now()}`);
-      const data = await res.json();
+		for (const category of categories) {
+			const res = await fetch(`assets/data/${category}.json?v=${Date.now()}`);
+			const data = await res.json();
 
-      // Dacă există cel puțin 1 item în categorie, îl adaugăm
-      if (data.length > 0) {
-        floatingLinks += `<a href="#${category}" class="block px-3 py-2 text-white bg-gray-800 rounded hover:bg-pink-600 transition text-sm" id="link-${category}">${categoryTitles[category]}</a>`;
+			// Dacă există cel puțin 1 item în categorie, îl adaugăm
+			if (data.length > 0) {
+				floatingLinks += `<a href="#${category}" class="block px-3 py-2 text-white bg-gray-800 rounded hover:bg-pink-600 transition text-sm" id="link-${category}">${categoryTitles[category]}</a>`;
 
-        fullContent += `
+				fullContent += `
           <section id="${category}">
             <h2 class="text-2xl font-semibold mb-4 text-pink-400 border-b border-gray-700 pb-2">${categoryTitles[category]}</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -165,28 +200,28 @@ function loadAllAssets() {
             </div>
           </section>
         `;
-      }
-    }
+			}
+		}
 
-    // Dacă nu e nimic, arătăm mesaj frumos
-    if (fullContent === '') {
-      contentArea.innerHTML = `
+		// Dacă nu e nimic, arătăm mesaj frumos
+		if (fullContent === '') {
+			contentArea.innerHTML = `
         <div class="text-center mt-24 text-gray-400 text-lg">No assets available at the moment. Please check back later!</div>
       `;
-    } else {
-      contentArea.innerHTML = `
+		} else {
+			contentArea.innerHTML = `
         <aside class="fixed top-24 left-4 space-y-2 z-50">${floatingLinks}</aside>
         <div class="ml-32 space-y-12">${fullContent}</div>
       `;
-      setupScrollSpy(categories); // scrollspy merge doar pe cele afișate
-    }
+			setupScrollSpy(categories); // scrollspy merge doar pe cele afișate
+		}
 
-    animateContent();
-  }, 300);
+		animateContent();
+	}, 300);
 }
 
 function renderItem(item, section) {
-  const imageWithPreviewButton = item.img ? `
+	const imageWithPreviewButton = item.img ? `
     <div class="relative mb-4">
       <img src="${item.img}" alt="${item.title}" class="asset-card-media">
       <button onclick="openModal('${item.full || item.img}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
@@ -194,19 +229,19 @@ function renderItem(item, section) {
       </button>
     </div>` : '';
 
-  const priceBtn = item.price ? `
+	const priceBtn = item.price ? `
     <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm rounded-none">
       Price: ${item.price}
     </div>` : '';
 
-  const previewBtn = item.preview ? `
+	const previewBtn = item.preview ? `
     <a href="${item.preview}" target="_blank" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
       <i class="fas fa-eye"></i> Preview
     </a>` : '';
 
-  // === FREE ===
-  if (section === 'free') {
-    return `
+	// === FREE ===
+	if (section === 'free') {
+		return `
       <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
@@ -216,20 +251,20 @@ function renderItem(item, section) {
           ${item.extra ? `<button onclick="copyPassword('${item.extra}')" class="asset-action-btn bg-gradient-to-r from-purple-500 to-pink-600 text-white"><i class="fas fa-key"></i> Password</button>` : ''}
         </div>
       </div>`;
-  }
+	}
 
-  // === TUTORIALS ===
-  if (section === 'tutorials') {
-    return `
+	// === TUTORIALS ===
+	if (section === 'tutorials') {
+		return `
       <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         <iframe class="asset-card-iframe mb-4" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
       </div>`;
-  }
+	}
 
-  // === TOOLS ===
-  if (section === 'tools') {
-    return `
+	// === TOOLS ===
+	if (section === 'tools') {
+		return `
       <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
@@ -239,10 +274,10 @@ function renderItem(item, section) {
           ${previewBtn}
         </div>
       </div>`;
-  }
+	}
 
-  // === DEFAULT (costumes, hairstyles, weapons, others)
-  return `
+	// === DEFAULT (costumes, hairstyles, weapons, others)
+	return `
     <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
       <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
       ${imageWithPreviewButton}
@@ -255,57 +290,57 @@ function renderItem(item, section) {
 
 // ======= FLOATING MENU ACTIVE =======
 function setupScrollSpy(categories) {
-  const links = categories.map(cat => document.getElementById(`link-${cat}`));
-  const sections = categories.map(cat => document.getElementById(cat));
+	const links = categories.map(cat => document.getElementById(`link-${cat}`));
+	const sections = categories.map(cat => document.getElementById(cat));
 
-  window.addEventListener('scroll', () => {
-    let index = sections.length - 1;
-    for (let i = 0; i < sections.length; i++) {
-      if (window.scrollY >= sections[i].offsetTop - 150) {
-        index = i;
-      }
-    }
-    links.forEach(link => link.classList.remove('bg-pink-600'));
-    links[index].classList.add('bg-pink-600');
-  });
+	window.addEventListener('scroll', () => {
+		let index = sections.length - 1;
+		for (let i = 0; i < sections.length; i++) {
+			if (window.scrollY >= sections[i].offsetTop - 150) {
+				index = i;
+			}
+		}
+		links.forEach(link => link.classList.remove('bg-pink-600'));
+		links[index].classList.add('bg-pink-600');
+	});
 }
 
 // ======= INIT =======
 window.addEventListener("DOMContentLoaded", () => {
-  const savedPage = localStorage.getItem("currentPage");
-  if (savedPage === 'assets') {
-    loadAllAssets();
-  } else if (savedPage) {
-    loadContent(savedPage);
-  } else {
-    renderWelcomeContent();
-  }
+	const savedPage = localStorage.getItem("currentPage");
+	if (savedPage === 'assets') {
+		loadAllAssets();
+	} else if (savedPage) {
+		loadContent(savedPage);
+	} else {
+		renderWelcomeContent();
+	}
 });
 
 document.getElementById("mobile-menu-button").addEventListener("click", () => {
-  document.getElementById("mobile-menu").classList.toggle("hidden");
+	document.getElementById("mobile-menu").classList.toggle("hidden");
 });
 
 document.getElementById("image-modal").addEventListener("click", e => {
-  if (e.target === e.currentTarget) closeModal();
+	if (e.target === e.currentTarget) closeModal();
 });
 
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeModal();
+	if (e.key === "Escape") closeModal();
 });
 
 document.querySelectorAll(".dropdown-content a").forEach(link => {
-  link.addEventListener("click", toggleDropdown);
+	link.addEventListener("click", toggleDropdown);
 });
 
 function renderAboutMePage() {
-  const contentArea = document.getElementById("content-area");
-  localStorage.setItem("currentPage", "about");
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  document.getElementById("mobile-menu").classList.add("hidden");
+	const contentArea = document.getElementById("content-area");
+	localStorage.setItem("currentPage", "about");
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
+	document.getElementById("mobile-menu").classList.add("hidden");
 
-  setTimeout(() => {
-    contentArea.innerHTML = `
+	setTimeout(() => {
+		contentArea.innerHTML = `
       <section class="text-center px-6 py-20 max-w-4xl mx-auto">
         <h1 class="text-4xl font-bold text-pink-500 mb-6">About Me</h1>
         <p class="text-lg text-gray-300 leading-relaxed mb-8">
@@ -366,20 +401,19 @@ function renderAboutMePage() {
         </button>
       </section>
     `;
-    animateContent();
-  }, 300);
+		animateContent();
+	}, 300);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
+	const mobileMenuButton = document.getElementById('mobile-menu-button');
+	const mobileMenu = document.getElementById('mobile-menu');
 
-  if (mobileMenuButton && mobileMenu) {
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      const expanded = mobileMenu.getAttribute('aria-expanded') === 'true';
-      mobileMenu.setAttribute('aria-expanded', !expanded);
-    });
-  }
+	if (mobileMenuButton && mobileMenu) {
+		mobileMenuButton.addEventListener('click', () => {
+			mobileMenu.classList.toggle('hidden');
+			const expanded = mobileMenu.getAttribute('aria-expanded') === 'true';
+			mobileMenu.setAttribute('aria-expanded', !expanded);
+		});
+	}
 });
-

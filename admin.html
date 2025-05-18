@@ -1,100 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Admin Panel</title>
-		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-		<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-	</head>
-	<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 min-h-screen flex flex-col">
-		<!-- 🔒 Login Screen -->
-		<div id="loginScreen" class="fixed inset-0 bg-gradient-to-tr from-gray-900 to-gray-800 flex flex-col items-center justify-center z-50 px-4">
-			<div class="bg-gray-800 shadow-lg p-8 w-full max-w-sm text-center">
-				<h2 class="text-3xl font-extrabold mb-6 tracking-wide">Admin Login</h2>
-				<input type="password" id="adminPassword" placeholder="Enter password" class="w-full p-3 bg-gray-700 text-white mb-5 focus:outline-none focus:ring-2 focus:ring-pink-500" />
-				<button onclick="checkPassword()" class="w-full bg-pink-600 hover:bg-pink-700 py-3 font-semibold tracking-wide transition duration-300">Login</button>
-				<p id="loginError" class="text-red-400 mt-4 hidden font-medium">Incorrect password!</p>
-			</div>
-		</div>
-		<!-- 🛠️ Admin Topbar -->
-		<div id="adminTopbar" class="hidden mb-8 flex justify-between items-center bg-gray-800 p-4 shadow-lg">
-			<span class="text-green-400 font-semibold text-lg flex items-center">
-			<i class="fas fa-user-shield mr-3 text-xl"></i>Logged in as Admin
-			</span>
-			<button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 flex items-center space-x-2 transition duration-300">
-			<i class="fas fa-sign-out-alt"></i><span>Logout</span>
-			</button>
-		</div>
-		<div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 hidden text-white px-4 py-3 shadow-lg z-50"></div>
-		<button id="toggle-table-btn" class="mb-6 bg-gray-800 hover:bg-gray-700 text-white px-5 py-3 shadow-md transition duration-300">
-		📁 Afișează fișiere
-		</button>
-		<div id="table-wrapper" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out shadow-lg border border-gray-700">
-			<table id="downloads-table" class="w-full text-sm text-left text-white overflow-hidden">
-				<thead class="bg-gray-800 text-gray-300 uppercase text-xs tracking-wide">
-					<tr>
-						<th class="px-6 py-4 border-b border-gray-700">Fișier</th>
-						<th class="px-6 py-4 border-b border-gray-700">Acțiuni</th>
-					</tr>
-				</thead>
-				<tbody id="downloads-list" class="divide-y divide-gray-700 bg-gray-900"></tbody>
-			</table>
-		</div>
-		<h1 class="text-4xl font-extrabold mt-10 mb-8 tracking-tight text-pink-500 drop-shadow-lg">Admin Panel</h1>
-		<label for="categorySelect" class="block mb-3 font-semibold text-lg">Select Category:</label>
-		<select id="categorySelect" onchange="showRelevantFields()" class="bg-gray-800 text-white p-3 mb-6 w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-pink-500">
-			<option value="">-- Select --</option>
-			<option value="costumes">Costumes</option>
-			<option value="hairstyles">Hairstyles</option>
-			<option value="weapons">Weapons</option>
-			<option value="others">Others</option>
-			<option value="free">Free Stuff</option>
-			<option value="tutorials">Tutorials</option>
-			<option value="tools">Tools</option>
-		</select>
-		<button onclick="loadItems()" class="bg-pink-600 hover:bg-pink-700 px-6 py-3 mb-10 font-semibold shadow-lg transition duration-300">
-		Load Items
-		</button>
-		<div id="itemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-		<p id="itemsCount" class="text-gray-400 mt-3 mb-10 text-sm italic"></p>
-		<hr class="my-10 border-gray-700">
-		<h2 class="text-3xl font-bold mb-6 tracking-wide text-pink-500">Add / Edit Item</h2>
-		<input id="newTitle" placeholder="Title" class="w-full mb-4 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-		<!-- Shared fields -->
-		<div id="freeFields" class="hidden mb-4">
-			<textarea id="newFreeDesc" placeholder="Description / Password / Preview link (pentru free)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
-		</div>
-<!-- 🔄 Shared fields pt Costumes, Hairstyles, Others, Tools -->
-<div id="sharedFields" class="hidden mb-4">
-  <input id="newDownload" placeholder="Download Link (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-  <input id="newImg" placeholder="Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-  <input id="newFull" placeholder="Full Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-  <input id="newPrice" placeholder="Price (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-  <input id="newPreview" placeholder="Preview Link (opțional)" class="w-full p-3 bg-gray-800 text-white" />
-</div>
-		
-		<!-- Tutorials fields -->
-		<div id="tutorialFields" class="hidden mb-4">
-			<input id="newYoutube" placeholder="YouTube Video ID" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-			<textarea id="newTutorialDesc" placeholder="Description / Password (optional)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
-		</div>
-
-<!-- 🔧 Tools fields -->
-<div id="toolsFields" class="hidden mb-4">
-  <textarea id="newDesc" placeholder="Description" class="w-full mb-3 p-3 bg-gray-800 text-white"></textarea>
-</div>
-		<div class="flex space-x-4">
-			<button onclick="addItem()" class="bg-green-600 hover:bg-green-700 px-6 py-3 font-semibold shadow-md transition duration-300">
-			Add Item
-			</button>
-			<button onclick="clearInputs()" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 font-semibold shadow-md transition duration-300">
-			Clear
-			</button>
-		</div>
-		<hr class="my-10 border-gray-700" />
-		<button onclick="saveData()" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 font-bold shadow-lg transition duration-300">
-		💾 Save and Download JSON
-		</button>
-			<script src="assets/js/admin.min.js?v=1.1"></script>
-	</body>
+   <head>
+      <meta charset="UTF-8" />
+      <title>Admin Panel</title>
+      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+         />
+      <link href="assets/css/admin.css?v=1.2" rel=stylesheet>
+      <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   </head>
+   <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 min-h-screen flex flex-col">
+      <!-- 🔒 Login Screen -->
+      <div id="loginScreen" class="fixed inset-0 bg-gradient-to-tr from-gray-900 to-gray-800 flex flex-col items-center justify-center z-50 px-4">
+         <div class="bg-gray-800 shadow-lg p-8 w-full max-w-sm text-center">
+            <h2 class="text-3xl font-extrabold mb-6 tracking-wide">Admin Login</h2>
+            <input type="password" id="adminPassword" placeholder="Enter password" class="w-full p-3 bg-gray-700 text-white mb-5 focus:outline-none focus:ring-2 focus:ring-pink-500" />
+            <button onclick="checkPassword()" class="w-full bg-pink-600 hover:bg-pink-700 py-3 font-semibold tracking-wide transition duration-300">Login</button>
+            <p id="loginError" class="text-red-400 mt-4 hidden font-medium">Incorrect password!</p>
+         </div>
+      </div>
+      <!-- 🛠️ Admin Topbar -->
+      <div id="adminTopbar" class="hidden mb-8 flex justify-between items-center bg-gray-800 p-4 shadow-lg">
+         <span class="text-green-400 font-semibold text-lg flex items-center">
+         <i class="fas fa-user-shield mr-3 text-xl"></i>Logged in as Admin
+         </span>
+         <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 flex items-center space-x-2 transition duration-300">
+         <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+         </button>
+      </div>
+      <div id="admin-toast" class="toast-box hidden">
+         <i class="icon fas"></i>
+         <span id="admin-toast-message"></span>
+      </div>
+      <button id="toggle-table-btn" class="mb-6 bg-gray-800 hover:bg-gray-700 text-white px-5 py-3 shadow-md transition duration-300">
+      📁 Afișează fișiere
+      </button>
+      <div id="table-wrapper" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out shadow-lg border border-gray-700">
+         <table id="downloads-table" class="w-full text-sm text-left text-white overflow-hidden">
+            <thead class="bg-gray-800 text-gray-300 uppercase text-xs tracking-wide">
+               <tr>
+                  <th class="px-6 py-4 border-b border-gray-700">Fișier</th>
+                  <th class="px-6 py-4 border-b border-gray-700">Acțiuni</th>
+               </tr>
+            </thead>
+            <tbody id="downloads-list" class="divide-y divide-gray-700 bg-gray-900"></tbody>
+         </table>
+      </div>
+      <h1 class="text-4xl font-extrabold mt-10 mb-8 tracking-tight text-pink-500 drop-shadow-lg">Admin Panel</h1>
+      <label for="categorySelect" class="block mb-3 font-semibold text-lg">Select Category:</label>
+      <select id="categorySelect" onchange="showRelevantFields()" class="bg-gray-800 text-white p-3 mb-6 w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-pink-500">
+         <option value="">-- Select --</option>
+         <option value="costumes">Costumes</option>
+         <option value="hairstyles">Hairstyles</option>
+         <option value="weapons">Weapons</option>
+         <option value="others">Others</option>
+         <option value="free">Free Stuff</option>
+         <option value="tutorials">Tutorials</option>
+         <option value="tools">Tools</option>
+      </select>
+      <button onclick="loadItems()" class="bg-pink-600 hover:bg-pink-700 px-6 py-3 mb-10 font-semibold shadow-lg transition duration-300">
+      Load Items
+      </button>
+      <div id="itemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+      <p id="itemsCount" class="text-gray-400 mt-3 mb-10 text-sm italic"></p>
+      <hr class="my-10 border-gray-700">
+      <h2 class="text-3xl font-bold mb-6 tracking-wide text-pink-500">Add / Edit Item</h2>
+      <input id="newTitle" placeholder="Title" class="w-full mb-4 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
+      <!-- Shared fields -->
+      <div id="freeFields" class="hidden mb-4">
+         <textarea id="newFreeDesc" placeholder="Description / Password / Preview link (pentru free)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
+      </div>
+      <!-- 🔄 Shared fields pt Costumes, Hairstyles, Others, Tools -->
+      <div id="sharedFields" class="hidden mb-4">
+         <input id="newDownload" placeholder="Download Link (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+         <input id="newImg" placeholder="Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+         <input id="newFull" placeholder="Full Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+         <input id="newPrice" placeholder="Price (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
+         <input id="newPreview" placeholder="Preview Link (opțional)" class="w-full p-3 bg-gray-800 text-white" />
+      </div>
+      <!-- Tutorials fields -->
+      <div id="tutorialFields" class="hidden mb-4">
+         <input id="newYoutube" placeholder="YouTube Video ID" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
+         <textarea id="newTutorialDesc" placeholder="Description / Password (optional)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
+      </div>
+      <!-- 🔧 Tools fields -->
+      <div id="toolsFields" class="hidden mb-4">
+         <textarea id="newDesc" placeholder="Description" class="w-full mb-3 p-3 bg-gray-800 text-white"></textarea>
+      </div>
+      <div class="flex space-x-4">
+         <button onclick="addItem()" class="bg-green-600 hover:bg-green-700 px-6 py-3 font-semibold shadow-md transition duration-300">
+         Add Item
+         </button>
+         <button onclick="clearInputs()" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 font-semibold shadow-md transition duration-300">
+         Clear
+         </button>
+      </div>
+      <hr class="my-10 border-gray-700" />
+      <button onclick="saveData()" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 font-bold shadow-lg transition duration-300">
+      💾 Save and Download JSON
+      </button>
+      <script src="assets/js/admin.min.js?v=1.1"></script>
+   </body>
 </html>

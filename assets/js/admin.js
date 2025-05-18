@@ -57,16 +57,16 @@ function loadItems() {
 }
 
 function getYoutubeId(url) {
-  const regExp = /^.*(youtu\.be\/|v=|\/embed\/|watch\?v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
+	const regExp = /^.*(youtu\.be\/|v=|\/embed\/|watch\?v=)([^#&?]*).*/;
+	const match = url.match(regExp);
+	return (match && match[2].length === 11) ? match[2] : null;
 }
 
 function displayItems() {
-  const container = document.getElementById('itemsContainer');
-  container.innerHTML = '';
-  currentItems.forEach((item, index) => {
-    container.innerHTML += `
+	const container = document.getElementById('itemsContainer');
+	container.innerHTML = '';
+	currentItems.forEach((item, index) => {
+		container.innerHTML += `
       <div style="
         background-color: #2d3748;
         padding: 1.25rem;
@@ -121,8 +121,8 @@ ${item.youtube ? `
         </div>
       </div>
     `;
-  });
-  document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
+	});
+	document.getElementById('itemsCount').textContent = `${currentItems.length} item(s) loaded`;
 }
 
 function addItem() {
@@ -133,7 +133,9 @@ function addItem() {
 		return;
 	}
 
-	let newItem = { title };
+	let newItem = {
+		title
+	};
 
 	// Shared: pentru costumes, hairstyles, weapons, others, free, tools
 	if (['costumes', 'hairstyles', 'weapons', 'others', 'free', 'tools'].includes(cat)) {
@@ -216,20 +218,30 @@ function deleteItem(index) {
 }
 
 function showToast(message, type = 'success') {
-	const toast = document.getElementById('toast');
-	toast.textContent = message;
-	toast.classList.remove('hidden', 'bg-green-600', 'bg-red-600');
+	const toast = document.getElementById('admin-toast');
+	const icon = toast.querySelector('.icon');
+	const messageSpan = document.getElementById('admin-toast-message');
+
+	messageSpan.textContent = message;
+	toast.className = 'toast-box show ' + type;
 
 	if (type === 'success') {
-		toast.classList.add('bg-green-600');
+		icon.className = 'icon fas fa-check-circle';
 	} else if (type === 'error') {
-		toast.classList.add('bg-red-600');
+		icon.className = 'icon fas fa-exclamation-circle';
 	}
 
+	// Arată toast-ul
+	toast.classList.add('show');
+	toast.classList.remove('hide');
+
+	// Ascunde toast-ul după 3 secunde cu animație
 	setTimeout(() => {
-		toast.classList.add('hidden');
+		toast.classList.remove('show');
+		toast.classList.add('hide');
 	}, 3000);
 }
+
 
 function saveData() {
 	if (!currentCategory) {
@@ -272,29 +284,29 @@ const downloadsList = document.getElementById('downloads-list');
 
 // Funcție pentru toggling
 toggleBtn.addEventListener('click', () => {
-  const isOpen = tableWrapper.classList.contains('open');
+	const isOpen = tableWrapper.classList.contains('open');
 
-  if (isOpen) {
-    tableWrapper.classList.remove('open');
-    tableWrapper.style.maxHeight = '0px';
-    toggleBtn.innerText = '📁 Afișează fișiere';
-  } else {
-    tableWrapper.classList.add('open');
-    tableWrapper.style.maxHeight = tableWrapper.scrollHeight + 'px';
-    toggleBtn.innerText = '📂 Ascunde fișiere';
-  }
+	if (isOpen) {
+		tableWrapper.classList.remove('open');
+		tableWrapper.style.maxHeight = '0px';
+		toggleBtn.innerText = '📁 Afișează fișiere';
+	} else {
+		tableWrapper.classList.add('open');
+		tableWrapper.style.maxHeight = tableWrapper.scrollHeight + 'px';
+		toggleBtn.innerText = '📂 Ascunde fișiere';
+	}
 });
 
 // Fetch + populare tabel + copiere link
 fetch('assets/downloads/downloads.json')
-  .then(res => res.json())
-  .then(files => {
-    files.forEach(name => {
-      const fullUrl = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${name}`;
-      const shortUrl = `https://adelinjawwad.github.io/jawwad-demo/short.html?file=${encodeURIComponent(name)}`;
+	.then(res => res.json())
+	.then(files => {
+		files.forEach(name => {
+			const fullUrl = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${name}`;
+			const shortUrl = `https://adelinjawwad.github.io/jawwad-demo/short.html?file=${encodeURIComponent(name)}`;
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+			const tr = document.createElement('tr');
+			tr.innerHTML = `
         <td class="px-4 py-3">
           <a href="${fullUrl}" download class="text-blue-400 hover:underline">${name}</a>
         </td>
@@ -304,17 +316,17 @@ fetch('assets/downloads/downloads.json')
           </button>
         </td>
       `;
-      downloadsList.appendChild(tr);
-    });
+			downloadsList.appendChild(tr);
+		});
 
-    // Adaugă event listeners pentru butoanele de copiere
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const link = btn.getAttribute('data-url');
-        navigator.clipboard.writeText(link).then(() => {
-          btn.innerText = 'Copied!';
-          setTimeout(() => btn.innerText = 'Copy link', 2000);
-        });
-      });
-    });
-  });
+		// Adaugă event listeners pentru butoanele de copiere
+		document.querySelectorAll('.copy-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				const link = btn.getAttribute('data-url');
+				navigator.clipboard.writeText(link).then(() => {
+					btn.innerText = 'Copied!';
+					setTimeout(() => btn.innerText = 'Copy link', 2000);
+				});
+			});
+		});
+	});
