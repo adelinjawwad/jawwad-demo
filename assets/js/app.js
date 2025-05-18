@@ -185,33 +185,37 @@ function loadAllAssets() {
   }, 300);
 }
 
-
-// ======= TEMPLATE ITEM =======
 function renderItem(item, section) {
-  // Template imagine + buton preview
-const imageWithPreviewButton = item.img ? `
-  <div class="relative mb-4">
-    <img src="${item.img}" alt="${item.title}" class="asset-card-media">
-    <button onclick="openModal('${item.full || item.img}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
-      <i class="fas fa-expand"></i>
-    </button>
-  </div>
-` : '';
+  const imageWithPreviewButton = item.img ? `
+    <div class="relative mb-4">
+      <img src="${item.img}" alt="${item.title}" class="asset-card-media">
+      <button onclick="openModal('${item.full || item.img}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
+        <i class="fas fa-expand"></i>
+      </button>
+    </div>` : '';
 
-  // === TOOLS ===
-  if (section === 'tools') {
+  const priceBtn = item.price ? `
+    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm rounded-none">
+      Price: ${item.price}
+    </div>` : '';
+
+  const previewBtn = item.preview ? `
+    <a href="${item.preview}" target="_blank" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+      <i class="fas fa-eye"></i> Preview
+    </a>` : '';
+
+  // === FREE ===
+  if (section === 'free') {
     return `
       <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
-        <p class="text-gray-300 mb-4 flex-1">${item.desc}</p>
-        <div class="flex space-x-4 mt-auto">
-          <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-none">
-            Price: ${item.price}
-          </div>
+        <div class="px-4 pb-4 flex flex-wrap gap-2">
+          ${item.download ? `<a href="${item.download}" download class="asset-action-btn bg-gradient-to-r from-green-500 to-teal-600 text-white"><i class="fas fa-download"></i> Download</a>` : ''}
+          ${previewBtn}
+          ${item.extra ? `<button onclick="copyPassword('${item.extra}')" class="asset-action-btn bg-gradient-to-r from-purple-500 to-pink-600 text-white"><i class="fas fa-key"></i> Password</button>` : ''}
         </div>
-      </div>
-    `;
+      </div>`;
   }
 
   // === TUTORIALS ===
@@ -220,58 +224,33 @@ const imageWithPreviewButton = item.img ? `
       <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         <iframe class="asset-card-iframe mb-4" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen></iframe>
-      </div>
-    `;
+      </div>`;
   }
 
-// === FREE ===
-if (section === 'free') {
-  return `
-    <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
-      <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
-      ${imageWithPreviewButton}
-      ${item.download ? `
-        <div class="px-4 pb-4 flex space-x-2">
-          <a href="${item.download}" download class="asset-action-btn bg-gradient-to-r from-green-500 to-teal-600 text-white">
-            <i class="fas fa-download"></i> Download
-          </a>
-
-${item.preview ? `
-<a href="${item.preview}" target="_blank" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-  <i class="fas fa-eye"></i> Preview
-</a>` : ''}
-
-
-          ${item.extra ? `
-            <button onclick="copyPassword('${item.extra}')" class="asset-action-btn bg-gradient-to-r from-purple-500 to-pink-600 text-white">
-              <i class="fas fa-key"></i> Password
-            </button>
-          ` : ''}
+  // === TOOLS ===
+  if (section === 'tools') {
+    return `
+      <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
+        <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
+        ${imageWithPreviewButton}
+        <p class="text-gray-300 mb-4 flex-1">${item.desc}</p>
+        <div class="flex flex-wrap gap-2 mt-auto">
+          ${priceBtn}
+          ${previewBtn}
         </div>
-      ` : ''}
-    </div>
-  `;
-}
+      </div>`;
+  }
 
-  // === Costumes / Hairstyles / Weapons / Others (default)
+  // === DEFAULT (costumes, hairstyles, weapons, others)
   return `
     <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
       <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
       ${imageWithPreviewButton}
       <div class="flex flex-wrap gap-2 mt-4">
-        ${item.price ? `
-          <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm rounded-none">
-            Price: ${item.price}
-          </div>
-        ` : ''}
-        ${item.preview ? `
-          <a href="${item.preview}" target="_blank" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-            <i class="fas fa-eye"></i> Preview
-          </a>
-        ` : ''}
+        ${priceBtn}
+        ${previewBtn}
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
 // ======= FLOATING MENU ACTIVE =======

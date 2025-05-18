@@ -22,13 +22,12 @@ let editIndex = -1;
 
 function showRelevantFields() {
 	const cat = document.getElementById('categorySelect').value;
-
 	document.getElementById('sharedFields').classList.add('hidden');
 	document.getElementById('tutorialFields').classList.add('hidden');
 	document.getElementById('toolsFields').classList.add('hidden');
 	document.getElementById('freeFields').classList.add('hidden');
 
-	if (['costumes', 'hairstyles', 'weapons', 'others', 'tools', 'free'].includes(cat)) {
+	if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
 		document.getElementById('sharedFields').classList.remove('hidden');
 	}
 	if (cat === 'tutorials') {
@@ -36,6 +35,7 @@ function showRelevantFields() {
 	}
 	if (cat === 'tools') {
 		document.getElementById('toolsFields').classList.remove('hidden');
+		document.getElementById('sharedFields').classList.remove('hidden');
 	}
 	if (cat === 'free') {
 		document.getElementById('freeFields').classList.remove('hidden');
@@ -133,39 +133,34 @@ function addItem() {
 		return;
 	}
 
-	let newItem = {
-		title
-	};
+	let newItem = { title };
 
-	if (['costumes', 'hairstyles', 'weapons', 'others', 'free'].includes(cat)) {
+	// Shared: pentru costumes, hairstyles, weapons, others, free, tools
+	if (['costumes', 'hairstyles', 'weapons', 'others', 'free', 'tools'].includes(cat)) {
 		const img = document.getElementById('newImg').value.trim();
 		const full = document.getElementById('newFull').value.trim();
-		
-
-		// Doar pentru free adăugăm extra
-		let extra = '';
-		if (cat === 'free') {
-			extra = document.getElementById('newFreeDesc').value.trim();
-		}
-
-		if (!img || !full) {
-			showToast('Completează toate câmpurile!', 'error');
-			return;
-		}
 		newItem.img = img;
 		newItem.full = full;
+
+		// Dacă lipsesc img/full => eroare (dar doar pentru free și tools)
+		if (!img || !full) {
+			if (['free', 'tools'].includes(cat)) {
+				showToast('Completează toate câmpurile!', 'error');
+				return;
+			}
+		}
+
+		// Adaugă optional price/preview
+		newItem.price = document.getElementById('newPrice').value.trim();
+		newItem.preview = document.getElementById('newPreview').value.trim();
 	}
 
-	if (['costumes', 'hairstyles', 'weapons', 'others'].includes(cat)) {
-  	newItem.price = document.getElementById('newPrice').value.trim();
-  	newItem.preview = document.getElementById('newPreview').value.trim();
-	}
-
+	// Free extras
 	if (cat === 'free') {
-		const extra = document.getElementById('newFreeDesc').value.trim();
-		newItem.extra = extra;
+		newItem.extra = document.getElementById('newFreeDesc').value.trim();
 	}
 
+	// Tutorials
 	if (cat === 'tutorials') {
 		const youtube = document.getElementById('newYoutube').value.trim();
 		const desc = document.getElementById('newTutorialDesc').value.trim();
@@ -177,21 +172,14 @@ function addItem() {
 		newItem.desc = desc;
 	}
 
+	// Tools extra desc
 	if (cat === 'tools') {
-		const img = document.getElementById('newImg').value.trim();
-		const full = document.getElementById('newFull').value.trim();
 		const desc = document.getElementById('newDesc').value.trim();
-		const price = document.getElementById('newPrice').value.trim();
-		const discord = document.getElementById('newDiscord').value.trim();
-		if (!img || !full || !desc || !price || !discord) {
-			showToast('Completează toate câmpurile!', 'error');
+		if (!desc) {
+			showToast('Completează descrierea!', 'error');
 			return;
 		}
-		newItem.img = img;
-		newItem.full = full;
 		newItem.desc = desc;
-		newItem.price = price;
-		newItem.discord = discord;
 	}
 
 	if (editIndex > -1) {
@@ -214,6 +202,7 @@ function editItem(index) {
 	document.getElementById('newTutorialDesc').value = item.desc || '';
 	document.getElementById('newDesc').value = item.desc || '';
 	document.getElementById('newPrice').value = item.price || '';
+	document.getElementById('newPreview').value = item.preview || '';
 	document.getElementById('newDiscord').value = item.discord || '';
 	document.getElementById('newFreeDesc').value = item.extra || '';
 	editIndex = index;
