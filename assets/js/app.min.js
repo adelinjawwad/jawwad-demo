@@ -12,8 +12,18 @@ function copyDiscordInvite() {
 }
 
 function toggleDiscordInvite() {
-	document.getElementById("discord-invite").classList.toggle("hidden");
+	const wrapper = document.getElementById("discord-invite-wrapper");
+
+	if (wrapper.classList.contains("open")) {
+		// CLOSE
+		wrapper.classList.remove("open");
+	} else {
+		// OPEN
+		wrapper.classList.add("open");
+	}
 }
+
+
 
 function showToast(message) {
 	const toast = document.getElementById("toast");
@@ -67,9 +77,6 @@ function renderWelcomeContent() {
 	setTimeout(() => {
 		contentArea.innerHTML = `
       <section class="text-center mb-12">
-<h1 class="subtle-gradient-text text-5xl md:text-6xl font-semibold mb-5">
-  Jawwad ART
-</h1>
 <p class="motto-subtle text-gray-400 max-w-3xl mx-auto text-center text-lg md:text-xl">
   Discover assets for your projects.<br>
   <span class="highlight-subtle">High-quality costumes, hairstyles, weapons and more!</span>
@@ -80,14 +87,16 @@ function renderWelcomeContent() {
   <i class="fab fa-discord mr-2"></i> Join our Discord server
 </button>
 
-<!-- Discord Invite Box -->
-<div id="discord-invite" class="discord-box hidden">
-  <p class="text-gray-300 mb-2">Join my Discord for chat, updates and support:</p>
-  <div class="flex items-center justify-between bg-gray-800 p-3 rounded">
-    <code class="text-purple-300">https://discord.gg/BBX8vfN4gQ</code>
-    <button onclick="copyDiscordInvite()" class="copy-btn" title="Copy to clipboard">
-      <i class="fas fa-copy"></i>
-    </button>
+<!-- Wrapper care se animă -->
+<div id="discord-invite-wrapper" class="discord-box-wrapper">
+  <div id="discord-invite" class="discord-box">
+    <p class="text-gray-300 mb-2">Join my Discord for chat, updates and support:</p>
+    <div class="flex items-center justify-between bg-gray-800 p-3 rounded">
+      <code class="text-purple-300">https://discord.gg/BBX8vfN4gQ</code>
+      <button onclick="copyDiscordInvite()" class="copy-btn" title="Copy to clipboard">
+        <i class="fas fa-copy"></i>
+      </button>
+    </div>
   </div>
 </div>
 <button onclick="loadContent('about')" class="btn-premium">
@@ -99,7 +108,7 @@ function renderWelcomeContent() {
     <div class="animated-icon">
       <i class="fas fa-info-circle"></i>
     </div>
-    <div class="animated-title">Important Information</div>
+    <div class="animated-title">Information</div>
   </div>
   <ul class="animated-list">
     <li><i class="fas fa-check-circle"></i> MSM files are always included.</li>
