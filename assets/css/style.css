@@ -612,49 +612,6 @@ aside a.active {
 	}
 }
 
-#site-footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	background-color: #111827;
-	color: #9ca3af;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1rem;
-	padding: 0.75rem 1rem;
-	font-size: 0.9rem;
-	z-index: 50;
-	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.7);
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#site-footer span {
-	user-select: none;
-}
-
-.discord-icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 36px;
-	height: 36px;
-	background: linear-gradient(135deg, #7289DA, #99AAB5);
-	border-radius: 50%;
-	cursor: pointer;
-	transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-	box-shadow: 0 2px 8px rgba(114, 137, 218, 0.6);
-	color: white;
-	font-size: 1.5rem;
-}
-
-.discord-icon:hover {
-	transform: scale(1.2) rotate(10deg);
-	box-shadow: 0 6px 16px rgba(114, 137, 218, 0.9);
-	color: #7289DA;
-}
-
 .discord-box-wrapper {
 	overflow: hidden;
 	max-height: 0;
@@ -676,4 +633,55 @@ aside a.active {
 .animate-fade-left {
   animation: fade-slide-left 0.4s ease-out forwards;
   opacity: 0;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.logo-animated {
+  background: linear-gradient(90deg, #a855f7, #ec4899, #a855f7);
+  background-size: 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  font-size: 1.75rem;
+  animation: gradientFlow 6s linear infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-animated:hover {
+  transform: scale(1.05);
+}
+
+.footer-glass {
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease;
+}
+
+.footer-glass:hover {
+  background: rgba(17, 17, 17, 0.75);
+}
+
+.discord-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7289da, #99aab5);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discord-icon:hover {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 0 0 8px #7289da;
 }

@@ -484,3 +484,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+        observer.unobserve(entry.target); // o singură dată
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-img').forEach(img => {
+    observer.observe(img);
+  });
