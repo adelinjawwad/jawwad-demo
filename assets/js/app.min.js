@@ -349,10 +349,17 @@ function renderItem(item, section) {
 
 // ======= FLOATING MENU ACTIVE =======
 function setupScrollSpy(categories) {
-	const links = categories.map(cat => document.getElementById(`link-${cat}`));
-	const sections = categories.map(cat => document.getElementById(cat));
+	const links = categories
+		.map(cat => document.getElementById(`link-${cat}`))
+		.filter(link => link !== null);
+
+	const sections = categories
+		.map(cat => document.getElementById(cat))
+		.filter(section => section !== null);
 
 	window.addEventListener('scroll', () => {
+		if (sections.length === 0 || links.length === 0) return;
+
 		let index = sections.length - 1;
 		for (let i = 0; i < sections.length; i++) {
 			if (window.scrollY >= sections[i].offsetTop - 150) {
@@ -360,7 +367,9 @@ function setupScrollSpy(categories) {
 			}
 		}
 		links.forEach(link => link.classList.remove('bg-pink-600'));
-		links[index].classList.add('bg-pink-600');
+		if (links[index]) {
+			links[index].classList.add('bg-pink-600');
+		}
 	});
 }
 
