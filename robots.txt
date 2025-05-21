@@ -1,4 +1,4 @@
 robots.txtUser-agent: *
 Allow: /
 
-Sitemap: https://adelinjawwad.github.io/jawwad-demo/sitemap.xml
+Sitemap: https://jawwad.site/sitemap.xml
