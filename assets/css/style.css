@@ -313,14 +313,17 @@ aside a.active {
 	align-items: center;
 	margin-bottom: 18px;
 	padding: 12px 16px;
-	border: 1px solid #4f46e5; /* border violet deschis pentru evidențiere */
+	border: 1px solid #4f46e5;
+	/* border violet deschis pentru evidențiere */
 	border-radius: 12px;
-	background-color: rgba(79, 70, 229, 0.15); /* fundal violet deschis translucid */
+	background-color: rgba(79, 70, 229, 0.15);
+	/* fundal violet deschis translucid */
 }
 
 /* Iconul păstrat ca acum */
 .animated-icon {
-	background: #6366f1; /* violet închis */
+	background: #6366f1;
+	/* violet închis */
 	color: white;
 	border-radius: 50%;
 	padding: 12px;
@@ -336,8 +339,10 @@ aside a.active {
 .animated-title {
 	font-size: 22px;
 	font-weight: 700;
-	color: #c7d2fe; /* albastru deschis, dar mai cald și lizibil pe fundal */
-	margin: 0; /* elimină marginile implicite */
+	color: #c7d2fe;
+	/* albastru deschis, dar mai cald și lizibil pe fundal */
+	margin: 0;
+	/* elimină marginile implicite */
 }
 
 /* Lista păstrată ca acum */
@@ -375,10 +380,13 @@ aside a.active {
 }
 
 @keyframes pulse {
-	0%, 100% {
+
+	0%,
+	100% {
 		transform: scale(1);
 		box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
 	}
+
 	50% {
 		transform: scale(1.05);
 		box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
@@ -418,7 +426,7 @@ aside a.active {
 	left: -50%;
 	width: 200%;
 	height: 200%;
-	background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
 	animation: shine 4s infinite linear;
 }
 
@@ -436,6 +444,7 @@ aside a.active {
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}
@@ -446,7 +455,8 @@ aside a.active {
 	max-width: 32rem;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: rgba(24, 24, 27, 0.6); /* ton închis, elegant */
+	background-color: rgba(24, 24, 27, 0.6);
+	/* ton închis, elegant */
 	padding: 1.25rem 1.5rem;
 	border-radius: 0.75rem;
 	border: 1px solid rgba(255, 255, 255, 0.08);
@@ -473,6 +483,7 @@ aside a.active {
 		opacity: 0;
 		transform: translateY(10px);
 	}
+
 	to {
 		opacity: 1;
 		transform: translateY(0);
@@ -488,6 +499,7 @@ aside a.active {
 		opacity: 1;
 		transform: translateY(0);
 	}
+
 	to {
 		opacity: 0;
 		transform: translateY(-10px);
@@ -651,6 +663,7 @@ aside a.active {
 }
 
 .discord-box-wrapper.open {
-	max-height: 500px; /* ajustează dacă ai conținut mai lung */
+	max-height: 500px;
+	/* ajustează dacă ai conținut mai lung */
 	opacity: 1;
 }
