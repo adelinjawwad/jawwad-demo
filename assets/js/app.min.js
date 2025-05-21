@@ -24,7 +24,6 @@ function toggleDiscordInvite() {
 }
 
 
-
 function showToast(message) {
 	const toast = document.getElementById("toast");
 	const box = toast.querySelector(".toast-box");
@@ -189,6 +188,23 @@ function loadAllAssets() {
 		free: "Free stuff"
 	};
 
+	// Injectăm stilurile pentru animație (doar o dată)
+	if (!document.getElementById("floating-menu-style")) {
+		const style = document.createElement("style");
+		style.id = "floating-menu-style";
+		style.innerHTML = `
+      @keyframes fade-slide-left {
+        from { opacity: 0; transform: translateX(-16px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      .animate-fade-left {
+        animation: fade-slide-left 0.4s ease-out forwards;
+        opacity: 0;
+      }
+    `;
+		document.head.appendChild(style);
+	}
+
 	setTimeout(async () => {
 		let fullContent = '';
 		let floatingLinks = '';
@@ -197,9 +213,15 @@ function loadAllAssets() {
 			const res = await fetch(`assets/data/${category}.json?v=${Date.now()}`);
 			const data = await res.json();
 
-			// Dacă există cel puțin 1 item în categorie, îl adaugăm
 			if (data.length > 0) {
-				floatingLinks += `<a href="#${category}" class="block px-3 py-2 text-white bg-gray-800 rounded hover:bg-pink-600 transition text-sm" id="link-${category}">${categoryTitles[category]}</a>`;
+				floatingLinks += `
+          <a href="#${category}" 
+             class="category-link block px-4 py-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition duration-300 text-sm font-medium" 
+             data-target="${category}" 
+             id="link-${category}">
+            ${categoryTitles[category]}
+          </a>
+        `;
 
 				fullContent += `
           <section id="${category}">
@@ -212,18 +234,46 @@ function loadAllAssets() {
 			}
 		}
 
-		// Dacă nu e nimic, arătăm mesaj frumos
 		if (fullContent === '') {
 			contentArea.innerHTML = `
         <div class="text-center mt-24 text-gray-400 text-lg">No assets available at the moment. Please check back later!</div>
       `;
 		} else {
 			contentArea.innerHTML = `
-        <aside class="fixed top-24 left-4 space-y-2 z-50">${floatingLinks}</aside>
-        <div class="ml-32 space-y-12">${fullContent}</div>
+        <aside class="fixed top-1/2 -left-3 translate-y-[-50%] z-[9999] bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-r-3xl p-3 space-y-2 hover:translate-x-1 transition-all duration-300">
+          ${floatingLinks}
+        </aside>
+        <div class="space-y-12">${fullContent}</div>
       `;
-			setupScrollSpy(categories); // scrollspy merge doar pe cele afișate
+
+			// Animație staggered pentru fiecare link din meniu
+			const links = document.querySelectorAll(".category-link");
+			links.forEach((link, index) => {
+				link.style.animationDelay = `${index * 0.15}s`; // delay incremental 150ms
+				link.classList.add("animate-fade-left");
+			});
+
+			setupScrollSpy(categories);
 		}
+
+		// Scroll custom la titlul secțiunii (nu la container)
+		document.querySelectorAll(".category-link").forEach(link => {
+			link.addEventListener("click", function (e) {
+				e.preventDefault();
+				const categoryId = this.getAttribute("data-target");
+				const section = document.getElementById(categoryId);
+				if (section) {
+					const title = section.querySelector("h2");
+					if (title) {
+						const offset = title.getBoundingClientRect().top + window.scrollY - 100;
+						window.scrollTo({
+							top: offset,
+							behavior: "smooth"
+						});
+					}
+				}
+			});
+		});
 
 		animateContent();
 	}, 300);
@@ -415,13 +465,13 @@ function renderAboutMePage() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const menuBtn = document.querySelector(".menu-btn");
-  const navbarMenu = document.querySelector(".navbar-menu");
+	const menuBtn = document.querySelector(".menu-btn");
+	const navbarMenu = document.querySelector(".navbar-menu");
 
-  if (menuBtn && navbarMenu) {
-    menuBtn.addEventListener("click", () => {
-      navbarMenu.classList.toggle("active");
-      menuBtn.classList.toggle("active");
-    });
-  }
+	if (menuBtn && navbarMenu) {
+		menuBtn.addEventListener("click", () => {
+			navbarMenu.classList.toggle("active");
+			menuBtn.classList.toggle("active");
+		});
+	}
 });
