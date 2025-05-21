@@ -282,7 +282,7 @@ function loadAllAssets() {
 function renderItem(item, section) {
 	const imageWithPreviewButton = item.img ? `
     <div class="relative mb-4">
-      <img src="${item.img}" alt="${item.title}" class="asset-card-media">
+      <img loading="lazy" src="${item.img}" alt="${item.title}" class="asset-card-media">
       <button onclick="openModal('${item.full || item.img}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
         <i class="fas fa-expand"></i>
       </button>
