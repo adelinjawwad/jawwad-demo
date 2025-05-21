@@ -2,26 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jawwad.site/</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#costumes</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#hairstyles</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#weapons</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#others</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#free</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#tutorials</loc>
-  </url>
-  <url>
-    <loc>https://jawwad.site/#tools</loc>
+    <lastmod>2025-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
 </urlset>
