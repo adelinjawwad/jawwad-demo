@@ -128,39 +128,43 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	// --- Confetti generator ---
-	function createConfetti() {
-		const container = document.getElementById('confetti-container');
-		const colors = ['#ff6b8b', '#ffb8c6', '#ff4757', '#ff8d8d', '#ffc3a0'];
-		const shapes = ['circle', 'rect'];
+function createConfetti() {
+	const container = document.getElementById('confetti-container');
+	const colors = ['#ff6b8b', '#ffb8c6', '#ff4757', '#ff8d8d', '#ffc3a0'];
 
-		for (let i = 0; i < 150; i++) {
-			const confetti = document.createElement('div');
-			confetti.className = 'confetti';
-			confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-			confetti.style.left = Math.random() * 100 + 'vw';
-			confetti.style.top = '-10px';
-			confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+	for (let i = 0; i < 10; i++) { // 10 confetti per apel, ca să fie mai fluid
+		const confetti = document.createElement('div');
+		confetti.className = 'confetti';
+		confetti.style.position = 'absolute';  // important
+		confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+		confetti.style.left = Math.random() * 100 + 'vw';
+		confetti.style.top = '-10px';
+		confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
 
-			if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
+		if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
 
-			const size = 6 + Math.random() * 12;
-			confetti.style.width = size + 'px';
-			confetti.style.height = size + 'px';
+		const size = 6 + Math.random() * 12;
+		confetti.style.width = size + 'px';
+		confetti.style.height = size + 'px';
 
-			container.appendChild(confetti);
+		container.appendChild(confetti);
 
-			gsap.to(confetti, {
-				y: window.innerHeight + 10,
-				x: Math.random() * 200 - 100,
-				rotation: Math.random() * 360,
-				opacity: 0.8,
-				duration: 2 + Math.random() * 4,
-				delay: Math.random() * 3,
-				ease: 'power1.out',
-				onComplete: () => confetti.remove()
-			});
-		}
+		gsap.to(confetti, {
+			y: window.innerHeight + 10,
+			x: Math.random() * 200 - 100,
+			rotation: Math.random() * 360,
+			opacity: 0.8,
+			duration: 2 + Math.random() * 4,
+			delay: Math.random() * 3,
+			ease: 'power1.out',
+			onComplete: () => confetti.remove()
+		});
 	}
+}
+
+// Porneste confetti constant
+setInterval(createConfetti, 300);
+
 
 	// --- Final animations ---
 	function initAnimations() {

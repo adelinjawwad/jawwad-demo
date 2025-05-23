@@ -8,8 +8,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
-		<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
 		<link href="script.css" rel="stylesheet">
 	</head>
 	<body>
@@ -26,7 +25,14 @@
 			<section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
 				<div class="glow" style="top: 20%; left: 10%;"></div>
 				<div class="glow" style="bottom: 15%; right: 10%;"></div>
-				<div id="confetti-container"></div>
+				<div id="confetti-container" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 1;">
+</div>
+
 				<div class="text-center px-4">
 					<div id="age-display" class="number-25 mb-4">
 						25
