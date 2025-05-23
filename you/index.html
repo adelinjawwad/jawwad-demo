@@ -1,179 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 25th Birthday, My Love</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="script.css" rel=stylesheet>
-</head>
-<body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-50 to-rose-50 flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
-        <div class="heart-loader"></div>
-        <div id="loading-text" class="loading-text">Preparing your magical gift...</div>
-        <div class="loading-bar">
-            <div id="loading-progress" class="loading-progress"></div>
-        </div>
-    </div>
-    
-    <!-- Main Content (hidden initially) -->
-    <div id="main-content" class="hidden">
-        <!-- Hero Section -->
-        <section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-            <!-- Glow effects -->
-            <div class="glow" style="top: 20%; left: 10%;"></div>
-            <div class="glow" style="bottom: 15%; right: 10%;"></div>
-            
-            <!-- Confetti elements will be added by JS -->
-            <div id="confetti-container"></div>
-            
-            <div class="text-center px-4">
-                <div id="age-display" class="number-25 mb-4">25</div>
-                <h1 id="birthday-text" class="handwriting text-5xl md:text-6xl text-pink-600 opacity-0 mb-6">Happy Birthday, my love!</h1>
-                <p class="text-xl text-pink-500 opacity-0" id="scroll-hint">Scroll down to see your gift...</p>
-            </div>
-            
-            <div class="scroll-hint">
-                <span>Scroll</span>
-                <i class="fas fa-chevron-down mt-2"></i>
-            </div>
-        </section>
-        
-        <!-- Memory Sections -->
-        <div class="max-w-4xl mx-auto px-4 py-20">
-            <!-- Section 1 -->
-            <section class="section mb-20">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="photo-frame" data-photo="1">
-                        <div class="photo-placeholder">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                    </div>
-                    <div class="love-note">
-                        <h2 class="text-2xl font-bold text-pink-600 mb-4">The Beginning of Us</h2>
-                        <p class="text-gray-700">From the moment we met, I knew there was something special about you. This photo captures the beginning of our beautiful journey together. Every day since then has been a gift I cherish deeply.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 2 -->
-            <section class="section mb-20">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="love-note order-2 md:order-1">
-                        <h2 class="text-2xl font-bold text-pink-600 mb-4">Your Beautiful Smile</h2>
-                        <p class="text-gray-700">Your smile lights up my world like nothing else. Even on my darkest days, the memory of your smile gives me strength and happiness. I fall in love with you all over again every time you smile.</p>
-                    </div>
-                    <div class="photo-frame order-1 md:order-2" data-photo="2">
-                        <div class="photo-placeholder">
-                            <i class="fas fa-smile"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 3 -->
-            <section class="section mb-20">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="photo-frame" data-photo="3">
-                        <div class="photo-placeholder">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                    </div>
-                    <div class="love-note">
-                        <h2 class="text-2xl font-bold text-pink-600 mb-4">Our Adventures</h2>
-                        <p class="text-gray-700">Every moment with you is an adventure. Whether we're traveling to new places or just cuddled up at home, life with you is always exciting. I can't wait for all the adventures we'll share in the years to come.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 4 -->
-            <section class="section mb-20">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="love-note order-2 md:order-1">
-                        <h2 class="text-2xl font-bold text-pink-600 mb-4">Your Loving Heart</h2>
-                        <p class="text-gray-700">Your kindness and compassion amaze me every day. The way you care for others, the love you show me - it's the most beautiful thing in my life. Your heart is pure gold, and I'm so lucky to be loved by you.</p>
-                    </div>
-                    <div class="photo-frame order-1 md:order-2" data-photo="4">
-                        <div class="photo-placeholder">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section 5 -->
-            <section class="section mb-20">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="photo-frame" data-photo="5">
-                        <div class="photo-placeholder">
-                            <i class="fas fa-hand-holding-heart"></i>
-                        </div>
-                    </div>
-                    <div class="love-note">
-                        <h2 class="text-2xl font-bold text-pink-600 mb-4">Our Connection</h2>
-                        <p class="text-gray-700">What we have is rare and precious. The way we understand each other without words, the comfort we find in each other's arms - it's magic. I've never felt this connected to anyone, and I know I never will with anyone else.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-        
-        <!-- Final Surprise Section -->
-        <section class="min-h-[50vh] flex flex-col items-center justify-center bg-gradient-to-b from-pink-50 to-rose-100 py-20 px-4 relative">
-            <div class="glow" style="top: 10%; left: 20%;"></div>
-            <div class="glow" style="bottom: 10%; right: 20%;"></div>
-            
-            <div class="text-center max-w-2xl mx-auto">
-                <h2 class="handwriting text-4xl text-pink-600 mb-6">My Dearest Love,</h2>
-                <p class="text-xl text-gray-700 mb-10">On your 25th birthday, I want you to know how incredibly special you are to me. You've brought more joy, love, and meaning into my life than I ever thought possible. Here's to celebrating you today and every day.</p>
-                
-                <button id="surprise-btn" class="surprise-btn">
-                    Your Secret Surprise <i class="fas fa-heart ml-2"></i>
-                </button>
-            </div>
-        </section>
-    </div>
-    
-    <!-- Fullscreen Photo Viewer -->
-    <div id="fullscreen-photo" class="fullscreen-photo">
-        <div class="close-fullscreen">
-            <i class="fas fa-times"></i>
-        </div>
-        <img src="" alt="Fullscreen photo">
-    </div>
-    
-    <!-- Audio Control -->
-    <div id="audio-control" class="audio-control">
-        <i class="fas fa-music"></i>
-    </div>
-    
-    <!-- Audio Element (hidden) -->
-    <audio id="bg-music" loop>
-        <!-- You can replace this with your own audio file -->
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-    
-    <!-- Surprise Modal -->
-    <div id="surprise-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 class="text-2xl font-bold text-pink-600 mb-4">Happy Birthday, My Love!</h2>
-            <p class="mb-4">This is your special surprise message. I love you more than words can say.</p>
-            
-            <div class="video-placeholder">
-                <i class="fas fa-video"></i>
-                <!-- You can replace this with your video -->
-                [Your Video Will Appear Here]
-            </div>
-            
-            <p class="text-sm text-gray-500">This is where your special video message will play. Replace the placeholder with your actual video.</p>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Happy 25th Birthday, My Love</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
+		<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<link href="script.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-50 to-rose-50 flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
+			<div class="heart-loader"></div>
+			<div id="loading-text" class="loading-text">
+				Preparing your magical gift...
+			</div>
+			<div class="loading-bar">
+				<div id="loading-progress" class="loading-progress"></div>
+			</div>
+		</div>
+		<div id="main-content" class="hidden">
+			<section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+				<div class="glow" style="top: 20%; left: 10%;"></div>
+				<div class="glow" style="bottom: 15%; right: 10%;"></div>
+				<div id="confetti-container"></div>
+				<div class="text-center px-4">
+					<div id="age-display" class="number-25 mb-4">
+						25
+					</div>
+					<h1 id="birthday-text" class="handwriting text-5xl md:text-6xl text-pink-600 opacity-0 mb-6">Happy Birthday, my love!</h1>
+					<p class="text-xl text-pink-500 opacity-0" id="scroll-hint">Scroll down to see your gift...</p>
+				</div>
+				<div class="scroll-hint">
+					<span>Scroll</span>
+				</div>
+			</section>
+			<div class="max-w-4xl mx-auto px-4 py-20">
+				<section class="section mb-20">
+					<div class="grid md:grid-cols-2 gap-8 items-center">
+						<div class="photo-frame" data-photo="1">
+							<div class="photo-placeholder"></div>
+						</div>
+						<div class="love-note">
+							<h2 class="text-2xl font-bold text-pink-600 mb-4">The Beginning of Us</h2>
+							<p class="text-gray-700">From the moment we met, I knew there was something special about you. This photo captures the beginning of our beautiful journey together. Every day since then has been a gift I cherish deeply.</p>
+						</div>
+					</div>
+				</section>
+				<section class="section mb-20">
+					<div class="grid md:grid-cols-2 gap-8 items-center">
+						<div class="love-note order-2 md:order-1">
+							<h2 class="text-2xl font-bold text-pink-600 mb-4">Your Beautiful Smile</h2>
+							<p class="text-gray-700">Your smile lights up my world like nothing else. Even on my darkest days, the memory of your smile gives me strength and happiness. I fall in love with you all over again every time you smile.</p>
+						</div>
+						<div class="photo-frame order-1 md:order-2" data-photo="2">
+							<div class="photo-placeholder"></div>
+						</div>
+					</div>
+				</section>
+				<section class="section mb-20">
+					<div class="grid md:grid-cols-2 gap-8 items-center">
+						<div class="photo-frame" data-photo="3">
+							<div class="photo-placeholder"></div>
+						</div>
+						<div class="love-note">
+							<h2 class="text-2xl font-bold text-pink-600 mb-4">Our Adventures</h2>
+							<p class="text-gray-700">Every moment with you is an adventure. Whether we're traveling to new places or just cuddled up at home, life with you is always exciting. I can't wait for all the adventures we'll share in the years to come.</p>
+						</div>
+					</div>
+				</section>
+				<section class="section mb-20">
+					<div class="grid md:grid-cols-2 gap-8 items-center">
+						<div class="love-note order-2 md:order-1">
+							<h2 class="text-2xl font-bold text-pink-600 mb-4">Your Loving Heart</h2>
+							<p class="text-gray-700">Your kindness and compassion amaze me every day. The way you care for others, the love you show me - it's the most beautiful thing in my life. Your heart is pure gold, and I'm so lucky to be loved by you.</p>
+						</div>
+						<div class="photo-frame order-1 md:order-2" data-photo="4">
+							<div class="photo-placeholder"></div>
+						</div>
+					</div>
+				</section>
+				<section class="section mb-20">
+					<div class="grid md:grid-cols-2 gap-8 items-center">
+						<div class="photo-frame" data-photo="5">
+							<div class="photo-placeholder"></div>
+						</div>
+						<div class="love-note">
+							<h2 class="text-2xl font-bold text-pink-600 mb-4">Our Connection</h2>
+							<p class="text-gray-700">What we have is rare and precious. The way we understand each other without words, the comfort we find in each other's arms - it's magic. I've never felt this connected to anyone, and I know I never will with anyone else.</p>
+						</div>
+					</div>
+				</section>
+			</div>
+			<section class="min-h-[50vh] flex flex-col items-center justify-center bg-gradient-to-b from-pink-50 to-rose-100 py-20 px-4 relative">
+				<div class="glow" style="top: 10%; left: 20%;"></div>
+				<div class="glow" style="bottom: 10%; right: 20%;"></div>
+				<div class="text-center max-w-2xl mx-auto">
+					<h2 class="handwriting text-4xl text-pink-600 mb-6">My Dearest Love,</h2>
+					<p class="text-xl text-gray-700 mb-10">On your 25th birthday, I want you to know how incredibly special you are to me. You've brought more joy, love, and meaning into my life than I ever thought possible. Here's to celebrating you today and every day.</p>
+					<button id="surprise-btn" class="surprise-btn">Your Secret Surprise</button>
+				</div>
+			</section>
+		</div>
+		<div id="fullscreen-photo" class="fullscreen-photo">
+			<div class="close-fullscreen"></div>
+			<img src="" alt="Fullscreen photo">
+		</div>
+		<div id="audio-control" class="audio-control"></div>
+		<audio id="bg-music" loop="">
+			<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+		</audio>
+		<div id="surprise-modal" class="modal">
+			<div class="modal-content">
+				<span class="close-modal">×</span>
+				<h2 class="text-2xl font-bold text-pink-600 mb-4">Happy Birthday, My Love!</h2>
+				<p class="mb-4">This is your special surprise message. I love you more than words can say.</p>
+				<div class="video-placeholder">
+					[Your Video Will Appear Here]
+				</div>
+				<p class="text-sm text-gray-500">This is where your special video message will play. Replace the placeholder with your actual video.</p>
+			</div>
+		</div>
+		<script src="script.js"></script>
+	</body>
 </html>
