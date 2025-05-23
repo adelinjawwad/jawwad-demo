@@ -110,7 +110,7 @@ typeLoadingText();
 	function createFloatingHeart() {
 		const heart = document.createElement('div');
 		const icon = document.createElement('i');
-		icon.className = 'fas fa-heart';
+		icon.className = '<i class="fa-solid fa-heart"></i>';
 		icon.style.color = 'red';
 		icon.style.fontSize = (15 + Math.random() * 25) + 'px';
 
