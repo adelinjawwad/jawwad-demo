@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
-	typeLoadingText();
+	loadingText.textContent = '';
+typeLoadingText();
 
 	// --- Progress bar logic ---
 	function startLoadingProgress() {
