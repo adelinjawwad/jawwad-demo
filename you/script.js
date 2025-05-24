@@ -10,20 +10,20 @@ let countdownValue = 5
 const introMessage = "Happy Birthday\nMy Love"
 const photos = [
   {
-    src: "https://via.placeholder.com/280x350/fce7f3/ec4899?text=Memory+1",
-    message: "You're the most beautiful part of my life...",
+    src: "photo1.jpg",
+    message: "Every adventure with you feels like magic... ✨",
   },
   {
-    src: "https://via.placeholder.com/280x350/fce7f3/ec4899?text=Memory+2",
-    message: "Every moment with you feels like magic...",
+    src: "photo2.jpg",
+    message: "Home is wherever I'm with you, my love 🏠💕",
   },
   {
-    src: "https://via.placeholder.com/280x350/fce7f3/ec4899?text=Memory+3",
-    message: "25 years of you. I'm so grateful to be part of your story...",
+    src: "photo3.jpg",
+    message: "25 years of your beautiful smile lighting up my world... 😍",
   },
   {
-    src: "https://via.placeholder.com/280x350/fce7f3/ec4899?text=Memory+4",
-    message: "Here's to many more adventures together...",
+    src: "photo1.jpg",
+    message: "Here's to many more memories together, forever and always 💖",
   },
 ]
 
@@ -42,7 +42,8 @@ const videoSection = document.getElementById("videoSection")
 document.addEventListener("DOMContentLoaded", () => {
   createBackgroundElements()
   createSparkles()
-  startIntroAnimation()
+  // Start directly with envelope section
+  currentState = "envelope"
   setupEventListeners()
 })
 
@@ -170,29 +171,6 @@ function setupEventListeners() {
   })
 }
 
-// Start intro animation
-function startIntroAnimation() {
-  const introTextElement = document.getElementById("introText")
-  let currentText = ""
-  let index = 0
-
-  function typeNextCharacter() {
-    if (index < introMessage.length) {
-      currentText += introMessage[index]
-      introTextElement.innerHTML = currentText + '<span class="cursor">|</span>'
-      index++
-      setTimeout(typeNextCharacter, 150)
-    } else {
-      introTextElement.innerHTML = currentText
-      setTimeout(() => {
-        fadeToSection("envelope")
-      }, 2000)
-    }
-  }
-
-  typeNextCharacter()
-}
-
 // Fade transition between sections
 function fadeToSection(nextSection) {
   fadeOverlay.classList.add("active")
@@ -223,6 +201,13 @@ function fadeToSection(nextSection) {
         videoSection.classList.remove("hidden")
         currentState = "video"
         break
+      case "birthdayMessage":
+        document.getElementById("birthdayMessageSection").classList.remove("hidden")
+        currentState = "birthdayMessage"
+        setTimeout(() => {
+          fadeToSection("photos")
+        }, 3000)
+        break
     }
 
     fadeOverlay.classList.remove("active")
@@ -234,7 +219,7 @@ function openEnvelope() {
   if (navigator.vibrate) {
     navigator.vibrate(100)
   }
-  fadeToSection("photos")
+  fadeToSection("birthdayMessage")
 }
 
 // Start photo sequence
@@ -283,21 +268,11 @@ function showCurrentPhoto() {
     nextPhotoHint.style.display = "none"
   }
 
-  // Trigger animations
-  const magicalStar = document.getElementById("magicalStar")
+  // Simple fade-in animation
   const currentPhoto = document.getElementById("currentPhoto")
-
-  // Reset animations
-  magicalStar.style.animation = "none"
   currentPhoto.style.animation = "none"
-
-  // Trigger reflow
-  magicalStar.offsetHeight
-  currentPhoto.offsetHeight
-
-  // Start animations
-  magicalStar.style.animation = "star-emerge-and-circle 3s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
-  currentPhoto.style.animation = "photo-magical-appear 3s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+  currentPhoto.offsetHeight // Trigger reflow
+  currentPhoto.style.animation = "photo-fade-grow 2s ease-out"
 }
 
 // Start story sequence
