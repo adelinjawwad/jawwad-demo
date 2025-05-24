@@ -2,458 +2,421 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 25th Birthday Alexandra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 25th Birthday, Alexandra</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Parisienne&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.05); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .fade-in {
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typewriter 3s steps(40) 1s 1 normal both;
+        }
+        
         body {
-            font-family: 'Parisienne', cursive;
-            background-color: #fff5f7;
-            color: #881337;
+            font-family: 'Playfair Display', serif;
+            background-color: #fff9fb;
+            color: #5a3d4a;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
         
-        .handwriting {
+        .cursive {
             font-family: 'Dancing Script', cursive;
         }
         
-        .envelope {
-            transition: all 1s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
+        .photo-frame {
+            box-shadow: 0 10px 30px rgba(234, 153, 178, 0.3);
+            border: 12px solid white;
+            border-bottom: 40px solid white;
         }
         
-        .envelope-flap {
-            transform-origin: bottom;
-            transition: transform 1.5s ease;
+        .letter-paper {
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            box-shadow: 0 10px 30px rgba(234, 153, 178, 0.3);
         }
-        
-        .envelope.open .envelope-flap {
-            transform: rotateX(180deg);
-        }
-        
-        .letter {
-            transform: translateY(100%);
-            opacity: 0;
-            transition: all 1.5s ease 0.5s;
-        }
-        
-        .envelope.open .letter {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .polaroid {
-            position: absolute;
-            opacity: 0;
-            transform: scale(0.5) rotate(-10deg);
-            transition: all 1s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            background: white;
-            padding: 15px 15px 40px 15px;
-        }
-        
-        .polaroid.visible {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-        }
-        
-        .polaroid:nth-child(1) { transition-delay: 0.3s; }
-        .polaroid:nth-child(2) { transition-delay: 0.6s; }
-        .polaroid:nth-child(3) { transition-delay: 0.9s; }
         
         .confetti {
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: #f0f;
+            background-color: #f9a8d4;
             opacity: 0;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .heart {
-            position: absolute;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-        
-        .typing {
+        .section {
+            min-height: 100vh;
+            padding-top: 20px;
+            position: relative;
             overflow: hidden;
-            white-space: nowrap;
-            border-right: 2px solid #fb7185;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
         }
         
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            animation: bounce 2s infinite;
         }
         
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #fb7185 }
-        }
-        
-        .video-container {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 1s ease;
-        }
-        
-        .video-container.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        .surprise-btn {
-            transition: all 0.5s ease;
-            box-shadow: 0 0 20px rgba(251, 113, 133, 0.5);
-        }
-        
-        .surprise-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(251, 113, 133, 0.8);
-        }
-        
-        .audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            cursor: pointer;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
         }
     </style>
 </head>
 <body class="relative">
-    <!-- Audio Control -->
-    <div class="audio-control" id="audioControl">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M12 6a7.975 7.975 0 015.657 2.343m0 0a7.975 7.975 0 010 11.314m-11.314 0a7.975 7.975 0 010-11.314m0 0a7.975 7.975 0 015.657-2.343" />
-        </svg>
+    <!-- Music Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="musicToggle" class="bg-pink-100 hover:bg-pink-200 text-pink-700 rounded-full p-3 shadow-lg transition-all">
+            <i class="fas fa-music text-xl"></i>
+        </button>
     </div>
     
-    <!-- Landing Screen -->
-    <section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden" id="landing">
-        <!-- Floating hearts -->
-        <div id="heartsContainer"></div>
+    <!-- Scene 1: The Beating Heart -->
+    <section id="scene1" class="section flex flex-col items-center justify-center bg-gradient-to-b from-pink-50 to-pink-100">
+        <div class="heartbeat text-center">
+            <i class="fas fa-heart text-8xl md:text-9xl text-pink-500" style="text-shadow: 0 0 20px rgba(249, 168, 212, 0.8);"></i>
+            <p class="mt-8 text-xl md:text-2xl cursive text-pink-700 fade-in" style="animation-delay: 1s;">
+                This heart has been beating for 25 years...
+            </p>
+            <p class="mt-2 text-xl md:text-2xl cursive text-pink-700 fade-in" style="animation-delay: 2s;">
+                Just for you, Alexandra.
+            </p>
+        </div>
+        <div class="scroll-hint fade-in" style="animation-delay: 3s;">
+            <p class="text-pink-600 cursive">Scroll down to see what's inside...</p>
+            <i class="fas fa-chevron-down text-pink-500 mt-2"></i>
+        </div>
+    </section>
+    
+    <!-- Scene 2: Heart Explosion & Memory Reveal -->
+    <section id="scene2" class="section bg-gradient-to-b from-pink-100 to-pink-50 pt-20">
+        <div id="heartContainer" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <i id="mainHeart" class="fas fa-heart text-8xl text-pink-500"></i>
+        </div>
         
-        <div class="text-center px-4">
-            <div class="envelope relative w-64 h-40 mx-auto mb-8" id="envelope">
-                <div class="absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 rounded-lg"></div>
-                <div class="envelope-flap absolute top-0 left-0 right-0 h-20 bg-pink-300 origin-bottom rounded-t-lg" style="transform-style: preserve-3d; backface-visibility: hidden;"></div>
-                <div class="letter absolute bottom-0 left-0 right-0 h-32 bg-white mx-2 mb-2 rounded-lg shadow-md flex items-center justify-center">
-                    <span class="text-pink-500 text-lg">For Alexandra</span>
-                </div>
+        <div id="photo1" class="hidden absolute w-64 h-64 photo-frame bg-white mx-auto" style="left: 50%; transform: translateX(-50%); top: 20%;">
+            <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80" alt="Memory 1" class="w-full h-full object-cover">
+            <div class="absolute bottom-0 left-0 right-0 bg-white p-2 text-center cursive text-pink-700">
+                Our first date
             </div>
-            
-            <p class="text-2xl md:text-3xl text-pink-600 mb-12 floating">Scroll down to open your birthday letter...</p>
-            
-            <div class="animate-bounce">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
+        </div>
+        
+        <div id="photo2" class="hidden absolute w-64 h-64 photo-frame bg-white mx-auto" style="left: 30%; top: 40%;">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Memory 2" class="w-full h-full object-cover">
+            <div class="absolute bottom-0 left-0 right-0 bg-white p-2 text-center cursive text-pink-700">
+                Beach vacation
+            </div>
+        </div>
+        
+        <div id="photo3" class="hidden absolute w-64 h-64 photo-frame bg-white mx-auto" style="left: 60%; top: 40%;">
+            <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Memory 3" class="w-full h-full object-cover">
+            <div class="absolute bottom-0 left-0 right-0 bg-white p-2 text-center cursive text-pink-700">
+                Winter getaway
             </div>
         </div>
     </section>
     
-    <!-- Envelope Opening Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center relative" id="opening">
-        <div class="text-center px-4">
-            <div class="envelope relative w-64 h-40 mx-auto mb-8" id="openedEnvelope">
-                <div class="absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 rounded-lg"></div>
-                <div class="envelope-flap absolute top-0 left-0 right-0 h-20 bg-pink-300 origin-bottom rounded-t-lg" style="transform-style: preserve-3d; backface-visibility: hidden;"></div>
-                <div class="letter absolute bottom-0 left-0 right-0 h-32 bg-white mx-2 mb-2 rounded-lg shadow-md flex items-center justify-center">
-                    <span class="text-pink-500 text-lg">For Alexandra</span>
-                </div>
+    <!-- Scene 3: The Letter from the Heart -->
+    <section id="scene3" class="section flex items-center justify-center p-8 bg-pink-50">
+        <div id="letter" class="letter-paper max-w-md w-full p-8 rounded-lg hidden">
+            <h2 class="text-2xl cursive text-center text-pink-700 mb-6">My Dearest Alexandra,</h2>
+            
+            <div class="mb-4 overflow-hidden">
+                <p class="typewriter text-pink-800">As I sit down to write this letter, my heart overflows with love for you.</p>
             </div>
             
-            <!-- Polaroid Photos -->
-            <div class="relative h-64">
-                <div class="polaroid" style="top: 0; left: -100px; z-index: 2;">
-                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Placeholder" class="w-32 h-32 object-cover rounded-sm">
-                </div>
-                <div class="polaroid" style="top: 30px; left: 0; z-index: 3;">
-                    <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Placeholder" class="w-32 h-32 object-cover rounded-sm">
-                </div>
-                <div class="polaroid" style="top: 0; right: -100px; z-index: 2;">
-                    <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Placeholder" class="w-32 h-32 object-cover rounded-sm">
-                </div>
+            <div class="mb-4 overflow-hidden">
+                <p class="typewriter text-pink-800" style="animation-delay: 3.5s;">These past years with you have been the most beautiful of my life.</p>
+            </div>
+            
+            <div class="mb-4 overflow-hidden">
+                <p class="typewriter text-pink-800" style="animation-delay: 7s;">Your smile brightens my darkest days, your laughter is my favorite melody.</p>
+            </div>
+            
+            <div class="mb-4 overflow-hidden">
+                <p class="typewriter text-pink-800" style="animation-delay: 10.5s;">On your 25th birthday, I want you to know how special you are to me.</p>
+            </div>
+            
+            <div class="mb-4 overflow-hidden">
+                <p class="typewriter text-pink-800" style="animation-delay: 14s;">You are my love, my joy, my everything.</p>
+            </div>
+            
+            <div class="mt-8 overflow-hidden">
+                <p class="typewriter cursive text-right text-pink-700" style="animation-delay: 17s;">Forever yours,</p>
+                <p class="typewriter cursive text-right text-pink-700" style="animation-delay: 18.5s;">Jawwad</p>
             </div>
         </div>
     </section>
     
-    <!-- Letter Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center py-20 px-4" id="letter">
-        <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 relative" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');">
-            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-pink-200 via-pink-300 to-pink-200 rounded-t-lg"></div>
-            
-            <div class="text-center mb-6">
-                <h1 class="text-3xl font-bold text-pink-600 handwriting">My Dearest Alexandra,</h1>
-            </div>
-            
-            <div class="text-lg leading-relaxed mb-6 handwriting">
-                <p class="mb-4 typing">Happy 25th birthday to the most beautiful soul I've ever known.</p>
-                <p class="mb-4 opacity-0 fade-in" style="animation: fadeIn 1s ease 3s forwards;">Today we celebrate not just your birth, but the incredible person you've become.</p>
-                <p class="mb-4 opacity-0 fade-in" style="animation: fadeIn 1s ease 4s forwards;">Your kindness lights up every room, your laughter is my favorite melody, and your love is my greatest treasure.</p>
-                <p class="mb-4 opacity-0 fade-in" style="animation: fadeIn 1s ease 5s forwards;">This past year with you has been filled with moments I'll cherish forever - from our quiet mornings to our grand adventures.</p>
-                <p class="mb-4 opacity-0 fade-in" style="animation: fadeIn 1s ease 6s forwards;">As you enter this new chapter, know that my love for you grows stronger with each passing day.</p>
-                <p class="mb-4 opacity-0 fade-in" style="animation: fadeIn 1s ease 7s forwards;">May this year bring you as much joy as you bring to everyone around you.</p>
-            </div>
-            
-            <div class="text-right mt-8">
-                <p class="text-xl text-pink-600 handwriting">Forever yours,</p>
-                <p class="text-xl font-bold text-pink-600 handwriting">[Your Name]</p>
-            </div>
-            
-            <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-pink-200 via-pink-300 to-pink-200 rounded-b-lg"></div>
+    <!-- Scene 4: The Surprise Video -->
+    <section id="scene4" class="section flex flex-col items-center justify-center bg-gradient-to-b from-pink-50 to-pink-100">
+        <div id="videoInvite" class="text-center hidden">
+            <i class="fas fa-gift text-6xl text-pink-500 mb-6 floating"></i>
+            <h2 class="text-3xl cursive text-pink-700 mb-4">One more surprise for you</h2>
+            <button id="videoButton" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105">
+                Tap here for a surprise 🎥
+            </button>
         </div>
         
-        <!-- Confetti and Surprise Button -->
-        <div id="confettiContainer" class="absolute inset-0 pointer-events-none"></div>
-        
-        <button id="surpriseBtn" class="mt-12 px-8 py-3 bg-gradient-to-r from-pink-400 to-pink-600 text-white rounded-full text-xl font-semibold shadow-lg surprise-btn opacity-0 transition-opacity duration-1000" style="animation: fadeIn 1s ease 8s forwards;">
-            Click for a Surprise 🎥
-        </button>
+        <div id="videoContainer" class="hidden w-full max-w-lg p-4">
+            <div class="relative pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-2xl">
+                <iframe id="birthdayVideo" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
     </section>
     
-    <!-- Video Surprise Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center py-20 px-4 bg-pink-50" id="videoSurprise">
-        <div class="video-container max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden">
-            <div class="aspect-w-16 aspect-h-9">
-                <iframe id="birthdayVideo" class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="p-6 text-center">
-                <h2 class="text-3xl font-bold text-pink-600 mb-4 handwriting">A Special Message for You</h2>
-                <p class="text-lg text-pink-700">Watch this video for a personal birthday wish</p>
-            </div>
+    <!-- Final Message -->
+    <section id="finale" class="section flex flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-pink-200 relative">
+        <div class="stars absolute inset-0 overflow-hidden">
+            <!-- Stars will be added by JavaScript -->
         </div>
         
-        <div class="mt-16 text-center">
-            <p class="text-xl text-pink-600 handwriting">Made with love for Alexandra – 25 years of magic 💫</p>
+        <div class="text-center z-10">
+            <h1 class="text-4xl md:text-5xl cursive text-pink-700 mb-6">Happy 25th Birthday,</h1>
+            <h2 class="text-4xl md:text-5xl cursive text-pink-700 mb-8">Alexandra</h2>
+            <p class="text-xl md:text-2xl text-pink-600 mb-12">You are everything my heart beats for.</p>
+            
+            <div class="signature mt-12">
+                <p class="text-xl cursive text-pink-700">With love, from</p>
+                <p class="text-2xl cursive text-pink-700 mt-2">Jawwad <i class="fas fa-heart text-pink-500"></i></p>
+            </div>
         </div>
     </section>
+    
+    <!-- Audio Element (hidden) -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
     
     <script>
-        // Create floating hearts
-        function createHearts() {
-            const container = document.getElementById('heartsContainer');
-            const colors = ['#fb7185', '#f472b6', '#f9a8d4', '#fda4af'];
+        document.addEventListener('DOMContentLoaded', function() {
+            // Music toggle
+            const musicToggle = document.getElementById('musicToggle');
+            const bgMusic = document.getElementById('bgMusic');
+            let musicPlaying = false;
             
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                
-                // Random properties
-                const size = Math.random() * 20 + 10;
-                const posX = Math.random() * window.innerWidth;
-                const posY = Math.random() * window.innerHeight;
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 10 + 10;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                
-                heart.style.width = `${size}px`;
-                heart.style.height = `${size}px`;
-                heart.style.left = `${posX}px`;
-                heart.style.top = `${posY}px`;
-                heart.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
-                heart.style.color = color;
-                
-                // Heart icon
-                heart.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                `;
-                
-                container.appendChild(heart);
-            }
-        }
-        
-        // Create confetti
-        function createConfetti() {
-            const container = document.getElementById('confettiContainer');
-            const colors = ['#fb7185', '#f472b6', '#f9a8d4', '#fda4af', '#fecaca', '#fef08a'];
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                
-                // Random properties
-                const size = Math.random() * 10 + 5;
-                const posX = Math.random() * window.innerWidth;
-                const posY = Math.random() * window.innerHeight * 0.5;
-                const delay = Math.random() * 3;
-                const duration = Math.random() * 3 + 2;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                const shape = Math.random() > 0.5 ? '50%' : '0';
-                
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                confetti.style.left = `${posX}px`;
-                confetti.style.top = `-${size}px`;
-                confetti.style.backgroundColor = color;
-                confetti.style.borderRadius = shape;
-                confetti.style.opacity = '0.8';
-                
-                // Animation
-                confetti.style.animation = `fall ${duration}s linear ${delay}s forwards`;
-                
-                // Keyframes for falling
-                const keyframes = `
-                    @keyframes fall {
-                        0% {
-                            transform: translateY(0) rotate(0deg);
-                            opacity: 0.8;
-                        }
-                        100% {
-                            transform: translateY(${window.innerHeight + size}px) rotate(${Math.random() * 360}deg);
-                            opacity: 0;
-                        }
-                    }
-                `;
-                
-                // Add keyframes to style
-                const style = document.createElement('style');
-                style.innerHTML = keyframes;
-                document.head.appendChild(style);
-                
-                container.appendChild(confetti);
-            }
-        }
-        
-        // Scroll animations
-        function handleScroll() {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            
-            // Open envelope when scrolling past landing
-            if (scrollPosition > windowHeight * 0.3) {
-                document.getElementById('openedEnvelope').classList.add('open');
-                
-                // Show polaroids
-                const polaroids = document.querySelectorAll('.polaroid');
-                polaroids.forEach(polaroid => {
-                    polaroid.classList.add('visible');
-                });
-            }
-            
-            // Show letter when scrolling to letter section
-            const letterSection = document.getElementById('letter');
-            const letterSectionTop = letterSection.offsetTop;
-            
-            if (scrollPosition > letterSectionTop - windowHeight * 0.7) {
-                // Trigger confetti once
-                if (!document.getElementById('letter').hasAttribute('data-confetti')) {
-                    createConfetti();
-                    document.getElementById('letter').setAttribute('data-confetti', 'true');
-                    
-                    // Show surprise button after delay
-                    setTimeout(() => {
-                        document.getElementById('surpriseBtn').classList.remove('opacity-0');
-                    }, 1000);
-                }
-            }
-            
-            // Show video section when clicking surprise button
-            // (handled in event listener below)
-        }
-        
-        // Audio control
-        function setupAudio() {
-            const audioControl = document.getElementById('audioControl');
-            let audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // Replace with your audio file
-            audio.loop = true;
-            let isPlaying = false;
-            
-            audioControl.addEventListener('click', () => {
-                if (isPlaying) {
-                    audio.pause();
-                    audioControl.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-                        </svg>
-                    `;
+            musicToggle.addEventListener('click', function() {
+                if (musicPlaying) {
+                    bgMusic.pause();
+                    musicToggle.innerHTML = '<i class="fas fa-music text-xl"></i>';
+                    musicToggle.classList.remove('bg-pink-200');
+                    musicToggle.classList.add('bg-pink-100');
                 } else {
-                    audio.play();
-                    audioControl.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M12 6a7.975 7.975 0 015.657 2.343m0 0a7.975 7.975 0 010 11.314m-11.314 0a7.975 7.975 0 010-11.314m0 0a7.975 7.975 0 015.657-2.343" />
-                        </svg>
-                    `;
+                    bgMusic.play();
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up text-xl"></i>';
+                    musicToggle.classList.remove('bg-pink-100');
+                    musicToggle.classList.add('bg-pink-200');
                 }
-                isPlaying = !isPlaying;
+                musicPlaying = !musicPlaying;
             });
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            createHearts();
-            setupAudio();
             
-            // Scroll event
-            window.addEventListener('scroll', handleScroll);
+            // Scroll animations
+            let scene1 = document.getElementById('scene1');
+            let scene2 = document.getElementById('scene2');
+            let scene3 = document.getElementById('scene3');
+            let scene4 = document.getElementById('scene4');
+            let finale = document.getElementById('finale');
             
-            // Surprise button click
-            document.getElementById('surpriseBtn').addEventListener('click', () => {
-                document.getElementById('videoSurprise').scrollIntoView({ behavior: 'smooth' });
+            let mainHeart = document.getElementById('mainHeart');
+            let heartContainer = document.getElementById('heartContainer');
+            let photo1 = document.getElementById('photo1');
+            let photo2 = document.getElementById('photo2');
+            let photo3 = document.getElementById('photo3');
+            let letter = document.getElementById('letter');
+            let videoInvite = document.getElementById('videoInvite');
+            let videoContainer = document.getElementById('videoContainer');
+            let videoButton = document.getElementById('videoButton');
+            
+            // Create confetti elements
+            function createConfetti() {
+                const colors = ['#f9a8d4', '#f472b6', '#ec4899', '#fbcfe8', '#fce7f3'];
+                const container = document.getElementById('scene2');
                 
-                // Show video container with animation
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = Math.random() * 100 + 'vh';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    container.appendChild(confetti);
+                }
+                
+                const confettiElements = document.querySelectorAll('.confetti');
+                confettiElements.forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transition = `all ${Math.random() * 3 + 2}s ease`;
+                    el.style.transform = `translate(${Math.random() * 400 - 200}px, ${Math.random() * 500 + 200}px) rotate(${Math.random() * 720}deg)`;
+                });
+                
                 setTimeout(() => {
-                    document.querySelector('.video-container').classList.add('show');
-                }, 500);
-            });
+                    confettiElements.forEach(el => el.remove());
+                }, 5000);
+            }
             
-            // Typing effect for letter
-            const typingElements = document.querySelectorAll('.typing');
-            typingElements.forEach(el => {
-                const text = el.textContent;
-                el.textContent = '';
-                let i = 0;
-                const typing = setInterval(() => {
-                    if (i < text.length) {
-                        el.textContent += text.charAt(i);
-                        i++;
-                    } else {
-                        clearInterval(typing);
-                        el.style.borderRight = 'none';
+            // Create stars for finale
+            function createStars() {
+                const container = document.querySelector('.stars');
+                
+                for (let i = 0; i < 50; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'absolute bg-white rounded-full';
+                    star.style.width = Math.random() * 3 + 1 + 'px';
+                    star.style.height = star.style.width;
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.opacity = Math.random();
+                    star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite ${Math.random() * 5}s`;
+                    container.appendChild(star);
+                }
+                
+                // Add CSS for twinkling animation
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes twinkle {
+                        0% { opacity: 0.2; }
+                        50% { opacity: 1; transform: scale(1.5); }
+                        100% { opacity: 0.2; }
                     }
-                }, 50);
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.id === 'scene2') {
+                            // Heartbeat faster as user scrolls into scene2
+                            mainHeart.style.animation = 'heartbeat 0.8s infinite';
+                            
+                            // Listen for scroll within scene2
+                            let scrollCount = 0;
+                            const scene2 = entry.target;
+                            
+                            const handleScroll = () => {
+                                const rect = scene2.getBoundingClientRect();
+                                const inView = rect.top <= 0 && rect.bottom >= 0;
+                                
+                                if (inView) {
+                                    scrollCount++;
+                                    
+                                    // Make heart beat faster with each scroll
+                                    mainHeart.style.animationDuration = `${Math.max(0.3, 0.8 - scrollCount * 0.1)}s`;
+                                    
+                                    // Show photos one by one
+                                    if (scrollCount > 3 && !photo1.classList.contains('floating')) {
+                                        photo1.classList.remove('hidden');
+                                        photo1.classList.add('floating');
+                                        photo1.style.animationDelay = '0s';
+                                    }
+                                    
+                                    if (scrollCount > 6 && !photo2.classList.contains('floating')) {
+                                        photo2.classList.remove('hidden');
+                                        photo2.classList.add('floating');
+                                        photo2.style.animationDelay = '0.5s';
+                                    }
+                                    
+                                    if (scrollCount > 9 && !photo3.classList.contains('floating')) {
+                                        photo3.classList.remove('hidden');
+                                        photo3.classList.add('floating');
+                                        photo3.style.animationDelay = '1s';
+                                        
+                                        // Heart explosion
+                                        setTimeout(() => {
+                                            mainHeart.classList.add('hidden');
+                                            createConfetti();
+                                        }, 500);
+                                    }
+                                }
+                            };
+                            
+                            window.addEventListener('scroll', handleScroll);
+                        } 
+                        else if (entry.target.id === 'scene3') {
+                            // Show letter
+                            setTimeout(() => {
+                                letter.classList.remove('hidden');
+                                letter.classList.add('fade-in');
+                            }, 500);
+                        }
+                        else if (entry.target.id === 'scene4') {
+                            // Show video invite
+                            setTimeout(() => {
+                                videoInvite.classList.remove('hidden');
+                                videoInvite.classList.add('fade-in');
+                            }, 500);
+                        }
+                        else if (entry.target.id === 'finale') {
+                            // Create stars
+                            createStars();
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            // Observe all scenes
+            observer.observe(scene2);
+            observer.observe(scene3);
+            observer.observe(scene4);
+            observer.observe(finale);
+            
+            // Video button click
+            videoButton.addEventListener('click', function() {
+                videoInvite.classList.add('hidden');
+                videoContainer.classList.remove('hidden');
+                videoContainer.classList.add('fade-in');
+                
+                // Scroll to video
+                setTimeout(() => {
+                    videoContainer.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
             });
         });
-        
-        // Fade-in animation
-        const fadeIn = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        `;
-        
-        const style = document.createElement('style');
-        style.innerHTML = fadeIn;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
