@@ -1,135 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Happy 25th Birthday, My Love</title>
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-		<link href="script.css" rel="stylesheet">
-	</head>
-	<body>
-		<div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-50 to-rose-50 flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
-			<div class="heart-loader"></div>
-			<div id="loading-text" class="loading-text">
-				Preparing your magical gift...
-			</div>
-			<div class="loading-bar">
-				<div id="loading-progress" class="loading-progress"></div>
-			</div>
-		</div>
-		<div id="main-content" class="hidden">
-			<section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-				<div class="glow" style="top: 20%; left: 10%;"></div>
-				<div class="glow" style="bottom: 15%; right: 10%;"></div>
-				<div id="confetti-container" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: 1;">
-</div>
-
-				<div class="text-center px-4">
-					<div id="age-display" class="number-25 mb-4">
-						25
-					</div>
-					<h1 id="birthday-text" class="handwriting text-5xl md:text-6xl text-pink-600 opacity-0 mb-6">Happy Birthday, my love!</h1>
-					<p class="text-xl text-pink-500 opacity-0" id="scroll-hint">Scroll down to see your gift...</p>
-				</div>
-				<div class="scroll-hint">
-					<span>Scroll</span>
-				</div>
-			</section>
-			<div class="max-w-4xl mx-auto px-4 py-20">
-				<section class="section mb-20">
-					<div class="grid md:grid-cols-2 gap-8 items-center">
-						<div class="photo-frame" data-photo="1">
-							<div class="photo-placeholder"></div>
-						</div>
-						<div class="love-note">
-							<h2 class="text-2xl font-bold text-pink-600 mb-4">The Beginning of Us</h2>
-							<p class="text-gray-700">From the moment we met, I knew there was something special about you. This photo captures the beginning of our beautiful journey together. Every day since then has been a gift I cherish deeply.</p>
-						</div>
-					</div>
-				</section>
-				<section class="section mb-20">
-					<div class="grid md:grid-cols-2 gap-8 items-center">
-						<div class="love-note order-2 md:order-1">
-							<h2 class="text-2xl font-bold text-pink-600 mb-4">Your Beautiful Smile</h2>
-							<p class="text-gray-700">Your smile lights up my world like nothing else. Even on my darkest days, the memory of your smile gives me strength and happiness. I fall in love with you all over again every time you smile.</p>
-						</div>
-						<div class="photo-frame order-1 md:order-2" data-photo="2">
-							<div class="photo-placeholder"></div>
-						</div>
-					</div>
-				</section>
-				<section class="section mb-20">
-					<div class="grid md:grid-cols-2 gap-8 items-center">
-						<div class="photo-frame" data-photo="3">
-							<div class="photo-placeholder"></div>
-						</div>
-						<div class="love-note">
-							<h2 class="text-2xl font-bold text-pink-600 mb-4">Our Adventures</h2>
-							<p class="text-gray-700">Every moment with you is an adventure. Whether we're traveling to new places or just cuddled up at home, life with you is always exciting. I can't wait for all the adventures we'll share in the years to come.</p>
-						</div>
-					</div>
-				</section>
-				<section class="section mb-20">
-					<div class="grid md:grid-cols-2 gap-8 items-center">
-						<div class="love-note order-2 md:order-1">
-							<h2 class="text-2xl font-bold text-pink-600 mb-4">Your Loving Heart</h2>
-							<p class="text-gray-700">Your kindness and compassion amaze me every day. The way you care for others, the love you show me - it's the most beautiful thing in my life. Your heart is pure gold, and I'm so lucky to be loved by you.</p>
-						</div>
-						<div class="photo-frame order-1 md:order-2" data-photo="4">
-							<div class="photo-placeholder"></div>
-						</div>
-					</div>
-				</section>
-				<section class="section mb-20">
-					<div class="grid md:grid-cols-2 gap-8 items-center">
-						<div class="photo-frame" data-photo="5">
-							<div class="photo-placeholder"></div>
-						</div>
-						<div class="love-note">
-							<h2 class="text-2xl font-bold text-pink-600 mb-4">Our Connection</h2>
-							<p class="text-gray-700">What we have is rare and precious. The way we understand each other without words, the comfort we find in each other's arms - it's magic. I've never felt this connected to anyone, and I know I never will with anyone else.</p>
-						</div>
-					</div>
-				</section>
-			</div>
-			<section class="min-h-[50vh] flex flex-col items-center justify-center bg-gradient-to-b from-pink-50 to-rose-100 py-20 px-4 relative">
-				<div class="glow" style="top: 10%; left: 20%;"></div>
-				<div class="glow" style="bottom: 10%; right: 20%;"></div>
-				<div class="text-center max-w-2xl mx-auto">
-					<h2 class="handwriting text-4xl text-pink-600 mb-6">My Dearest Love,</h2>
-					<p class="text-xl text-gray-700 mb-10">On your 25th birthday, I want you to know how incredibly special you are to me. You've brought more joy, love, and meaning into my life than I ever thought possible. Here's to celebrating you today and every day.</p>
-					<button id="surprise-btn" class="surprise-btn">Your Secret Surprise</button>
-				</div>
-			</section>
-		</div>
-		<div id="fullscreen-photo" class="fullscreen-photo">
-			<div class="close-fullscreen"></div>
-			<img src="" alt="Fullscreen photo">
-		</div>
-		<div id="audio-control" class="audio-control"></div>
-		<audio id="bg-music" loop>
-			<source src="you.mp3" type="audio/mpeg">
-		</audio>
-		<div id="surprise-modal" class="modal">
-			<div class="modal-content">
-				<span class="close-modal">×</span>
-				<h2 class="text-2xl font-bold text-pink-600 mb-4">Happy Birthday, My Love!</h2>
-				<p class="mb-4">This is your special surprise message. I love you more than words can say.</p>
-				<div class="video-placeholder">
-					[Your Video Will Appear Here]
-				</div>
-				<p class="text-sm text-gray-500">This is where your special video message will play. Replace the placeholder with your actual video.</p>
-			</div>
-		</div>
-		<script src="script.js"></script>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 25th Birthday, My Love</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            touch-action: pan-y;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .great-vibes {
+            font-family: 'Great Vibes', cursive;
+        }
+        
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .bg-gradient-romantic {
+            background: linear-gradient(135deg, #FADADD 0%, #FFFDF7 100%);
+        }
+        
+        .heart {
+            width: 60px;
+            height: 60px;
+            background-color: #ff6b8b;
+            transform: rotate(45deg);
+            position: relative;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .heart:before, .heart:after {
+            content: '';
+            width: 60px;
+            height: 60px;
+            background-color: #ff6b8b;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart:before {
+            top: -30px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -30px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.1); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+        
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background-color: #ff6b8b;
+            border-radius: 2px;
+            transition: width 4s ease-out;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff6b8b;
+            opacity: 0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 80%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .modal-btn.yes {
+            background-color: #ff6b8b;
+            color: white;
+        }
+        
+        .modal-btn.no {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .three-d-text {
+            color: #ff6b8b;
+            text-shadow: 
+                1px 1px 0px #ff8fa3,
+                2px 2px 0px #ffb7c5,
+                3px 3px 0px #ffd6e0,
+                4px 4px 0px #fff0f3;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .love-section {
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background-color 1s ease;
+        }
+        
+        .love-photo {
+            width: 90%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .love-photo:hover {
+            transform: scale(1.02);
+        }
+        
+        .love-message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 20px auto;
+            max-width: 350px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fullscreen-photo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .fullscreen-photo.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .fullscreen-photo img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+        
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #ff6b8b;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .audio-control svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        .swipe-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            animation: fadeInOut 2s infinite;
+            z-index: 5;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid #ff6b8b;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 1px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #ff6b8b; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-romantic text-gray-800 overflow-x-hidden">
+    <!-- Initial Modal -->
+    <div id="initialModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-6">Are you ready?</h2>
+            <div class="flex justify-center">
+                <button class="modal-btn yes">Yes</button>
+                <button class="modal-btn no">No</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Second Modal -->
+    <div id="secondModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-6">Are you sure?</h2>
+            <button class="modal-btn yes">Yes</button>
+        </div>
+    </div>
+    
+    <!-- Funny Modal -->
+    <div id="funnyModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-xl font-bold mb-6">You pressed NO!? 😱</h2>
+            <p class="mb-6">That's illegal on birthdays!</p>
+        </div>
+    </div>
+    
+    <!-- Loading Section -->
+    <div id="loadingSection" class="fixed inset-0 flex flex-col justify-center items-center z-50 bg-gradient-romantic">
+        <div class="heart mb-8"></div>
+        <p class="mb-4 text-gray-700">Loading your magical gift...</p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div id="mainContent" class="opacity-0">
+        <!-- Intro Section -->
+        <section id="intro" class="love-section flex flex-col justify-center items-center text-center">
+            <h1 class="text-5xl md:text-6xl playfair three-d-text mb-6">25 Years of You</h1>
+            <p class="text-xl md:text-2xl great-vibes mb-4">Happy Birthday, my love...</p>
+            <p class="text-lg md:text-xl great-vibes mb-8">This is just the beginning of forever 💌</p>
+            <div class="swipe-hint">Swipe to begin your surprise...</div>
+        </section>
+        
+        <!-- Love Story Sections -->
+        <section class="love-section bg-[#FF9A8B]">
+            <div class="love-message text-center great-vibes text-2xl text-white">
+                Every day with you is a new adventure in love...
+            </div>
+            <img src="https://via.placeholder.com/350x500/FF9A8B/FFFFFF?text=Your+Photo" alt="Romantic moment" class="love-photo">
+        </section>
+        
+        <section class="love-section bg-[#FFE8C2]">
+            <img src="https://via.placeholder.com/350x500/FFE8C2/FFFFFF?text=Your+Photo" alt="Romantic moment" class="love-photo">
+            <div class="love-message text-center playfair text-xl text-gray-800">
+                You're my sunshine, my favorite hello, my hardest goodbye.
+            </div>
+        </section>
+        
+        <section class="love-section bg-[#FADADD]">
+            <div class="love-message text-center great-vibes text-2xl text-gray-800">
+                Your smile still gives me butterflies.
+            </div>
+            <img src="https://via.placeholder.com/350x500/FADADD/FFFFFF?text=Your+Photo" alt="Romantic moment" class="love-photo">
+        </section>
+        
+        <section class="love-section bg-[#FFFDF7]">
+            <img src="https://via.placeholder.com/350x500/FFFDF7/FFFFFF?text=Your+Photo" alt="Romantic moment" class="love-photo">
+            <div class="love-message text-center playfair text-xl text-gray-800">
+                I fall in love with you more every single day.
+            </div>
+        </section>
+        
+        <!-- Final Letter Section -->
+        <section class="love-section bg-gradient-to-b from-[#FADADD] to-[#FFFDF7]">
+            <div class="max-w-md mx-auto p-6 bg-white bg-opacity-80 rounded-xl shadow-lg">
+                <h2 class="text-2xl playfair font-bold mb-4 text-center text-gray-800">To My Love,</h2>
+                <p class="mb-4">I made this little world for you because you make mine beautiful every day.</p>
+                <p class="mb-4">Thank you for being my always, for your laughter that lights up my world, and for your love that makes every moment special.</p>
+                <p class="mb-4">On your 25th birthday, I want you to know that you're the most amazing person I've ever known, and I'm so grateful to be sharing this life with you.</p>
+                <p class="great-vibes text-xl text-center mt-6">I love you more than words can say.</p>
+                <p class="text-right mt-8 playfair">Forever yours,</p>
+                <p class="text-right playfair">[Your Name]</p>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Fullscreen Photo Viewer -->
+    <div class="fullscreen-photo">
+        <img src="" alt="" id="fullscreenImg">
+    </div>
+    
+    <!-- Audio Control -->
+    <div class="audio-control" id="audioControl">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path>
+        </svg>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show initial modal
+            const initialModal = document.getElementById('initialModal');
+            const secondModal = document.getElementById('secondModal');
+            const funnyModal = document.getElementById('funnyModal');
+            const loadingSection = document.getElementById('loadingSection');
+            const mainContent = document.getElementById('mainContent');
+            const audioControl = document.getElementById('audioControl');
+            
+            initialModal.style.display = 'flex';
+            
+            // Modal interactions
+            document.querySelectorAll('.modal-btn.yes').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.closest('#secondModal')) {
+                        // Start the loading animation
+                        initialModal.style.display = 'none';
+                        secondModal.style.display = 'none';
+                        
+                        // Fill loading bar
+                        document.querySelector('.loading-progress').style.width = '100%';
+                        
+                        // After loading completes
+                        setTimeout(() => {
+                            // Heart burst animation
+                            const heart = document.querySelector('.heart');
+                            heart.style.animation = 'none';
+                            gsap.to(heart, {
+                                scale: 5,
+                                duration: 1,
+                                ease: 'power2.out',
+                                onComplete: createConfetti
+                            });
+                            
+                            // Hide loading section
+                            setTimeout(() => {
+                                gsap.to(loadingSection, {
+                                    opacity: 0,
+                                    duration: 0.5,
+                                    onComplete: () => {
+                                        loadingSection.style.display = 'none';
+                                        showMainContent();
+                                    }
+                                });
+                            }, 1500);
+                        }, 4000);
+                    } else {
+                        initialModal.style.display = 'none';
+                        secondModal.style.display = 'flex';
+                    }
+                });
+            });
+            
+            document.querySelector('.modal-btn.no').addEventListener('click', function() {
+                initialModal.style.display = 'none';
+                funnyModal.style.display = 'flex';
+                
+                setTimeout(() => {
+                    funnyModal.style.display = 'none';
+                    initialModal.style.display = 'flex';
+                }, 2000);
+            });
+            
+            function createConfetti() {
+                const colors = ['#ff6b8b', '#ff8fa3', '#ffb7c5', '#ffd6e0'];
+                const heart = document.querySelector('.heart');
+                
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${50 + Math.random() * 10 - 5}%`;
+                    confetti.style.top = `${50 + Math.random() * 10 - 5}%`;
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    heart.appendChild(confetti);
+                    
+                    gsap.to(confetti, {
+                        x: `${Math.random() * 400 - 200}px`,
+                        y: `${Math.random() * 400 - 200}px`,
+                        opacity: 1,
+                        scale: Math.random() * 1.5 + 0.5,
+                        duration: 1.5,
+                        ease: 'power2.out'
+                    });
+                    
+                    setTimeout(() => {
+                        gsap.to(confetti, {
+                            opacity: 0,
+                            duration: 0.5
+                        });
+                    }, 1000);
+                }
+            }
+            
+            function showMainContent() {
+                gsap.to(mainContent, {
+                    opacity: 1,
+                    duration: 1
+                });
+                
+                // Animate in messages
+                gsap.utils.toArray('.love-message').forEach((msg, i) => {
+                    gsap.from(msg, {
+                        scrollTrigger: {
+                            trigger: msg,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 0,
+                        y: 20,
+                        duration: 1,
+                        delay: i * 0.1
+                    });
+                });
+                
+                // Show audio control
+                setTimeout(() => {
+                    gsap.to(audioControl, {
+                        opacity: 1,
+                        duration: 0.5
+                    });
+                }, 2000);
+                
+                // Initialize ScrollTrigger
+                gsap.registerPlugin(ScrollTrigger);
+                ScrollTrigger.refresh();
+            }
+            
+            // Photo fullscreen functionality
+            const photos = document.querySelectorAll('.love-photo');
+            const fullscreenPhoto = document.querySelector('.fullscreen-photo');
+            const fullscreenImg = document.getElementById('fullscreenImg');
+            
+            photos.forEach(photo => {
+                photo.addEventListener('click', function() {
+                    fullscreenImg.src = this.src;
+                    fullscreenPhoto.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            fullscreenPhoto.addEventListener('click', function() {
+                this.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Audio control functionality
+            let audio = new Audio(); // User will provide their audio file
+            let isPlaying = false;
+            
+            audioControl.addEventListener('click', function() {
+                if (isPlaying) {
+                    audio.pause();
+                    this.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>';
+                } else {
+                    audio.play();
+                    this.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+                }
+                isPlaying = !isPlaying;
+            });
+            
+            // Typewriter effect for intro text
+            setTimeout(() => {
+                document.querySelectorAll('#intro p').forEach((p, i) => {
+                    p.style.overflow = 'hidden';
+                    p.style.borderRight = '2px solid #ff6b8b';
+                    p.style.whiteSpace = 'nowrap';
+                    p.style.width = '0';
+                    
+                    gsap.to(p, {
+                        width: '100%',
+                        duration: 2,
+                        delay: i * 2,
+                        ease: 'power2.out',
+                        onComplete: () => {
+                            p.style.borderRight = 'none';
+                        }
+                    });
+                });
+            }, 500);
+        });
+    </script>
+</body>
 </html>
