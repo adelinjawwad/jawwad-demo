@@ -1,226 +1,253 @@
-document.addEventListener('DOMContentLoaded', function () {
-	// --- Typing loading text ---
-	const loadingText = document.getElementById('loading-text');
-	const textToType = "Preparing your magical gift...";
-	let charIndex = 0;
-
-	function typeLoadingText() {
-		if (charIndex < textToType.length) {
-			loadingText.textContent += textToType.charAt(charIndex);
-			charIndex++;
-			setTimeout(typeLoadingText, 50 + Math.random() * 50);
-		} else {
-			loadingText.style.borderRight = 'none';
-			startLoadingProgress();
-		}
-	}
-
-	loadingText.textContent = '';
-typeLoadingText();
-
-	// --- Progress bar logic ---
-	function startLoadingProgress() {
-		let progress = 0;
-		const loadingInterval = setInterval(() => {
-			progress += Math.random() * 5;
-			if (progress > 100) progress = 100;
-			document.getElementById('loading-progress').style.width = progress + '%';
-
-			if (progress >= 100) {
-				clearInterval(loadingInterval);
-				setTimeout(() => {
-					gsap.to("#loading-screen", {
-						opacity: 0,
-						duration: 0.8,
-						ease: "power2.inOut",
-						onComplete: function () {
-							document.getElementById('loading-screen').style.display = 'none';
-							document.getElementById('main-content').style.display = 'block';
-							initAnimations();
-						}
-					});
-				}, 500);
-			}
-		}, 100);
-	}
-
-	// --- Audio control ---
-	const audioControl = document.getElementById('audio-control');
-	const bgMusic = document.getElementById('bg-music');
-
-	audioControl.addEventListener('click', () => {
-		if (bgMusic.paused) {
-			bgMusic.play().then(() => {
-				audioControl.innerHTML = '<i class="fas fa-music"></i>';
-			}).catch(e => console.log('Audio playback prevented:', e));
-		} else {
-			bgMusic.pause();
-			audioControl.innerHTML = '<i class="fas fa-music-slash"></i>';
-		}
-	});
-
-	document.addEventListener('click', () => {
-		if (bgMusic.paused) {
-			bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
-		}
-	}, { once: true });
-
-	// --- Surprise modal logic ---
-	const surpriseBtn = document.getElementById('surprise-btn');
-	const surpriseModal = document.getElementById('surprise-modal');
-	const closeModal = document.querySelector('.close-modal');
-
-	surpriseBtn.addEventListener('click', () => {
-		surpriseModal.style.display = 'flex';
-		setTimeout(() => surpriseModal.classList.add('show'), 10);
-	});
-
-	closeModal.addEventListener('click', () => {
-		surpriseModal.classList.remove('show');
-		setTimeout(() => surpriseModal.style.display = 'none', 300);
-	});
-
-	window.addEventListener('click', event => {
-		if (event.target === surpriseModal) {
-			surpriseModal.classList.remove('show');
-			setTimeout(() => surpriseModal.style.display = 'none', 300);
-		}
-	});
-
-	// --- Fullscreen photo viewer ---
-	const photoFrames = document.querySelectorAll('.photo-frame');
-	const fullscreenPhoto = document.getElementById('fullscreen-photo');
-	const fullscreenImg = fullscreenPhoto.querySelector('img');
-	const closeFullscreen = fullscreenPhoto.querySelector('.close-fullscreen');
-
-	photoFrames.forEach(frame => {
-		frame.addEventListener('click', () => {
-			fullscreenImg.src = frame.querySelector('img').src || 'https://via.placeholder.com/1000x1000/ffb8c6/ff4757?text=Our+Photo';
-			fullscreenPhoto.classList.add('active');
-			document.body.style.overflow = 'hidden';
-		});
-	});
-
-	closeFullscreen.addEventListener('click', () => {
-		fullscreenPhoto.classList.remove('active');
-		document.body.style.overflow = '';
-	});
-
-	// --- Floating heart generator ---
-	function createFloatingHeart() {
-		const heart = document.createElement('div');
-		const icon = document.createElement('i');
-		icon.className = '<i class="fa-solid fa-heart"></i>';
-		icon.style.color = 'red';
-		icon.style.fontSize = (15 + Math.random() * 25) + 'px';
-
-		heart.appendChild(icon);
-		heart.style.position = 'fixed';
-		heart.style.left = Math.random() * 100 + 'vw';
-		heart.style.top = '100vh';
-		heart.style.opacity = '0.7';
-		heart.style.zIndex = '10';
-		heart.style.pointerEvents = 'none';
-		heart.style.animation = 'floatUp 4s linear forwards';
-
-		document.body.appendChild(heart);
-
-		heart.addEventListener('animationend', () => heart.remove());
-	}
-
-	// --- Confetti generator ---
-function createConfetti() {
-	const container = document.getElementById('confetti-container');
-	const colors = ['#ff6b8b', '#ffb8c6', '#ff4757', '#ff8d8d', '#ffc3a0'];
-
-	for (let i = 0; i < 10; i++) { // 10 confetti per apel, ca să fie mai fluid
-		const confetti = document.createElement('div');
-		confetti.className = 'confetti';
-		confetti.style.position = 'absolute';  // important
-		confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-		confetti.style.left = Math.random() * 100 + 'vw';
-		confetti.style.top = '-10px';
-		confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-
-		if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
-
-		const size = 6 + Math.random() * 12;
-		confetti.style.width = size + 'px';
-		confetti.style.height = size + 'px';
-
-		container.appendChild(confetti);
-
-		gsap.to(confetti, {
-			y: window.innerHeight + 10,
-			x: Math.random() * 200 - 100,
-			rotation: Math.random() * 360,
-			opacity: 0.8,
-			duration: 2 + Math.random() * 4,
-			delay: Math.random() * 3,
-			ease: 'power1.out',
-			onComplete: () => confetti.remove()
-		});
-	}
-}
-
-// Porneste confetti constant
-setInterval(createConfetti, 300);
-
-
-	// --- Final animations ---
-	function initAnimations() {
-		gsap.registerPlugin(ScrollTrigger, TextPlugin);
-
-		gsap.to('.number-25', {
-			opacity: 1,
-			y: 0,
-			duration: 1.2,
-			ease: 'elastic.out(1, 0.5)'
-		});
-
-		gsap.to("#birthday-text", {
-			duration: 2,
-			text: "Happy Birthday, my love!",
-			ease: "none",
-			delay: 0.5
-		});
-
-		gsap.to("#birthday-text", {
-			opacity: 1,
-			duration: 0.5,
-			delay: 0.5
-		});
-
-		gsap.to("#scroll-hint", {
-			opacity: 1,
-			delay: 2.5,
-			duration: 1
-		});
-
-		createConfetti();
-
-		// Hearts on loop + random ones
-		setInterval(createFloatingHeart, 500);
-		setInterval(() => {
-			if (Math.random() > 0.7) createFloatingHeart();
-		}, 3000);
-
-		const sections = document.querySelectorAll('.section');
-		sections.forEach((section, index) => {
-			gsap.to(section, {
-				scrollTrigger: {
-					trigger: section,
-					start: 'top 80%',
-					toggleActions: 'play none none none'
-				},
-				opacity: 1,
-				y: 0,
-				duration: 1,
-				delay: index * 0.1,
-				ease: 'power2.out'
-			});
-		});
-
-		ScrollTrigger.refresh();
-	}
-});
+// Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Loading animation
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    showBirthdayHeader();
+                }, 500);
+            }, 3000);
+            
+            // Create floating hearts
+            createFloatingHearts();
+            
+            // Create twinkling stars
+            createTwinkles();
+            
+            // Timeline data
+            const timelineData = [
+                {
+                    photo: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    date: "Our First Date",
+                    message: "The day my life changed forever. I knew from the moment I saw you that you were special."
+                },
+                {
+                    photo: "https://images.unsplash.com/photo-1529333164857-4230a53a2971?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    date: "Our First Trip",
+                    message: "Exploring new places with you by my side made every moment magical."
+                },
+                {
+                    photo: "https://images.unsplash.com/photo-1529333164857-4230a53a2971?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    date: "Your Smile",
+                    message: "Your smile brightens even my darkest days. It's my favorite thing in the world."
+                },
+                {
+                    photo: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                    date: "Today",
+                    message: "Every day I fall more in love with you. Happy 25th birthday to the most amazing woman."
+                }
+            ];
+            
+            // Generate timeline
+            generateTimeline(timelineData);
+            
+            // Set up intersection observers for fade-in effects
+            setupObservers();
+            
+            // Gift button event
+            document.getElementById('gift-button').addEventListener('click', showLoveLetter);
+            
+            // Close love letter event
+            document.getElementById('close-letter').addEventListener('click', hideLoveLetter);
+        });
+        
+        function showBirthdayHeader() {
+            const header = document.getElementById('birthday-header');
+            header.style.opacity = '1';
+            
+            // Create confetti effect for the number 25
+            createConfettiEffect(document.getElementById('number-25'));
+        }
+        
+        function createConfettiEffect(container) {
+            const colors = ['#ff6b9e', '#ff9ec6', '#ffb3d1', '#ffd6e7', '#ffecf2'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.width = Math.random() * 8 + 4 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                container.appendChild(confetti);
+                
+                // Animate confetti
+                setTimeout(() => {
+                    confetti.style.opacity = '1';
+                    confetti.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 + 100}px) rotate(${Math.random() * 360}deg)`;
+                    confetti.style.transition = `all ${Math.random() * 2 + 1}s ease-out`;
+                    
+                    setTimeout(() => {
+                        confetti.style.opacity = '0';
+                    }, 1000);
+                }, Math.random() * 500);
+            }
+        }
+        
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart text-pink-400';
+                heart.innerHTML = '❤️';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.animationDuration = Math.random() * 10 + 5 + 's';
+                
+                container.appendChild(heart);
+                
+                // Animate heart
+                setTimeout(() => {
+                    heart.style.opacity = '0.7';
+                    heart.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * -100 - 50}px)`;
+                    heart.style.transition = `all ${Math.random() * 10 + 10}s linear`;
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '0';
+                        setTimeout(() => {
+                            heart.style.left = Math.random() * 100 + '%';
+                            heart.style.top = '100vh';
+                            heart.style.opacity = '0.7';
+                            heart.style.transform = 'translate(0, 0)';
+                            
+                            // Repeat animation
+                            const animateHeart = () => {
+                                heart.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * -100 - 50}px)`;
+                                setTimeout(() => {
+                                    heart.style.opacity = '0';
+                                    setTimeout(() => {
+                                        heart.style.left = Math.random() * 100 + '%';
+                                        heart.style.top = '100vh';
+                                        heart.style.opacity = '0.7';
+                                        heart.style.transform = 'translate(0, 0)';
+                                        setTimeout(animateHeart, 1000);
+                                    }, 1000);
+                                }, 10000);
+                            };
+                            
+                            setTimeout(animateHeart, 1000);
+                        }, 1000);
+                    }, 10000);
+                }, Math.random() * 2000);
+            }
+        }
+        
+        function createTwinkles() {
+            const container = document.getElementById('twinkles-container');
+            const twinkleCount = 20;
+            
+            for (let i = 0; i < twinkleCount; i++) {
+                const twinkle = document.createElement('div');
+                twinkle.className = 'twinkle absolute rounded-full bg-white';
+                twinkle.style.width = Math.random() * 4 + 2 + 'px';
+                twinkle.style.height = twinkle.style.width;
+                twinkle.style.left = Math.random() * 100 + '%';
+                twinkle.style.top = Math.random() * 100 + 'vh';
+                twinkle.style.animationDelay = Math.random() * 2 + 's';
+                
+                container.appendChild(twinkle);
+            }
+        }
+        
+        function generateTimeline(data) {
+            const timeline = document.getElementById('timeline');
+            
+            data.forEach((item, index) => {
+                const isEven = index % 2 === 0;
+                
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'fade-in timeline-item';
+                
+                timelineItem.innerHTML = `
+                    <div class="flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-6">
+                        <div class="w-full md:w-2/3 photo-card rounded-xl overflow-hidden border-2 border-rose-200 shadow-lg bg-white">
+                            <img src="${item.photo}" alt="${item.date}" class="w-full h-auto object-cover">
+                        </div>
+                        <div class="w-full md:w-1/3">
+                            <div class="bg-white bg-opacity-80 backdrop-blur-sm rounded-xl p-6 border border-rose-100 shadow-md">
+                                <h3 class="text-2xl font-dancing text-rose-700 mb-2">${item.date}</h3>
+                                <p class="text-rose-800">${item.message}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                timeline.appendChild(timelineItem);
+            });
+        }
+        
+        function setupObservers() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        function showLoveLetter() {
+            // Create heart explosion effect
+            createHeartExplosion();
+            
+            // Show love letter
+            const loveLetter = document.getElementById('love-letter');
+            loveLetter.style.opacity = '1';
+            loveLetter.style.pointerEvents = 'auto';
+        }
+        
+        function hideLoveLetter() {
+            const loveLetter = document.getElementById('love-letter');
+            loveLetter.style.opacity = '0';
+            loveLetter.style.pointerEvents = 'none';
+        }
+        
+        function createHeartExplosion() {
+            const button = document.getElementById('gift-button');
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart text-pink-400 absolute';
+                heart.innerHTML = '❤️';
+                heart.style.fontSize = Math.random() * 24 + 16 + 'px';
+                heart.style.left = centerX + 'px';
+                heart.style.top = centerY + 'px';
+                heart.style.opacity = '0';
+                
+                document.body.appendChild(heart);
+                
+                // Animate heart
+                setTimeout(() => {
+                    heart.style.opacity = '1';
+                    heart.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * -200 - 100}px) rotate(${Math.random() * 360}deg)`;
+                    heart.style.transition = `all ${Math.random() * 1 + 0.5}s ease-out`;
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '0';
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 1000);
+                    }, 1000);
+                }, i * 50);
+            }
+        }
