@@ -105,7 +105,7 @@
         video.play();
     });
 
-    document.addEventLis2tener('click', () => {
+    document.addEventListener('click', () => {
   const music = document.getElementById('background-music');
   music.play().catch(() => {}); // încearcă să pornească muzica
 }, { once: true });
