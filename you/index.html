@@ -3,190 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday My Love ❤️</title>
+    <title>Your Magical Gift</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes confetti {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(255, 117, 140, 0.7); }
+            50% { text-shadow: 0 0 20px rgba(255, 117, 140, 0.9); }
+            100% { text-shadow: 0 0 5px rgba(255, 117, 140, 0.7); }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s infinite;
+        }
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        .slide-in-left {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+        .slide-in-right {
+            animation: slideInRight 1s ease-out forwards;
+        }
+        .glow-text {
+            animation: glow 2s infinite;
+        }
+        
+        .letter-paper {
+            background: linear-gradient(to bottom, #fff9f9 0%, #fff 100%);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .letter-paper:hover {
+            transform: rotateY(5deg) rotateX(2deg);
+        }
+        .letter-paper:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .photo-container {
+            perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+        .photo-left {
+            transform: rotate(-5deg) translateX(-10px);
+            transition: transform 0.5s ease;
+            box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .photo-right {
+            transform: rotate(5deg) translateX(10px);
+            transition: transform 0.5s ease;
+            box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .photo-left:hover, .photo-right:hover {
+            transform: rotate(0deg) scale(1.05) translateZ(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+        
+        .video-container {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        .video-container:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-30px) translateX(-50%);}
+            60% {transform: translateY(-15px) translateX(-50%);}
+        }
+    </style>
 </head>
-<body class="relative overflow-x-hidden">
-    <!-- Loading Animation -->
-    <div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 z-50 flex flex-col items-center justify-center transition-all duration-1000">
-        <div class="text-center">
-            <!-- Animated hearts floating in background -->
-            <div class="floating-hearts">
-                <div class="heart heart-1">💖</div>
-                <div class="heart heart-2">💕</div>
-                <div class="heart heart-3">💗</div>
-                <div class="heart heart-4">💝</div>
-                <div class="heart heart-5">💘</div>
+
+<body class="bg-pink-50 font-sans overflow-x-hidden">
+  
+  <audio id="finalSound" src="you.mp3" preload="auto" loop></audio>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-100 to-purple-200 flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
+        <div class="text-center relative">
+            <i class="fas fa-heart text-pink-500 text-6xl mb-6 heartbeat float"></i>
+            <h1 class="text-3xl font-bold text-pink-700 mb-2 glow-text">Loading your magical gift</h1>
+            <p class="text-pink-600 mb-6 fade-in">Just a moment while we prepare something special...</p>
+            <div class="w-64 h-2 bg-pink-200 rounded-full mx-auto overflow-hidden">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full" style="width: 0%"></div>
             </div>
-            
-            <svg id="heart-svg" width="200" height="200" viewBox="0 0 200 200" style="display: none;" class="pulse-heart">
-                <path class="heart-drawing" fill="#ff6b9d" stroke="#ff6b9d" stroke-width="2" stroke-linecap="round" d="M100,35 C80,10 40,20 40,60 C40,90 100,130 100,130 C100,130 160,90 160,60 C160,20 120,10 100,35 Z" />
-            </svg>
-            <h1 id="loading-text" class="text-4xl md:text-5xl loading-text text-pink-600 title-font typewriter">Happy Birthday Alexandra</h1>
+            <p id="progress-text" class="text-pink-500 mt-2">0%</p>
         </div>
     </div>
-    
-    <!-- Main Content -->
-    <div id="main-content" class="opacity-0 transition-all duration-2000 ease-out">
-        <!-- Enhanced Floating Particles -->
-        <div id="particles-container" class="fixed inset-0 pointer-events-none"></div>
-        
-        <!-- Animated Background Elements -->
-        <div class="background-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
-        
-        <!-- Header with enhanced animations -->
-        <header class="relative py-12 px-4 text-center animate-fade-in-up">
-           <h1 class="text-[8rem] md:text-[12rem] title-font text-pink-600 mb-4 animate-bounce-gentle number-glow">25</h1>
-            <h1 class="text-5xl md:text-6xl title-font text-pink-600 mb-4 animate-slide-in-left rainbow-text">Happy Birthday! ❤️</h1>
-            <p class="text-xl md:text-2xl handwriting text-purple-700 animate-slide-in-right">From your loving bombardier ❤️</p>
-            
-            <div class="mt-8 flex justify-center animate-pulse-gentle">
-                <svg width="100" height="100" viewBox="0 0 100 100" class="floating-heart-main">
-                    <path fill="#ff6b9d" d="M50,25 C40,10 20,15 20,35 C20,50 50,70 50,70 C50,70 80,50 80,35 C80,15 60,10 50,25 Z" />
-                </svg>
+
+    <!-- Floating Hearts Background -->
+    <div id="floating-hearts" class="fixed inset-0 pointer-events-none z-0 hidden">
+        <!-- Hearts will be added dynamically -->
+    </div>
+
+    <!-- Main Content (hidden initially) -->
+    <div id="main-content" class="hidden">
+        <!-- Birthday Number Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 p-6 relative overflow-hidden">
+            <div id="confetti-container" class="absolute inset-0 overflow-hidden"></div>
+            <div class="text-center relative z-10">
+                <h1 class="text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-700 mb-4 transform transition duration-500 hover:scale-110">25</h1>
+                <p class="text-4xl font-semibold text-pink-700 slide-in-left">La mulți ani!</p>
+                <i class="fas fa-gift text-5xl text-pink-600 mt-8 float"></i>
             </div>
-        </header>
-        
-        <!-- Enhanced Photo Gallery -->
-        <section class="py-12 px-4 max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl title-font text-center text-pink-600 mb-12 animate-fade-in-up section-title">Our Beautiful Memories</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down text-2xl text-pink-600"></i>
+            </div>
+        </section>
+
+        <!-- Photos Section -->
+        <section class="py-16 px-6 bg-white">
+            <div class="max-w-3xl mx-auto space-y-20">
                 <!-- Photo 1 -->
-                <div class="photo-card bg-white rounded-xl overflow-hidden shadow-lg relative animate-slide-in-up" style="animation-delay: 0.2s;">
-                    <div class="relative h-64 w-full overflow-hidden rounded-xl group">
-                        <img 
-                            src="https://blobs.vusercontent.net/blob/06cd500b-0e22-43cb-925b-67ec6cce6af7.jpg" 
-                            alt="Poza noastră"
-                            class="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
-                        >
-                        <div class="absolute inset-0 bg-gradient-to-t from-pink-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                        <div class="absolute inset-0 sparkle-overlay"></div>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="photo-container flex-1">
+                        <img src="photo1.jpg" 
+                             alt="Romantic moment" 
+                             class="w-full h-auto rounded-xl photo-left border-4 border-white">
                     </div>
-                    <div class="p-6">
-                        <div class="photo-caption absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 backdrop-blur-sm">
-                            <p class="text-white text-center handwriting text-xl animate-fade-in">The day I knew you were the one</p>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800">Prima noastră întâlnire</h3>
-                        <p class="text-gray-600 mt-2">Te-ai văzut la Brașov cu un străin de pe internet..wtf</p>
+                    <div class="flex-1 slide-in-right">
+                        <p class="text-2xl font-light italic text-pink-700 transform transition duration-500 hover:scale-105">"Fiecare clipă petrecută alături de tine este ca o poveste de vis."</p>
                     </div>
                 </div>
-                
+
                 <!-- Photo 2 -->
-                <div class="photo-card bg-white rounded-xl overflow-hidden shadow-lg relative animate-slide-in-up" style="animation-delay: 0.4s;">
-                    <div class="relative h-64 w-full overflow-hidden rounded-xl group">
-                        <img 
-                            src="https://blobs.vusercontent.net/blob/f0ff56f2-57fd-42eb-86ce-406c77e187d8.jpg" 
-                            alt="Your Beautiful Smile"
-                            class="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:-rotate-1"
-                        >
-                        <div class="absolute inset-0 bg-gradient-to-t from-purple-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                        <div class="absolute inset-0 sparkle-overlay"></div>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+                    <div class="photo-container flex-1">
+                        <img src="photo2.jpg" 
+                             alt="Romantic sunset" 
+                             class="w-full h-auto rounded-xl photo-right border-4 border-white">
                     </div>
-                    <div class="p-6">
-                        <div class="photo-caption absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 backdrop-blur-sm">
-                            <p class="text-white text-center handwriting text-xl animate-fade-in">Your smile lights up my world</p>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800">Your Beautiful Smile</h3>
-                        <p class="text-gray-600 mt-2">This smile makes every day brighter for me.</p>
+                    <div class="flex-1 slide-in-left">
+                        <p class="text-2xl font-light italic text-purple-700 transform transition duration-500 hover:scale-105">"Lumea ta este locul în care inima mea se simte acasă."</p>
                     </div>
                 </div>
-                
+
                 <!-- Photo 3 -->
-                <div class="photo-card bg-white rounded-xl overflow-hidden shadow-lg relative animate-slide-in-up" style="animation-delay: 0.6s;">
-                    <div class="relative h-64 w-full overflow-hidden rounded-xl group">
-                        <img 
-                            src="https://blobs.vusercontent.net/blob/5ed418f3-dc45-44db-a97f-a87111b6deb9.jpg" 
-                            alt="Poza noastră"
-                            class="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
-                        >
-                        <div class="absolute inset-0 bg-gradient-to-t from-blue-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                        <div class="absolute inset-0 sparkle-overlay"></div>
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="photo-container flex-1">
+                        <img src="photo3.jpg" 
+                             alt="Romantic walk" 
+                             class="w-full h-auto rounded-xl photo-left border-4 border-white">
                     </div>
-                    <div class="p-6">
-                        <div class="photo-caption absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 backdrop-blur-sm">
-                            <p class="text-white text-center handwriting text-xl animate-fade-in">You became a bombardier like me..</p>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800">Între timp</h3>
-                        <p class="text-gray-600 mt-2">Am evoluat împreună!</p>
+                    <div class="flex-1 slide-in-right">
+                        <p class="text-2xl font-light italic text-pink-700 transform transition duration-500 hover:scale-105">"Împreună, transformăm cele mai simple clipe în cele mai frumoase amintiri."</p>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Enhanced Video Section -->
-        <section class="py-12 px-4 max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl title-font text-center text-pink-600 mb-12 animate-fade-in-up section-title">Cel mai frumos videoclip cu noi făcut vreodată!</h2>
 
-            <div class="flex justify-center animate-scale-in">
-                <div class="video-container bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-3xl shadow-2xl overflow-hidden flex flex-col items-center justify-center p-8 video-glow">
-                    <div id="video-placeholder" class="text-center">
-                        <div class="relative">
-                            <svg width="100" height="100" viewBox="0 0 100 100" class="mx-auto mb-6 floating-heart-video">
-                                <path fill="#ff6b9d" d="M50,25 C40,10 20,15 20,35 C20,50 50,70 50,70 C50,70 80,50 80,35 C80,15 60,10 50,25 Z" />
-                            </svg>
-                            <div class="heart-particles">
-                                <span>💖</span>
-                                <span>💕</span>
-                                <span>💗</span>
-                            </div>
+        <!-- Love Letter Section -->
+        <section class="py-16 px-6 bg-pink-50">
+            <div class="max-w-2xl mx-auto transform transition duration-500 hover:scale-[1.01]">
+                <div class="letter-paper p-8 md:p-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <p class="text-pink-600">Dragă inimă,</p>
                         </div>
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-4 animate-bounce-gentle">Videoclip ascuns!</h3>
-                        <p class="text-gray-600 mb-6">Este videoclip tău, dar mi se pare cel mai frumos și superb video făcut vreodată ❤️</p>
-                        <button id="play-btn" class="mt-6 px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 button-glow">
-                            <span class="flex items-center gap-2">
-                                <span>Push me baby ❤️</span>
-                                <span class="animate-pulse">▶️</span>
-                            </span>
-                        </button>
+                        <div class="text-xs text-gray-500">
+                            <p>Ziua ta specială</p>
+                        </div>
                     </div>
+                    
+                    <div class="space-y-4 text-gray-700">
+                        <p class="transition duration-300 hover:text-pink-700">În această zi minunată, vreau să-ți spun cât de norocoasă mă simt că te am în viața mea. Fiecare an petrecut alături de tine a fost plin de bucurie, iar zilele tale sunt cele care luminează lumea mea.</p>
+                        
+                        <p class="transition duration-300 hover:text-pink-700">25 de ani de viață, de zâmbete, de momente frumoase. Și eu am privilegiul de a fi alături de tine în această zi specială. Sărbătorim împreună frumusețea persoanei care ești, căldura pe care o aduci în viața celor din jur și dragostea care ne unește.</p>
+                        
+                        <p class="transition duration-300 hover:text-pink-700">Fie ca acest an să-ți aducă împlinirea tuturor viselor tale, sănătate și fericire fără margini. Știu că orice ai dori, vei reuși, pentru că ești o persoană incredibilă, puternică și plină de iubire.</p>
+                        
+                        <p class="transition duration-300 hover:text-pink-700">În această zi, vreau să-ți mulțumesc pentru tot ce ești și pentru tot ce faci. Luminezi viața mea în fiecare zi, iar astăzi este ziua ta să strălucești mai mult ca niciodată!</p>
+                    </div>
+                    
+                    <div class="mt-8 text-right">
+                        <p class="text-pink-600">Cu toată dragostea,</p>
+                        <p class="font-semibold text-pink-700">[Numele tău]</p>
+                        <div class="mt-4 flex justify-end">
+                            <i class="fas fa-heart text-pink-500 text-xl mr-2"></i>
+                            <i class="fas fa-heart text-pink-500 text-xl mr-2"></i>
+                            <i class="fas fa-heart text-pink-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Video element initially hidden -->
-                    <video id="my-video" class="rounded-3xl shadow-2xl mt-6 hidden max-w-full video-reveal" controls>
-                        <source src="you.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
+<!-- Video Gift Section -->
+<section class="py-16 px-6 bg-gradient-to-br from-purple-100 to-pink-100">
+    <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-purple-800 mb-6 slide-in-left">Un mic dar pentru tine</h2>
+
+        <div class="relative w-full max-w-[480px] mx-auto rounded-xl overflow-hidden shadow-2xl" style="aspect-ratio: 480 / 848;">
+            <video 
+                class="w-full h-full object-cover"
+                autoplay muted playsinline loop
+                poster="preview.jpg">
+                <source src="you.mp4" type="video/mp4">
+                Videoclipul nu poate fi redat 😢
+            </video>
+        </div>
+
+        <p class="mt-6 text-lg text-purple-700 slide-in-right">Sper că îți va plăcea acest mic dar pregătit cu drag pentru tine!</p>
+        <i class="fas fa-heart text-4xl text-pink-600 mt-8 float"></i>
+    </div>
+</section>
+
+        <!-- Footer -->
+        <footer class="py-8 bg-pink-900 text-center">
+            <p class="text-pink-200">Cu dragoste, în ziua ta specială ♥</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <i class="fas fa-heart text-pink-300 text-xl"></i>
+                <i class="fas fa-heart text-pink-300 text-xl"></i>
+                <i class="fas fa-heart text-pink-300 text-xl"></i>
             </div>
-        </section>
-        
-        <!-- Enhanced Love Letter -->
-        <section class="py-12 px-4 max-w-3xl mx-auto">
-            <div class="bg-white/80 backdrop-blur-lg rounded-xl shadow-2xl p-8 md:p-12 letter-glow animate-fade-in-up">
-                <h2 class="text-3xl md:text-4xl title-font text-center text-pink-600 mb-8 animate-fade-in section-title">My Dearest Alexandra</h2>
-                
-                <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
-                    <p class="handwriting animate-slide-in-left" style="animation-delay: 0.2s;">As you turn 25 today, I find myself reflecting on how incredibly lucky I am to have you in my life.</p>
-                    
-                    <p class="animate-slide-in-right" style="animation-delay: 0.4s;">Your kindness, intelligence, and beauty continue to amaze me every single day. The way you light up every room you enter, the way you care so deeply about others, and the way you make me feel loved - these are just a few of the countless reasons why I adore you.</p>
-                    
-                    <p class="handwriting text-xl text-pink-600 animate-scale-in rainbow-text" style="animation-delay: 0.6s;">This past year with you has been the most wonderful of my life.</p>
-                    
-                    <p class="animate-slide-in-left" style="animation-delay: 0.8s;">From our quiet mornings together to our exciting adventures, every moment with you is a treasure. You've taught me so much about love, patience, and what truly matters in life.</p>
-                    
-                    <p class="animate-slide-in-right" style="animation-delay: 1s;">On your special day, I want you to know that you are loved beyond measure. I promise to continue cherishing you, supporting your dreams, and building beautiful memories together.</p>
-                    
-                    <div class="text-center mt-10 animate-fade-in-up" style="animation-delay: 1.2s;">
-                        <p class="text-2xl handwriting text-purple-600 rainbow-text">Happy 25th Birthday, my love.</p>
-                        <p class="mt-4">Forever yours,</p>
-                        <p class="text-xl font-semibold text-pink-600 signature">Adelin</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </footer>
     </div>
 
-    <!-- Background Music -->
-    <audio id="background-music" src="you.mp3" loop></audio>
-    
-    <script src="script.js"></script>
+    <script>
+        // Simulate loading progress
+        let progress = 0;
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const loadingScreen = document.getElementById('loading-screen');
+        const mainContent = document.getElementById('main-content');
+        const floatingHearts = document.getElementById('floating-hearts');
+        const confettiContainer = document.getElementById('confetti-container');
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            floatingHearts.innerHTML = '';
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '<i class="fas fa-heart text-pink-300 opacity-50"></i>';
+                heart.className = 'absolute';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animation = `float ${Math.random() * 6 + 3}s ease-in-out infinite ${Math.random() * 2}s`;
+                floatingHearts.appendChild(heart);
+            }
+        }
+
+        // Create confetti
+        function createConfetti() {
+            confettiContainer.innerHTML = '';
+            const colors = ['#ff758c', '#ff7eb3', '#ff88a2', '#ff9770', '#ffa570'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `confetti ${Math.random() * 5 + 3}s linear forwards ${Math.random() * 2}s`;
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        // Animate elements when they come into view
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.slide-in-left, .slide-in-right, .fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Smooth scroll to sections
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+
+        // Simulate loading
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress > 100) progress = 100;
+            
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${Math.floor(progress)}%`;
+            
+            if (progress === 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loadingScreen.classList.add('opacity-0');
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                        floatingHearts.classList.remove('hidden');
+                        createFloatingHearts();
+                        createConfetti();
+                        animateOnScroll();
+                        setupSmoothScroll();
+                    }, 1000);
+                }, 500);
+            }
+        }, 300);
+
+        // Add hover effects to all interactive elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const interactiveElements = document.querySelectorAll('button, a, .photo-container, .letter-paper, .video-container');
+            
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    el.classList.add('transition', 'duration-300', 'ease-in-out');
+                });
+            });
+        });
+
+            const finalSound = document.getElementById("finalSound");
+
+    // Pornim muzica la primul click oriunde în pagină
+    document.addEventListener("click", function playMusicOnce() {
+        finalSound.play().catch((e) => {
+            console.log("Autoplay failed:", e);
+        });
+        document.removeEventListener("click", playMusicOnce); // evită redare multiplă
+    });
+    </script>
 </body>
 </html>
