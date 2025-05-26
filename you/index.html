@@ -6,183 +6,508 @@
 		<title>IUBIREA MEA 💕</title>
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-		<!-- Critical CSS -->
+		<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 		<link href="styles.css" rel="stylesheet">
-		<!-- Favicon -->
-		<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
-		<link rel="icon" type="image/svg+xml" href="favicon.svg">
-		<link rel="shortcut icon" href="favicon.ico">
-		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/placeholder.svg?height=96&width=96" sizes="96x96">
 	</head>
-	<body class="bg-pink-50 font-sans overflow-x-hidden">
+	<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 font-poppins overflow-x-hidden">
 		<audio id="finalSound" src="you.mp3" preload="auto" loop></audio>
-		<!-- Loading Screen -->
-		<div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-100 to-purple-200 flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
-			<div class="text-center relative">
-				<i class="fas fa-heart text-pink-500 text-6xl mb-6 heartbeat float"></i>
-				<h1 class="text-3xl font-bold text-pink-700 mb-2 glow-text">Un moment, pregătim ceva special</h1>
-				<p class="text-pink-600 mb-6 fade-in">Aşteaptă şi tu oleacă..se încarcă mai greu</p>
-				<div class="w-64 h-2 bg-pink-200 rounded-full mx-auto overflow-hidden">
-					<div id="progress-bar" class="h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full" style="width: 0%"></div>
+		<!-- Enhanced Romantic Loading Screen (PĂSTRAT EXACT) -->
+		<div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-pink-100 via-rose-200 to-purple-300 flex flex-col items-center justify-center z-50 transition-all duration-1000 overflow-hidden">
+			<!-- Floating Rose Petals -->
+			<div id="rose-petals" class="absolute inset-0 pointer-events-none"></div>
+			<!-- Floating Hearts Background -->
+			<div id="loading-hearts" class="absolute inset-0 pointer-events-none"></div>
+			<!-- Sparkles -->
+			<div id="sparkles" class="absolute inset-0 pointer-events-none"></div>
+			<div class="text-center relative z-10 max-w-lg mx-auto px-6">
+				<!-- Main Heart with Pulse Effect -->
+				<div class="relative mb-8">
+					<div class="heart-container">
+						<i class="fas fa-heart text-pink-500 text-8xl main-heart"></i>
+						<div class="heart-pulse"></div>
+						<div class="heart-pulse delay-1"></div>
+						<div class="heart-pulse delay-2"></div>
+					</div>
 				</div>
-				<p id="progress-text" class="text-pink-500 mt-2">0%</p>
+				<!-- Romantic Messages that Change -->
+				<div class="message-container mb-6">
+					<h1 id="romantic-message" class="text-3xl md:text-4xl font-bold text-pink-700 mb-4 glow-text font-dancing min-h-[3rem]">
+						Pregătesc ceva special pentru tine...
+					</h1>
+					<p id="sub-message" class="text-pink-600 text-lg font-light min-h-[2rem]">
+						Fiecare secundă merită așteptarea ♥
+					</p>
+				</div>
+				<!-- Enhanced Progress Bar -->
+				<div class="progress-container mb-6">
+					<div class="relative w-80 h-4 bg-pink-200/50 rounded-full mx-auto overflow-hidden shadow-inner backdrop-blur-sm border border-pink-300/30">
+						<div id="progress-bar" class="h-full bg-gradient-to-r from-pink-400 via-rose-500 to-purple-500 rounded-full transition-all duration-500 ease-out glow-bar relative" style="width: 0%">
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+						</div>
+					</div>
+					<div class="flex justify-between items-center mt-3">
+						<span class="text-pink-500 text-sm font-medium">💕</span>
+						<p id="progress-text" class="text-pink-600 text-xl font-semibold">0%</p>
+						<span class="text-pink-500 text-sm font-medium">💕</span>
+					</div>
+				</div>
+				<!-- Loading Hearts Animation -->
+				<div class="loading-hearts-animation">
+					<div class="heart-beat-group">
+						<i class="fas fa-heart text-pink-400 text-2xl heart-beat-1"></i>
+						<i class="fas fa-heart text-rose-400 text-2xl heart-beat-2"></i>
+						<i class="fas fa-heart text-purple-400 text-2xl heart-beat-3"></i>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- Floating Hearts Background -->
-		<div id="floating-hearts" class="fixed inset-0 pointer-events-none z-0 hidden">
-			<!-- Hearts will be added dynamically -->
-		</div>
-		<!-- Main Content (hidden initially) -->
+		<div id="floating-hearts" class="fixed inset-0 pointer-events-none z-0 hidden"></div>
+		<!-- CONȚINUT PRINCIPAL ÎMBUNĂTĂȚIT -->
 		<div id="main-content" class="hidden">
-			<!-- Birthday Number Section -->
-			<section class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 p-6 relative overflow-hidden">
-				<div id="confetti-container" class="absolute inset-0 overflow-hidden"></div>
-				<div class="text-center relative z-10 space-y-6">
-					<p class="text-4xl font-semibold text-pink-700 opacity-0 animate-fade-slide-in delay-[300ms]">La mulţi ani iubirea mea!</p>
-					<h1 class="text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-700 mb-4 opacity-0 animate-zoom-in delay-[1000ms]">
-						25
-					</h1>
-					<p class="text-4xl font-semibold text-pink-700 opacity-0 animate-fade-slide-in delay-[1800ms]">
-						25 de ani de tine. Și fiecare a contat.
-					</p>
-					<i class="fas fa-gift text-5xl text-pink-600 mt-8 opacity-0 animate-fade-in delay-[2500ms] float"></i>
-				</div>
-				<div class="scroll-indicator mt-10 opacity-0 animate-fade-in delay-[3200ms]">
-					<i class="fas fa-chevron-down text-2xl text-pink-600 animate-bounce"></i>
-				</div>
-			</section>
-			<!-- Photos Section -->
-			<section class="py-16 px-6 bg-white">
-				<div class="max-w-3xl mx-auto space-y-20">
-					<!-- Photo 1 -->
-					<div class="flex flex-col md:flex-row items-center gap-8">
-						<div class="photo-container flex-1">
-							<img loading="lazy" src="photo1.jpg" 
-								alt="Romantic moment" 
-								class="w-full h-auto rounded-xl photo-left border-4 border-white">
-						</div>
-						<div class="flex-1 slide-in-right">
-							<p class="text-2xl font-light italic text-pink-700 transform transition duration-500 hover:scale-105">"Cu tine e liniște, și râs, și cafea bună. Cam tot ce-mi trebuie."</p>
-						</div>
-					</div>
-					<!-- Photo 2 -->
-					<div class="flex flex-col md:flex-row-reverse items-center gap-8">
-						<div class="photo-container flex-1">
-							<img loading="lazy" src="photo2.jpg" 
-								alt="Romantic sunset" 
-								class="w-full h-auto rounded-xl photo-right border-4 border-white">
-						</div>
-						<div class="flex-1 slide-in-left">
-							<p class="text-2xl font-light italic text-purple-700 transform transition duration-500 hover:scale-105">"Când ești lângă mine, totul pare mai puțin complicat. Inclusiv eu."</p>
-						</div>
-					</div>
-					<!-- Photo 3 -->
-					<div class="flex flex-col md:flex-row items-center gap-8">
-						<div class="photo-container flex-1">
-							<img loading="lazy" src="photo3.jpg" 
-								alt="Romantic walk" 
-								class="w-full h-auto rounded-xl photo-left border-4 border-white">
-						</div>
-						<div class="flex-1 slide-in-right">
-							<p class="text-2xl font-light italic text-pink-700 transform transition duration-500 hover:scale-105">"Împreună, transformăm cele mai simple clipe în cele mai frumoase amintiri."</p>
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- Photos Section -->
-			<section class="py-16 px-6 bg-white">
-				<div class="max-w-3xl mx-auto space-y-20">
-					<!-- Photo 4 -->
-					<div class="flex flex-col md:flex-row-reverse items-center gap-8">
-						<div class="photo-container flex-1">
-							<img loading="lazy" src="photo4.jpg" 
-								alt="Romantic sunset" 
-								class="w-full h-auto rounded-xl photo-right border-4 border-white">
-						</div>
-						<div class="flex-1 slide-in-left">
-							<p class="text-2xl font-light italic text-purple-700 transform transition duration-500 hover:scale-105">"Când ești lângă mine, totul pare mai puțin complicat. Inclusiv eu."</p>
-						</div>
-					</div>
-					<!-- Photo 5 -->
-					<div class="flex flex-col md:flex-row items-center gap-8">
-						<div class="photo-container flex-1">
-							<img loading="lazy" src="photo5.jpg" 
-								alt="Romantic walk" 
-								class="w-full h-auto rounded-xl photo-left border-4 border-white">
-						</div>
-						<div class="flex-1 slide-in-right">
-							<p class="text-2xl font-light italic text-pink-700 transform transition duration-500 hover:scale-105">"Împreună, transformăm cele mai simple clipe în cele mai frumoase amintiri."</p>
-						</div>
-					</div>
-					<!-- Photo 6 -->
-					<div class="flex flex-col md:flex-row-reverse items-center gap-8">
-						<div class="photo-container flex-1">
-							<img loading="lazy" src="photo6.jpg" 
-								alt="Romantic sunset" 
-								class="w-full h-auto rounded-xl photo-right border-4 border-white">
-						</div>
-						<div class="flex-1 slide-in-left">
-							<p class="text-2xl font-light italic text-purple-700 transform transition duration-500 hover:scale-105">"Când ești lângă mine, totul pare mai puțin complicat. Inclusiv eu."</p>
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- Love Letter Section -->
-			<section class="py-16 px-6 bg-pink-50">
-				<div class="max-w-2xl mx-auto transform transition duration-500 hover:scale-[1.01]">
-					<div class="letter-paper p-8 md:p-12">
-						<div class="flex justify-between items-center mb-6">
-							<div>
-								<p class="text-pink-600">Dragă inimă,</p>
-							</div>
-						</div>
-						<div class="space-y-4 text-gray-700">
-							<p class="transition duration-300 hover:text-pink-700">În ziua asta plină de magie, simt nevoia să-ți spun cât de norocos sunt că îți pot spune a mea. Zâmbetul tău îmi schimbă lumea, iar prezența ta face fiecare zi mai frumoasă decât precedenta. Tu nu ești doar o parte din viața mea — ești motivul pentru care inima mea zâmbește.</p>
-							<p class="transition duration-300 hover:text-pink-700">25 de ani de lumină, de zâmbete și clipe care lasă urme frumoase. Iar azi, am norocul să fiu lângă tine și să-ți spun cât de specială ești. Sărbătorim nu doar ziua ta, ci felul în care reușești să aduci căldură, bucurie și dragoste oriunde mergi — mai ales în inima mea.</p>
-							<p class="transition duration-300 hover:text-pink-700">Fie ca acest an să-ți aducă împlinirea tuturor viselor tale, sănătate și fericire fără margini. Știu că orice ai dori, vei reuși, pentru că ești o persoană incredibilă, puternică și plină de iubire.</p>
-							<p class="transition duration-300 hover:text-pink-700">În această zi, vreau să-ți mulțumesc pentru tot ce ești și pentru tot ce faci. Luminezi viața mea în fiecare zi, iar astăzi este ziua ta să strălucești mai mult ca niciodată!</p>
-							<p class="transition duration-300 hover:text-pink-700">..daa, puţin text este generat cu chatgpt..♥ silly me haha </p>
-						</div>
-						<div class="mt-8 text-right">
-							<p class="text-pink-600">Cu toată dragostea,</p>
-							<p class="font-semibold text-pink-700">bombardierul tău ♥</p>
-							<div class="mt-4 flex justify-end">
-								<i class="fas fa-heart text-pink-500 text-xl mr-2"></i>
-								<i class="fas fa-heart text-pink-500 text-xl mr-2"></i>
-								<i class="fas fa-heart text-pink-500 text-xl"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- Video Gift Section -->
-			<section class="py-16 px-6 bg-gradient-to-br from-purple-100 to-pink-100">
-				<div class="max-w-2xl mx-auto text-center">
-					<h2 class="text-3xl font-bold text-purple-800 mb-6 slide-in-left">Cel mai frumos video cu noi, plin de iubire ♥</h2>
-					<div class="relative w-full max-w-[480px] mx-auto rounded-xl overflow-hidden shadow-2xl" style="aspect-ratio: 480 / 848;">
-						<video 
-							class="w-full h-full object-cover"
-							autoplay muted playsinline loop
-							poster="preview.jpg">
-							<source src="you.mp4" type="video/mp4">
-							Videoclipul nu poate fi redat 😢
-						</video>
-					</div>
-					<p class="mt-6 text-lg text-purple-700 slide-in-right">Sper să îţi placă acest video făcut de tine, pe care eu doar l-am pus aici! ♥</p>
-					<i class="fas fa-heart text-4xl text-pink-600 mt-8 float"></i>
-				</div>
-			</section>
-			<!-- Footer -->
-			<footer class="py-8 bg-pink-900 text-center">
-				<p class="text-pink-200">Mă chinui de mult să ţin acest site ascuns de tine!! m-am luptat cu mine în fiecare zi, dar în sfârşit ziua specială a sosit să poţi vedeaaaa ♥</p>
-				<div class="mt-4 flex justify-center space-x-4">
-					<i class="fas fa-heart text-pink-300 text-xl"></i>
-					<i class="fas fa-heart text-pink-300 text-xl"></i>
-					<i class="fas fa-heart text-pink-300 text-xl"></i>
-				</div>
-			</footer>
+			<!-- Enhanced Birthday Hero Section -->
+			<section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+				<!-- Animated Background -->
+				<div class="absolute inset-0 bg-gradient-to-br from-pink-200/90 via-purple-200/90 to-indigo-200/90"></div>
+				<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ff758c" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-pulse">
 		</div>
-		<!-- Main script -->
+		<div id="confetti-container" class="absolute inset-0 overflow-hidden"></div>
+		<div class="text-center relative z-10 space-y-8 px-6 max-w-4xl mx-auto">
+		<div class="space-y-6">
+		<p class="text-3xl md:text-5xl font-semibold text-pink-700 animate-fade-slide-in delay-[300ms] font-dancing drop-shadow-lg">
+		La mulţi ani iubirea mea!
+		</p>
+		<!-- Enhanced Age Display -->
+		<div class="relative my-12">
+		<div class="age-display-container">
+		<h1 class="text-8xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 animate-zoom-in delay-[1000ms] number-glow relative z-10">
+		25
+		</h1>
+		<!-- Floating elements around the number -->
+		<div class="absolute inset-0 flex items-center justify-center">
+		<div class="age-decoration">
+		<i class="fas fa-heart text-pink-400 text-2xl floating-heart-1"></i>
+		<i class="fas fa-heart text-rose-400 text-xl floating-heart-2"></i>
+		<i class="fas fa-heart text-purple-400 text-lg floating-heart-3"></i>
+		<i class="fas fa-heart text-pink-300 text-xl floating-heart-4"></i>
+		</div>
+		</div>
+		</div>
+		</div>
+		<p class="text-2xl md:text-4xl font-semibold text-pink-700 animate-fade-slide-in delay-[1800ms] max-w-3xl mx-auto leading-relaxed drop-shadow-sm">
+		25 de ani de tine. Și fiecare a contat.
+		</p>
+		</div>
+		<div class="gift-section animate-fade-in delay-[2500ms]">
+		<i class="fas fa-gift text-6xl text-pink-600 gift-bounce"></i>
+		<div class="gift-sparkles">
+		<span class="sparkle-1">✨</span>
+		<span class="sparkle-2">✨</span>
+		<span class="sparkle-3">✨</span>
+		</div>
+		</div>
+		</div>
+		<div class="scroll-indicator animate-fade-in delay-[3200ms]">
+		<div class="scroll-arrow-enhanced">
+		<i class="fas fa-chevron-down text-2xl text-pink-600"></i>
+		<span class="scroll-text">Scroll pentru mai multe surprize</span>
+		</div>
+		</div>
+		</section>
+		<!-- Enhanced Photos Gallery Section -->
+		<section class="py-24 px-6 bg-gradient-to-br from-white/95 to-pink-50/95 backdrop-blur-sm relative">
+			<!-- Decorative elements -->
+			<div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M50 5L61.8 38.2L95 50L61.8 61.8L50 95L38.2 61.8L5 50L38.2 38.2z" fill="%23ff758c" fill-opacity="0.03"/%3E%3C/svg%3E')] opacity-50"></div>
+			<div class="max-w-5xl mx-auto relative z-10">
+				<div class="text-center mb-20">
+					<h2 class="text-5xl font-bold text-pink-700 mb-6 font-dancing drop-shadow-lg">
+						Momentele noastre magice
+					</h2>
+					<div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
+				</div>
+				<div class="space-y-32">
+					<!-- Enhanced Photo 1 -->
+					<div class="photo-section" data-aos="fade-up">
+						<div class="flex flex-col lg:flex-row items-center gap-16">
+							<div class="photo-container-enhanced flex-1 group">
+								<div class="photo-frame-luxury">
+									<img loading="lazy" src="photo4.jpg" 
+										alt="Romantic moment" 
+										class="w-full h-auto rounded-2xl photo-left-enhanced">
+									<div class="photo-overlay-romantic">
+										<div class="overlay-content">
+											<i class="fas fa-heart text-white text-4xl mb-4 heart-pulse-overlay"></i>
+											<p class="text-white font-dancing text-xl">Primul nostru moment magic</p>
+										</div>
+									</div>
+									<!-- Decorative corners -->
+									<div class="photo-corners">
+										<div class="corner corner-tl"></div>
+										<div class="corner corner-tr"></div>
+										<div class="corner corner-bl"></div>
+										<div class="corner corner-br"></div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="quote-card-luxury">
+									<div class="quote-decoration">
+										<i class="fas fa-quote-left text-pink-400 text-3xl mb-6"></i>
+									</div>
+									<p class="text-3xl font-light italic text-pink-700 leading-relaxed mb-6">
+										"Cu tine e liniște, și râs, și cafea bună. Cam tot ce-mi trebuie."
+									</p>
+									<div class="quote-hearts">
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Enhanced Photo 2 -->
+					<div class="photo-section" data-aos="fade-up">
+						<div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+							<div class="photo-container-enhanced flex-1 group">
+								<div class="photo-frame-luxury">
+									<img loading="lazy" src="photo5.jpg" 
+										alt="Romantic sunset" 
+										class="w-full h-auto rounded-2xl photo-right-enhanced">
+									<div class="photo-overlay-romantic">
+										<div class="overlay-content">
+											<i class="fas fa-heart text-white text-4xl mb-4 heart-pulse-overlay"></i>
+											<p class="text-white font-dancing text-xl">Al doilea nostru moment magic</p>
+										</div>
+									</div>
+									<div class="photo-corners">
+										<div class="corner corner-tl"></div>
+										<div class="corner corner-tr"></div>
+										<div class="corner corner-bl"></div>
+										<div class="corner corner-br"></div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="quote-card-luxury">
+									<div class="quote-decoration">
+										<i class="fas fa-quote-left text-purple-400 text-3xl mb-6"></i>
+									</div>
+									<p class="text-3xl font-light italic text-purple-700 leading-relaxed mb-6">
+										"Când ești lângă mine, totul pare mai puțin complicat. Inclusiv eu."
+									</p>
+									<div class="quote-hearts">
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Enhanced Photo 3 -->
+					<div class="photo-section" data-aos="fade-up">
+						<div class="flex flex-col lg:flex-row items-center gap-16">
+							<div class="photo-container-enhanced flex-1 group">
+								<div class="photo-frame-luxury">
+									<img loading="lazy" src="photo6.jpg" 
+										alt="Romantic walk" 
+										class="w-full h-auto rounded-2xl photo-left-enhanced">
+									<div class="photo-overlay-romantic">
+										<div class="overlay-content">
+											<i class="fas fa-heart text-white text-4xl mb-4 heart-pulse-overlay"></i>
+											<p class="text-white font-dancing text-xl">Al trilea moment nostru magic(aşa se scrie?)..</p>
+										</div>
+									</div>
+									<div class="photo-corners">
+										<div class="corner corner-tl"></div>
+										<div class="corner corner-tr"></div>
+										<div class="corner corner-bl"></div>
+										<div class="corner corner-br"></div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="quote-card-luxury">
+									<div class="quote-decoration">
+										<i class="fas fa-quote-left text-pink-400 text-3xl mb-6"></i>
+									</div>
+									<p class="text-3xl font-light italic text-pink-700 leading-relaxed mb-6">
+										"Împreună, transformăm cele mai simple clipe în cele mai frumoase amintiri."
+									</p>
+									<div class="quote-hearts">
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Photos 4, 5, 6 cu același pattern îmbunătățit -->
+					<div class="photo-section" data-aos="fade-up">
+						<div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+							<div class="photo-container-enhanced flex-1 group">
+								<div class="photo-frame-luxury">
+									<img loading="lazy" src="photo3.jpg" 
+										alt="Romantic moment" 
+										class="w-full h-auto rounded-2xl photo-right-enhanced">
+									<div class="photo-overlay-romantic">
+										<div class="overlay-content">
+											<i class="fas fa-heart text-white text-4xl mb-4 heart-pulse-overlay"></i>
+											<p class="text-white font-dancing text-xl">Al patrulea...moment...</p>
+										</div>
+									</div>
+									<div class="photo-corners">
+										<div class="corner corner-tl"></div>
+										<div class="corner corner-tr"></div>
+										<div class="corner corner-bl"></div>
+										<div class="corner corner-br"></div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="quote-card-luxury">
+									<div class="quote-decoration">
+										<i class="fas fa-quote-left text-purple-400 text-3xl mb-6"></i>
+									</div>
+									<p class="text-3xl font-light italic text-purple-700 leading-relaxed mb-6">
+										"Fiecare clipă cu tine e o poveste de dragoste."
+									</p>
+									<div class="quote-hearts">
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="photo-section" data-aos="fade-up">
+						<div class="flex flex-col lg:flex-row items-center gap-16">
+							<div class="photo-container-enhanced flex-1 group">
+								<div class="photo-frame-luxury">
+									<img loading="lazy" src="photo2.jpg" 
+										alt="Romantic moment" 
+										class="w-full h-auto rounded-2xl photo-left-enhanced">
+									<div class="photo-overlay-romantic">
+										<div class="overlay-content">
+											<i class="fas fa-heart text-white text-4xl mb-4 heart-pulse-overlay"></i>
+											<p class="text-white font-dancing text-xl">yes, ghici ce, alt moment magic</p>
+										</div>
+									</div>
+									<div class="photo-corners">
+										<div class="corner corner-tl"></div>
+										<div class="corner corner-tr"></div>
+										<div class="corner corner-bl"></div>
+										<div class="corner corner-br"></div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="quote-card-luxury">
+									<div class="quote-decoration">
+										<i class="fas fa-quote-left text-pink-400 text-3xl mb-6"></i>
+									</div>
+									<p class="text-3xl font-light italic text-pink-700 leading-relaxed mb-6">
+										"În ochii tăi găsesc acasă, în brațele tale găsesc pacea."
+									</p>
+									<div class="quote-hearts">
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="photo-section" data-aos="fade-up">
+						<div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+							<div class="photo-container-enhanced flex-1 group">
+								<div class="photo-frame-luxury">
+									<img loading="lazy" src="photo1.jpg" 
+										alt="Romantic moment" 
+										class="w-full h-auto rounded-2xl photo-right-enhanced">
+									<div class="photo-overlay-romantic">
+										<div class="overlay-content">
+											<i class="fas fa-heart text-white text-4xl mb-4 heart-pulse-overlay"></i>
+											<p class="text-white font-dancing text-xl">Pentru totdeauna împreună</p>
+										</div>
+									</div>
+									<div class="photo-corners">
+										<div class="corner corner-tl"></div>
+										<div class="corner corner-tr"></div>
+										<div class="corner corner-bl"></div>
+										<div class="corner corner-br"></div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="quote-card-luxury">
+									<div class="quote-decoration">
+										<i class="fas fa-quote-left text-purple-400 text-3xl mb-6"></i>
+									</div>
+									<p class="text-3xl font-light italic text-purple-700 leading-relaxed mb-6">
+										"Tu ești poezia pe care inima mea o scrie în fiecare zi."
+									</p>
+									<div class="quote-hearts">
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+										<i class="fas fa-heart text-purple-400 text-sm"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Enhanced Love Letter Section -->
+		<section class="py-24 px-6 bg-gradient-to-br from-pink-50/95 to-purple-50/95 backdrop-blur-sm relative">
+			<!-- Romantic background pattern -->
+			<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ff758c" fill-opacity="0.05"%3E%3Cpath d="M30 5L35 20L50 15L40 30L55 35L40 40L50 55L35 50L30 65L25 50L10 55L20 40L5 35L20 30L10 15L25 20z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+			<div class="max-w-4xl mx-auto relative z-10">
+				<div class="text-center mb-16">
+					<h2 class="text-5xl font-bold text-pink-700 mb-6 font-dancing drop-shadow-lg">
+						Scrisoarea mea pentru tine (kiss love)
+					</h2>
+					<div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
+				</div>
+				<div class="letter-container-luxury" data-aos="fade-up">
+					<div class="letter-paper-enhanced">
+						<!-- Letter decorative header -->
+						<div class="letter-header-luxury">
+							<div class="flex justify-between items-center mb-10">
+								<div class="letter-greeting">
+									<p class="text-pink-600 text-2xl font-dancing">Dragă şefa mea,</p>
+									<div class="greeting-decoration">
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+										<i class="fas fa-heart text-pink-400 text-xs"></i>
+										<i class="fas fa-heart text-pink-400 text-sm"></i>
+									</div>
+								</div>
+								<div class="letter-date-luxury">
+									<i class="fas fa-calendar-heart text-pink-500 text-xl"></i>
+									<span class="text-pink-600 ml-3 font-semibold" id="current-date"></span>
+								</div>
+							</div>
+						</div>
+						<div class="letter-content-luxury space-y-8 text-gray-700 text-lg leading-relaxed">
+							<p class="letter-paragraph">
+								În ziua asta plină de magie, simt nevoia să-ți spun cât de norocos sunt că îți pot spune a mea. Zâmbetul tău îmi schimbă lumea, iar prezența ta face fiecare zi mai frumoasă decât precedenta. Tu nu ești doar o parte din viața mea — ești motivul pentru care inima mea zâmbește.
+							</p>
+							<p class="letter-paragraph">
+								25 de ani de lumină, de zâmbete și clipe care lasă urme frumoase. Iar azi sărbătorim nu doar ziua ta, ci felul în care reușești să aduci căldură, bucurie și dragoste oriunde mergi — mai ales în inima mea.
+							</p>
+							<p class="letter-paragraph">
+								Fie ca acest an să-ți aducă împlinirea tuturor viselor tale, sănătate și fericire fără margini. Știu că orice ai dori(mai puţin renaultu meu..), vei reuși, pentru că ești o persoană incredibilă, puternică și plină de iubire.
+							</p>
+							<p class="letter-paragraph">
+								În această zi, vreau să-ți mulțumesc pentru tot ce ești și pentru tot ce faci. Luminezi viața mea în fiecare zi, iar astăzi este ziua ta să strălucești mai mult ca niciodată!
+							</p>
+							<p class="letter-paragraph italic text-pink-600">
+								..daa, puţin text este generat cu chatgpt..♥ silly me haha
+							</p>
+						</div>
+						<div class="letter-signature-luxury mt-16 text-right">
+							<p class="text-pink-600 text-xl font-dancing mb-2">Cu toată dragostea,</p>
+							<p class="font-bold text-pink-700 text-2xl font-dancing mb-6">bombardierul tău ♥</p>
+							<div class="signature-hearts">
+								<i class="fas fa-heart text-pink-500 text-xl heart-float-1"></i>
+								<i class="fas fa-heart text-pink-500 text-lg heart-float-2"></i>
+								<i class="fas fa-heart text-pink-500 text-xl heart-float-3"></i>
+							</div>
+						</div>
+						<!-- Letter decorative elements -->
+						<div class="letter-decorations">
+							<div class="decoration decoration-tl">
+								<i class="fas fa-heart text-pink-300"></i>
+							</div>
+							<div class="decoration decoration-tr">
+								<i class="fas fa-heart text-pink-300"></i>
+							</div>
+							<div class="decoration decoration-bl">
+								<i class="fas fa-heart text-pink-300"></i>
+							</div>
+							<div class="decoration decoration-br">
+								<i class="fas fa-heart text-pink-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Enhanced Video Section -->
+		<section class="py-24 px-6 bg-gradient-to-br from-purple-100/95 to-pink-100/95 backdrop-blur-sm relative">
+			<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23764ba2" fill-opacity="0.05"%3E%3Ccircle cx="40" cy="40" r="20"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+			<div class="max-w-4xl mx-auto text-center relative z-10">
+				<div class="mb-16">
+					<h2 class="text-5xl font-bold text-purple-800 mb-6 font-dancing drop-shadow-lg">
+						Cel mai frumos video cu noi ♥
+					</h2>
+					<div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto rounded-full"></div>
+				</div>
+				<div class="video-wrapper-luxury" data-aos="zoom-in">
+					<div class="video-container-enhanced">
+						<div class="relative w-full max-w-[500px] mx-auto rounded-3xl overflow-hidden shadow-2xl" style="aspect-ratio: 480 / 848;">
+							<video 
+								class="w-full h-full object-cover"
+								autoplay muted playsinline loop
+								poster="/placeholder.svg?height=848&width=480">
+								<source src="you.mp4" type="video/mp4">
+								Videoclipul nu poate fi redat 😢
+							</video>
+							<div class="video-overlay-luxury">
+								<div class="play-button-luxury" onclick="toggleVideo()">
+									<i class="fas fa-play text-white text-4xl"></i>
+									<div class="play-ripple"></div>
+								</div>
+							</div>
+						</div>
+						<!-- Video decorative frame -->
+						<div class="video-frame-decoration">
+							<div class="frame-corner frame-tl"></div>
+							<div class="frame-corner frame-tr"></div>
+							<div class="frame-corner frame-bl"></div>
+							<div class="frame-corner frame-br"></div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-12">
+					<p class="text-2xl text-purple-700 font-light mb-8 max-w-2xl mx-auto leading-relaxed">
+						Sper să îţi placă acest video făcut de tine, pe care eu doar l-am pus aici! ♥
+					</p>
+					<div class="video-hearts">
+						<i class="fas fa-heart text-pink-600 text-5xl heart-bounce-1"></i>
+						<i class="fas fa-heart text-purple-600 text-3xl heart-bounce-2"></i>
+						<i class="fas fa-heart text-pink-600 text-4xl heart-bounce-3"></i>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Enhanced Footer -->
+		<footer class="py-16 bg-gradient-to-r from-pink-900 via-purple-900 to-indigo-900 text-center relative overflow-hidden">
+			<div class="absolute inset-0 bg-black/30"></div>
+			<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M50 5L61.8 38.2L95 50L61.8 61.8L50 95L38.2 61.8L5 50L38.2 38.2z" fill="%23ffffff" fill-opacity="0.05"/%3E%3C/svg%3E')] opacity-30"></div>
+			<div class="relative z-10 max-w-4xl mx-auto px-6">
+				<p class="text-pink-200 text-xl max-w-3xl mx-auto leading-relaxed mb-8">
+					Mă chinui de mult să ţin acest site ascuns de tine!! m-am luptat cu mine în fiecare zi, dar în sfârşit ziua specială a sosit să poţi vedeaaaa ♥
+				</p>
+				<div class="footer-hearts mb-8">
+					<i class="fas fa-heart text-pink-300 text-3xl footer-heart-1"></i>
+					<i class="fas fa-heart text-pink-300 text-2xl footer-heart-2"></i>
+					<i class="fas fa-heart text-pink-300 text-3xl footer-heart-3"></i>
+					<i class="fas fa-heart text-pink-300 text-xl footer-heart-4"></i>
+					<i class="fas fa-heart text-pink-300 text-2xl footer-heart-5"></i>
+				</div>
+				<p class="text-pink-300 text-2xl font-dancing">Made with ♥ for my special one</p>
+				<div class="mt-6">
+					<div class="w-32 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
+				</div>
+			</div>
+		</footer>
+		</div>
 		<script src="script.js"></script>
 	</body>
 </html>
