@@ -1,151 +1,152 @@
 // ======= PERFORMANCE OPTIMIZATIONS =======
 const DOM = {
-  contentArea: null,
-  mobileMenu: null,
-  toast: null,
-  toastMessage: null,
-  toastBox: null,
-  imageModal: null,
-  modalImage: null,
-  init() {
-    this.contentArea = document.getElementById("content-area")
-    this.mobileMenu = document.getElementById("mobile-menu")
-    this.toast = document.getElementById("toast")
-    this.toastMessage = document.getElementById("toast-message")
-    this.toastBox = this.toast?.querySelector(".toast-box")
-    this.imageModal = document.getElementById("image-modal")
-    this.modalImage = document.getElementById("modal-image")
-  },
+	contentArea: null,
+	mobileMenu: null,
+	toast: null,
+	toastMessage: null,
+	toastBox: null,
+	imageModal: null,
+	modalImage: null,
+	init() {
+		this.contentArea = document.getElementById("content-area")
+		this.mobileMenu = document.getElementById("mobile-menu")
+		this.toast = document.getElementById("toast")
+		this.toastMessage = document.getElementById("toast-message")
+		this.toastBox = this.toast?.querySelector(".toast-box")
+		this.imageModal = document.getElementById("image-modal")
+		this.modalImage = document.getElementById("modal-image")
+	},
 }
 
 const debounce = (func, wait) => {
-  let timeout
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout)
-      func(...args)
-    }
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-  }
+	let timeout
+	return function executedFunction(...args) {
+		const later = () => {
+			clearTimeout(timeout)
+			func(...args)
+		}
+		clearTimeout(timeout)
+		timeout = setTimeout(later, wait)
+	}
 }
 
 // ======= UTILITY FUNCTIONS =======
 let toastTimeout
+
 function showToast(message, type = "success") {
-  const toast = document.getElementById("toast")
-  const toastBox = toast?.querySelector(".toast-box")
-  const toastMessage = document.getElementById("toast-message")
+	const toast = document.getElementById("toast")
+	const toastBox = toast?.querySelector(".toast-box")
+	const toastMessage = document.getElementById("toast-message")
 
-  if (!toast || !toastBox || !toastMessage) {
-    console.log("Toast elements not found")
-    return
-  }
+	if (!toast || !toastBox || !toastMessage) {
+		console.log("Toast elements not found")
+		return
+	}
 
-  if (toastTimeout) {
-    clearTimeout(toastTimeout)
-  }
+	if (toastTimeout) {
+		clearTimeout(toastTimeout)
+	}
 
-  toastMessage.textContent = message
-  toast.classList.remove("hidden")
-  toastBox.classList.remove("hide")
-  toastBox.classList.add("show")
+	toastMessage.textContent = message
+	toast.classList.remove("hidden")
+	toastBox.classList.remove("hide")
+	toastBox.classList.add("show")
 
-  toastTimeout = setTimeout(() => {
-    toastBox.classList.remove("show")
-    toastBox.classList.add("hide")
-    setTimeout(() => {
-      toast.classList.add("hidden")
-    }, 500)
-  }, 2500)
+	toastTimeout = setTimeout(() => {
+		toastBox.classList.remove("show")
+		toastBox.classList.add("hide")
+		setTimeout(() => {
+			toast.classList.add("hidden")
+		}, 500)
+	}, 2500)
 }
 
 const copyToClipboard = async (text, message) => {
-  try {
-    await navigator.clipboard.writeText(text)
-    showToast(message)
-  } catch (err) {
-    console.error("Failed to copy:", err)
-    const textArea = document.createElement("textarea")
-    textArea.value = text
-    textArea.style.position = "fixed"
-    textArea.style.left = "-999999px"
-    textArea.style.top = "-999999px"
-    document.body.appendChild(textArea)
-    textArea.focus()
-    textArea.select()
-    try {
-      document.execCommand("copy")
-      showToast(message)
-    } catch (fallbackErr) {
-      showToast("Copy failed - please copy manually", "error")
-    }
-    document.body.removeChild(textArea)
-  }
+	try {
+		await navigator.clipboard.writeText(text)
+		showToast(message)
+	} catch (err) {
+		console.error("Failed to copy:", err)
+		const textArea = document.createElement("textarea")
+		textArea.value = text
+		textArea.style.position = "fixed"
+		textArea.style.left = "-999999px"
+		textArea.style.top = "-999999px"
+		document.body.appendChild(textArea)
+		textArea.focus()
+		textArea.select()
+		try {
+			document.execCommand("copy")
+			showToast(message)
+		} catch (fallbackErr) {
+			showToast("Copy failed - please copy manually", "error")
+		}
+		document.body.removeChild(textArea)
+	}
 }
 
 function copyPassword(pass) {
-  copyToClipboard(pass, "Password copied to clipboard!")
+	copyToClipboard(pass, "Password copied to clipboard!")
 }
 
 function copyDiscordInvite() {
-  copyToClipboard("https://discord.gg/BBX8vfN4gQ", "Discord invite link copied!")
+	copyToClipboard("https://discord.gg/BBX8vfN4gQ", "Discord invite link copied!")
 }
 
 function toggleDiscordInvite() {
-  const wrapper = document.getElementById("discord-invite-wrapper")
-  wrapper?.classList.toggle("open")
+	const wrapper = document.getElementById("discord-invite-wrapper")
+	wrapper?.classList.toggle("open")
 }
 
 function openModal(src) {
-  const modal = document.getElementById("image-modal")
-  const modalImage = document.getElementById("modal-image")
+	const modal = document.getElementById("image-modal")
+	const modalImage = document.getElementById("modal-image")
 
-  if (!modal || !modalImage) return
+	if (!modal || !modalImage) return
 
-  modalImage.src = src
-  modal.classList.remove("hidden")
-  document.body.style.overflow = "hidden"
+	modalImage.src = src
+	modal.classList.remove("hidden")
+	document.body.style.overflow = "hidden"
 }
 
 function closeModal() {
-  const modal = document.getElementById("image-modal")
-  if (!modal) return
+	const modal = document.getElementById("image-modal")
+	if (!modal) return
 
-  modal.classList.add("hidden")
-  document.body.style.overflow = "auto"
+	modal.classList.add("hidden")
+	document.body.style.overflow = "auto"
 }
 
 function toggleDropdown() {
-  const dropdown = document.querySelector(".dropdown")
-  if (!dropdown) return
+	const dropdown = document.querySelector(".dropdown")
+	if (!dropdown) return
 
-  const icon = dropdown.querySelector(".dropbtn i")
-  const isActive = dropdown.classList.toggle("active")
+	const icon = dropdown.querySelector(".dropbtn i")
+	const isActive = dropdown.classList.toggle("active")
 
-  if (icon) {
-    icon.style.transform = isActive ? "rotate(180deg)" : "rotate(0deg)"
-  }
+	if (icon) {
+		icon.style.transform = isActive ? "rotate(180deg)" : "rotate(0deg)"
+	}
 }
 
 function animateContent() {
-  const contentArea = document.getElementById("content-area")
-  contentArea?.classList.remove("opacity-0")
+	const contentArea = document.getElementById("content-area")
+	contentArea?.classList.remove("opacity-0")
 }
 
 // ======= CONTENT RENDERING =======
 function renderWelcomeContent() {
-  localStorage.setItem("currentPage", "welcome")
-  const contentArea = document.getElementById("content-area")
-  const mobileMenu = document.getElementById("mobile-menu")
+	localStorage.setItem("currentPage", "welcome")
+	const contentArea = document.getElementById("content-area")
+	const mobileMenu = document.getElementById("mobile-menu")
 
-  if (!contentArea) return
+	if (!contentArea) return
 
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
-  mobileMenu?.classList.add("hidden")
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+	mobileMenu?.classList.add("hidden")
 
-  setTimeout(() => {
-    contentArea.innerHTML = `
+	setTimeout(() => {
+		contentArea.innerHTML = `
       <section class="text-center mb-12">
         <div class="hero-text-new">
           <p class="hero-main-text">
@@ -192,7 +193,7 @@ function renderWelcomeContent() {
             <div class="features-icon-pulse">
               <i class="fas fa-info-circle"></i>
             </div>
-            <h3 class="features-title-new">What's Included</h3>
+            <h3 class="features-title-new">Important Information</h3>
           </div>
           
           <div class="features-grid-new">
@@ -229,67 +230,67 @@ function renderWelcomeContent() {
         </div>
       </section>
     `
-    animateContent()
-  }, 300)
+		animateContent()
+	}, 300)
 }
 
 async function loadContent(section) {
-  section = section.split("?")[0]
-  localStorage.setItem("currentPage", section)
+	section = section.split("?")[0]
+	localStorage.setItem("currentPage", section)
 
-  const contentArea = document.getElementById("content-area")
-  const mobileMenu = document.getElementById("mobile-menu")
+	const contentArea = document.getElementById("content-area")
+	const mobileMenu = document.getElementById("mobile-menu")
 
-  if (!contentArea) return
+	if (!contentArea) return
 
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
-  mobileMenu?.classList.add("hidden")
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+	mobileMenu?.classList.add("hidden")
 
-  setTimeout(async () => {
-    if (section === "welcome") {
-      renderWelcomeContent()
-      return
-    }
-    if (section === "about") {
-      renderAboutMePage()
-      return
-    }
+	setTimeout(async () => {
+		if (section === "welcome") {
+			renderWelcomeContent()
+			return
+		}
+		if (section === "about") {
+			renderAboutMePage()
+			return
+		}
 
-    const title = section.charAt(0).toUpperCase() + section.slice(1)
-    const jsonUrl =
-      section === "tutorials"
-        ? "assets/data/tutorials.json"
-        : section === "tools"
-          ? "assets/data/tools.json"
-          : `assets/data/${section}.json`
+		const title = section.charAt(0).toUpperCase() + section.slice(1)
+		const jsonUrl =
+			section === "tutorials" ?
+			"assets/data/tutorials.json" :
+			section === "tools" ?
+			"assets/data/tools.json" :
+			`assets/data/${section}.json`
 
-    try {
-      const response = await fetch(`${jsonUrl}?v=${Date.now()}`)
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+		try {
+			const response = await fetch(`${jsonUrl}?v=${Date.now()}`)
+			if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
-      const data = await response.json()
-      renderContent(title, data, section)
-    } catch (error) {
-      console.error("Failed to load content:", error)
-      contentArea.innerHTML = `
+			const data = await response.json()
+			renderContent(title, data, section)
+		} catch (error) {
+			console.error("Failed to load content:", error)
+			contentArea.innerHTML = `
         <div class="text-center mt-24 text-red-400 text-lg">
           Failed to load content. Please try again later.
         </div>
       `
-      animateContent()
-    }
-  }, 300)
+			animateContent()
+		}
+	}, 300)
 }
 
 function renderContent(title, items, section) {
-  const contentArea = document.getElementById("content-area")
-  if (!contentArea || !Array.isArray(items)) return
+	const contentArea = document.getElementById("content-area")
+	if (!contentArea || !Array.isArray(items)) return
 
-  const gridCols = ["tutorials", "tools"].includes(section)
-    ? "grid-cols-1 sm:grid-cols-2"
-    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+	const gridCols = ["tutorials", "tools"].includes(section) ?
+		"grid-cols-1 sm:grid-cols-2" :
+		"grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 
-  const content = `
+	const content = `
     <section>
       <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
       <div class="grid ${gridCols} gap-6">
@@ -298,48 +299,54 @@ function renderContent(title, items, section) {
     </section>
   `
 
-  contentArea.innerHTML = content
-  animateContent()
+	contentArea.innerHTML = content
+	animateContent()
 }
 
 // ======= ASSETS PAGE =======
 async function loadAllAssets() {
-  localStorage.setItem("currentPage", "assets")
-  const contentArea = document.getElementById("content-area")
-  const mobileMenu = document.getElementById("mobile-menu")
+	localStorage.setItem("currentPage", "assets")
+	const contentArea = document.getElementById("content-area")
+	const mobileMenu = document.getElementById("mobile-menu")
 
-  if (!contentArea) return
+	if (!contentArea) return
 
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
-  mobileMenu?.classList.add("hidden")
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+	mobileMenu?.classList.add("hidden")
 
-  const categories = ["costumes", "hairstyles", "weapons", "others", "free"]
-  const categoryTitles = {
-    costumes: "Costumes",
-    hairstyles: "Hairstyles",
-    weapons: "Weapons",
-    others: "Others",
-    free: "Free stuff",
-  }
+	const categories = ["costumes", "hairstyles", "weapons", "others", "free"]
+	const categoryTitles = {
+		costumes: "Costumes",
+		hairstyles: "Hairstyles",
+		weapons: "Weapons",
+		others: "Others",
+		free: "Free stuff",
+	}
 
-  setTimeout(async () => {
-    try {
-      const fetchPromises = categories.map(async (category) => {
-        const response = await fetch(`assets/data/${category}.json?v=${Date.now()}`)
-        if (!response.ok) throw new Error(`Failed to fetch ${category}`)
-        const data = await response.json()
-        return { category, data }
-      })
+	setTimeout(async () => {
+		try {
+			const fetchPromises = categories.map(async (category) => {
+				const response = await fetch(`assets/data/${category}.json?v=${Date.now()}`)
+				if (!response.ok) throw new Error(`Failed to fetch ${category}`)
+				const data = await response.json()
+				return {
+					category,
+					data
+				}
+			})
 
-      const results = await Promise.all(fetchPromises)
+			const results = await Promise.all(fetchPromises)
 
-      let fullContent = ""
-      let floatingLinks = ""
-      let mobileLinks = ""
+			let fullContent = ""
+			let floatingLinks = ""
+			let mobileLinks = ""
 
-      results.forEach(({ category, data }) => {
-        if (data.length > 0) {
-          floatingLinks += `
+			results.forEach(({
+				category,
+				data
+			}) => {
+				if (data.length > 0) {
+					floatingLinks += `
             <a href="#${category}" 
                class="nav-link-modern" 
                data-target="${category}" 
@@ -349,7 +356,7 @@ async function loadAllAssets() {
             </a>
           `
 
-          mobileLinks += `
+					mobileLinks += `
             <a href="#${category}" 
                class="mobile-nav-link" 
                data-target="${category}" 
@@ -359,7 +366,7 @@ async function loadAllAssets() {
             </a>
           `
 
-          fullContent += `
+					fullContent += `
             <section id="${category}">
               <h2 class="section-title text-2xl font-semibold mb-4 text-pink-400 border-b border-gray-700 pb-2">${categoryTitles[category]}</h2>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -367,15 +374,15 @@ async function loadAllAssets() {
               </div>
             </section>
           `
-        }
-      })
+				}
+			})
 
-      if (fullContent === "") {
-        contentArea.innerHTML = `
+			if (fullContent === "") {
+				contentArea.innerHTML = `
           <div class="text-center mt-24 text-gray-400 text-lg">No assets available at the moment. Please check back later!</div>
         `
-      } else {
-        contentArea.innerHTML = `
+			} else {
+				contentArea.innerHTML = `
           <!-- Desktop Floating Menu -->
           <aside class="floating-nav-modern">
             <div class="nav-header">
@@ -409,125 +416,125 @@ async function loadAllAssets() {
           <div class="space-y-12">${fullContent}</div>
         `
 
-        setupScrollSpy(categories)
-        setupSmoothScrolling()
-        setupMobileNav()
-      }
+				setupScrollSpy(categories)
+				setupSmoothScrolling()
+				setupMobileNav()
+			}
 
-      animateContent()
-    } catch (error) {
-      console.error("Failed to load assets:", error)
-      contentArea.innerHTML = `
+			animateContent()
+		} catch (error) {
+			console.error("Failed to load assets:", error)
+			contentArea.innerHTML = `
         <div class="text-center mt-24 text-red-400 text-lg">Failed to load assets. Please try again later.</div>
       `
-      animateContent()
-    }
-  }, 300)
+			animateContent()
+		}
+	}, 300)
 }
 
 function getCategoryIcon(category) {
-  const icons = {
-    costumes: "tshirt",
-    hairstyles: "cut",
-    weapons: "sword",
-    others: "cube",
-    free: "gift",
-  }
-  return icons[category] || "folder"
+	const icons = {
+		costumes: "tshirt",
+		hairstyles: "cut",
+		weapons: "sword",
+		others: "cube",
+		free: "gift",
+	}
+	return icons[category] || "folder"
 }
 
 function setupMobileNav() {
-  const toggle = document.getElementById("mobile-nav-toggle")
-  const close = document.getElementById("mobile-nav-close")
-  const overlay = document.getElementById("mobile-nav-overlay")
-  const menu = document.getElementById("mobile-nav-menu")
+	const toggle = document.getElementById("mobile-nav-toggle")
+	const close = document.getElementById("mobile-nav-close")
+	const overlay = document.getElementById("mobile-nav-overlay")
+	const menu = document.getElementById("mobile-nav-menu")
 
-  if (!toggle || !close || !overlay || !menu) return
+	if (!toggle || !close || !overlay || !menu) return
 
-  const openMenu = () => {
-    menu.classList.add("active")
-    overlay.classList.add("active")
-    document.body.style.overflow = "hidden"
-  }
+	const openMenu = () => {
+		menu.classList.add("active")
+		overlay.classList.add("active")
+		document.body.style.overflow = "hidden"
+	}
 
-  const closeMenu = () => {
-    menu.classList.remove("active")
-    overlay.classList.remove("active")
-    document.body.style.overflow = "auto"
-  }
+	const closeMenu = () => {
+		menu.classList.remove("active")
+		overlay.classList.remove("active")
+		document.body.style.overflow = "auto"
+	}
 
-  toggle.addEventListener("click", openMenu)
-  close.addEventListener("click", closeMenu)
-  overlay.addEventListener("click", closeMenu)
+	toggle.addEventListener("click", openMenu)
+	close.addEventListener("click", closeMenu)
+	overlay.addEventListener("click", closeMenu)
 
-  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    link.addEventListener("click", closeMenu)
-  })
+	document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+		link.addEventListener("click", closeMenu)
+	})
 }
 
 function setupSmoothScrolling() {
-  document.querySelectorAll(".nav-link-modern").forEach((link) => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault()
-      const categoryId = this.getAttribute("data-target")
-      const section = document.getElementById(categoryId)
-      if (section) {
-        const title = section.querySelector(".section-title")
-        if (title) {
-          const offset = title.getBoundingClientRect().top + window.scrollY - 120
-          window.scrollTo({
-            top: offset,
-            behavior: "smooth",
-          })
-        }
-      }
-    })
-  })
+	document.querySelectorAll(".nav-link-modern").forEach((link) => {
+		link.addEventListener("click", function (e) {
+			e.preventDefault()
+			const categoryId = this.getAttribute("data-target")
+			const section = document.getElementById(categoryId)
+			if (section) {
+				const title = section.querySelector(".section-title")
+				if (title) {
+					const offset = title.getBoundingClientRect().top + window.scrollY - 120
+					window.scrollTo({
+						top: offset,
+						behavior: "smooth",
+					})
+				}
+			}
+		})
+	})
 
-  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault()
-      const categoryId = this.getAttribute("data-target")
-      const section = document.getElementById(categoryId)
-      if (section) {
-        const title = section.querySelector(".section-title")
-        if (title) {
-          const offset = title.getBoundingClientRect().top + window.scrollY - 120
-          window.scrollTo({
-            top: offset,
-            behavior: "smooth",
-          })
-        }
-      }
-    })
-  })
+	document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+		link.addEventListener("click", function (e) {
+			e.preventDefault()
+			const categoryId = this.getAttribute("data-target")
+			const section = document.getElementById(categoryId)
+			if (section) {
+				const title = section.querySelector(".section-title")
+				if (title) {
+					const offset = title.getBoundingClientRect().top + window.scrollY - 120
+					window.scrollTo({
+						top: offset,
+						behavior: "smooth",
+					})
+				}
+			}
+		})
+	})
 }
 
 function renderItem(item, section) {
-  const imageWithPreviewButton = item.img
-    ? `
+	const imageWithPreviewButton = item.img ?
+		`
     <div class="relative mb-4">
       <img loading="lazy" src="${item.img}" alt="${item.title}" class="asset-card-media">
       <button onclick="openModal('${item.full || item.img}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
         <i class="fas fa-expand"></i>
       </button>
-    </div>`
-    : ""
+    </div>` :
+		""
 
-  const calculateDiscountedPrice = (originalPrice, discount) => {
-    if (!originalPrice || !discount) return null
-    const numericPrice = Number.parseFloat(originalPrice.replace(/[^\d.]/g, ""))
-    const discountedPrice = numericPrice * (1 - discount / 100)
-    const currency = originalPrice.replace(/[\d.]/g, "").trim()
-    return `${discountedPrice.toFixed(0)}${currency}`
-  }
+	const calculateDiscountedPrice = (originalPrice, discount) => {
+		if (!originalPrice || !discount) return null
+		const numericPrice = Number.parseFloat(originalPrice.replace(/[^\d.]/g, ""))
+		const discountedPrice = numericPrice * (1 - discount / 100)
+		const currency = originalPrice.replace(/[\d.]/g, "").trim()
+		return `${discountedPrice.toFixed(0)}${currency}`
+	}
 
-  const createPriceButton = (item) => {
-    if (!item.price) return ""
+	const createPriceButton = (item) => {
+		if (!item.price) return ""
 
-    if (item.onSale && item.discount) {
-      const discountedPrice = calculateDiscountedPrice(item.price, item.discount)
-      return `
+		if (item.onSale && item.discount) {
+			const discountedPrice = calculateDiscountedPrice(item.price, item.discount)
+			return `
         <div class="modern-sale-container">
           <div class="sale-badge-modern">
             <span class="sale-text">SALE</span>
@@ -539,26 +546,26 @@ function renderItem(item, section) {
           </div>
         </div>
       `
-    } else {
-      return `
+		} else {
+			return `
         <div class="regular-price-container">
           <span class="regular-price">Price: ${item.price}</span>
         </div>
       `
-    }
-  }
+		}
+	}
 
-  const priceBtn = createPriceButton(item)
+	const priceBtn = createPriceButton(item)
 
-  const previewBtn = item.preview
-    ? `
+	const previewBtn = item.preview ?
+		`
     <a href="${item.preview}" target="_blank" rel="noopener noreferrer" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
       <i class="fas fa-eye"></i> Preview
-    </a>`
-    : ""
+    </a>` :
+		""
 
-  const sectionRenderers = {
-    free: () => `
+	const sectionRenderers = {
+		free: () => `
       <div class="bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
@@ -569,13 +576,13 @@ function renderItem(item, section) {
         </div>
       </div>`,
 
-    tutorials: () => `
+		tutorials: () => `
       <div class="bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         <iframe class="asset-card-iframe mb-4" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen loading="lazy"></iframe>
       </div>`,
 
-    tools: () => `
+		tools: () => `
       <div class="tool-card-modern ${item.onSale ? "on-sale-modern" : ""} bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full relative overflow-hidden">
         <h3 class="text-2xl font-bold text-white mb-4 relative z-10">${item.title}</h3>
         ${imageWithPreviewButton}
@@ -586,7 +593,7 @@ function renderItem(item, section) {
         </div>
       </div>`,
 
-    default: () => `
+		default: () => `
       <div class="bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
@@ -595,54 +602,56 @@ function renderItem(item, section) {
           ${previewBtn}
         </div>
       </div>`,
-  }
+	}
 
-  return (sectionRenderers[section] || sectionRenderers.default)()
+	return (sectionRenderers[section] || sectionRenderers.default)()
 }
 
 function setupScrollSpy(categories) {
-  const desktopLinks = categories.map((cat) => document.getElementById(`link-${cat}`)).filter(Boolean)
-  const mobileLinks = categories.map((cat) => document.getElementById(`mobile-link-${cat}`)).filter(Boolean)
-  const sections = categories.map((cat) => document.getElementById(cat)).filter(Boolean)
+	const desktopLinks = categories.map((cat) => document.getElementById(`link-${cat}`)).filter(Boolean)
+	const mobileLinks = categories.map((cat) => document.getElementById(`mobile-link-${cat}`)).filter(Boolean)
+	const sections = categories.map((cat) => document.getElementById(cat)).filter(Boolean)
 
-  if (sections.length === 0) return
+	if (sections.length === 0) return
 
-  const debouncedScrollHandler = debounce(() => {
-    let index = sections.length - 1
-    for (let i = 0; i < sections.length; i++) {
-      if (window.scrollY >= sections[i].offsetTop - 150) {
-        index = i
-      }
-    }
+	const debouncedScrollHandler = debounce(() => {
+		let index = sections.length - 1
+		for (let i = 0; i < sections.length; i++) {
+			if (window.scrollY >= sections[i].offsetTop - 150) {
+				index = i
+			}
+		}
 
-    requestAnimationFrame(() => {
-      desktopLinks.forEach((link) => link?.classList.remove("active"))
-      if (desktopLinks[index]) {
-        desktopLinks[index].classList.add("active")
-      }
+		requestAnimationFrame(() => {
+			desktopLinks.forEach((link) => link?.classList.remove("active"))
+			if (desktopLinks[index]) {
+				desktopLinks[index].classList.add("active")
+			}
 
-      mobileLinks.forEach((link) => link?.classList.remove("active"))
-      if (mobileLinks[index]) {
-        mobileLinks[index].classList.add("active")
-      }
-    })
-  }, 16)
+			mobileLinks.forEach((link) => link?.classList.remove("active"))
+			if (mobileLinks[index]) {
+				mobileLinks[index].classList.add("active")
+			}
+		})
+	}, 16)
 
-  window.addEventListener("scroll", debouncedScrollHandler, { passive: true })
+	window.addEventListener("scroll", debouncedScrollHandler, {
+		passive: true
+	})
 }
 
 function renderAboutMePage() {
-  const contentArea = document.getElementById("content-area");
-  const mobileMenu = document.getElementById("mobile-menu");
+	const contentArea = document.getElementById("content-area");
+	const mobileMenu = document.getElementById("mobile-menu");
 
-  if (!contentArea) return;
+	if (!contentArea) return;
 
-  localStorage.setItem("currentPage", "about");
-  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  mobileMenu?.classList.add("hidden");
+	localStorage.setItem("currentPage", "about");
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
+	mobileMenu?.classList.add("hidden");
 
-  setTimeout(() => {
-    contentArea.innerHTML = `
+	setTimeout(() => {
+		contentArea.innerHTML = `
       <section class="about-page-container">
         <div class="animated-bg">
           <div class="bg-shape shape-1"></div>
@@ -1250,68 +1259,68 @@ function renderAboutMePage() {
         });
       </script>
     `;
-    
-    animateContent();
-  }, 300);
+
+		animateContent();
+	}, 300);
 }
 
 // ======= INITIALIZATION =======
 function initializeApp() {
-  DOM.init()
+	DOM.init()
 
-  const mobileMenuButton = document.getElementById("mobile-menu-button")
-  if (mobileMenuButton) {
-    mobileMenuButton.addEventListener("click", () => {
-      const mobileMenu = document.getElementById("mobile-menu")
-      mobileMenu?.classList.toggle("hidden")
-    })
-  }
+	const mobileMenuButton = document.getElementById("mobile-menu-button")
+	if (mobileMenuButton) {
+		mobileMenuButton.addEventListener("click", () => {
+			const mobileMenu = document.getElementById("mobile-menu")
+			mobileMenu?.classList.toggle("hidden")
+		})
+	}
 
-  const imageModal = document.getElementById("image-modal")
-  if (imageModal) {
-    imageModal.addEventListener("click", (e) => {
-      if (e.target === e.currentTarget) closeModal()
-    })
-  }
+	const imageModal = document.getElementById("image-modal")
+	if (imageModal) {
+		imageModal.addEventListener("click", (e) => {
+			if (e.target === e.currentTarget) closeModal()
+		})
+	}
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal()
-  })
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape") closeModal()
+	})
 
-  document.querySelectorAll(".dropdown-content a").forEach((link) => {
-    link.addEventListener("click", toggleDropdown)
-  })
+	document.querySelectorAll(".dropdown-content a").forEach((link) => {
+		link.addEventListener("click", toggleDropdown)
+	})
 
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "50px",
-  }
+	const observerOptions = {
+		threshold: 0.1,
+		rootMargin: "50px",
+	}
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("opacity-100", "translate-y-0")
-        observer.unobserve(entry.target)
-      }
-    })
-  }, observerOptions)
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add("opacity-100", "translate-y-0")
+				observer.unobserve(entry.target)
+			}
+		})
+	}, observerOptions)
 
-  document.querySelectorAll(".fade-img").forEach((img) => {
-    observer.observe(img)
-  })
+	document.querySelectorAll(".fade-img").forEach((img) => {
+		observer.observe(img)
+	})
 
-  const savedPage = localStorage.getItem("currentPage")
-  if (savedPage === "assets") {
-    loadAllAssets()
-  } else if (savedPage) {
-    loadContent(savedPage)
-  } else {
-    renderWelcomeContent()
-  }
+	const savedPage = localStorage.getItem("currentPage")
+	if (savedPage === "assets") {
+		loadAllAssets()
+	} else if (savedPage) {
+		loadContent(savedPage)
+	} else {
+		renderWelcomeContent()
+	}
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeApp)
+	document.addEventListener("DOMContentLoaded", initializeApp)
 } else {
-  initializeApp()
+	initializeApp()
 }

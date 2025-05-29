@@ -1,275 +1,121 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Jawwad ART</title>
-  <meta name="description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
-  <meta name="theme-color" content="#000000">
-  <meta property="og:title" content="Jawwad ART - High Quality Assets">
-  <meta property="og:description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
-  <meta property="og:image" content="https://jawwad.site/assets/img/site_preview.png">
-  <meta property="og:url" content="https://jawwad.site/">
-  <meta property="og:type" content="website">
-  
-  <!-- Preload critical resources -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-  <link rel="preload" href="assets/css/style.min.css?v=1.4" as="style">
-  
-  <!-- Critical CSS -->
-  <link href="assets/css/style.min.css?v=1.4" rel="stylesheet">
-  
-  <!-- Non-critical CSS -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/ico/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/svg+xml" href="assets/ico/favicon.svg">
-  <link rel="shortcut icon" href="assets/ico/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
-  
-  <!-- External scripts with defer -->
-  <script src="https://cdn.tailwindcss.com" defer></script>
-  <script defer data-domain="jawwad.site" src="https://plausible.io/js/script.js"></script>
-  
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": "Jawwad ART Assets"
-  }
-  </script>
-  
-  <link rel="sitemap" href="https://jawwad.site/sitemap.xml">
-</head>
-<body class="min-h-screen">
-  <nav class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <span class="logo-animated" aria-label="Jawwad ART Logo" onclick="renderWelcomeContent()">Jawwad ART</span>
-          </div>
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
-              <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="renderWelcomeContent()">
-                <i class="fa-solid fa-house"></i> Welcome
-              </a>
-              <button class="dropbtn" onclick="loadAllAssets()">Assets <i class="fa fa-layer-group"></i></button>
-              <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tutorials')">
-                <i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials
-              </a>
-              <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tools')">
-                <i class="fas fa-tools mr-2"></i> Tools
-              </a>
-              <button onclick="copyDiscordInvite()" class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center">
-                <i class="fab fa-discord mr-2"></i> Contact
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Mobile menu button -->
-        <div class="-mr-2 flex md:hidden">
-          <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-none text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" aria-label="Main menu" aria-expanded="false">
-            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Mobile Menu -->
-<div class="md:hidden hidden" id="mobile-menu">
-  <div class="mobile-menu-backdrop">
-    <div class="mobile-menu-content">
-      <!-- Header simplu -->
-      <div class="mobile-header">
-        <span class="mobile-title">Menu</span>
-        <button class="mobile-close" onclick="toggleMobileMenu()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <!-- Links simple -->
-      <nav class="mobile-nav">
-        <a href="#" class="mobile-link" onclick="renderWelcomeContent(); closeMobileMenu();">
-          <i class="fas fa-home"></i>
-          <span>Welcome</span>
-        </a>
-        
-        <a href="#" class="mobile-link" onclick="loadAllAssets(); closeMobileMenu();">
-          <i class="fas fa-cube"></i>
-          <span>Assets</span>
-        </a>
-        
-        <a href="#" class="mobile-link" onclick="loadContent('tutorials'); closeMobileMenu();">
-          <i class="fas fa-play"></i>
-          <span>Tutorials</span>
-        </a>
-        
-        <a href="#" class="mobile-link" onclick="loadContent('tools'); closeMobileMenu();">
-          <i class="fas fa-tools"></i>
-          <span>Tools</span>
-        </a>
-        
-        <button class="mobile-link" onclick="copyDiscordInvite(); closeMobileMenu();">
-          <i class="fab fa-discord"></i>
-          <span>Contact</span>
-        </button>
-      </nav>
-    </div>
-  </div>
-</div>
-
-<style>
-/* Mobile Menu - Simplu și Clean */
-.mobile-menu-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 9999;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.mobile-menu-content {
-  background: #1a1a1a;
-  height: 100vh;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header */
-.mobile-header {
-  display: flex;
-  justify-content: between;
-  align-items: center;
-  padding: 1rem 0 2rem;
-  border-bottom: 1px solid #333;
-  margin-bottom: 2rem;
-}
-
-.mobile-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ec4899;
-  flex: 1;
-}
-
-.mobile-close {
-  background: #333;
-  border: none;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-}
-
-.mobile-close:hover {
-  background: #444;
-}
-
-/* Navigation */
-.mobile-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.mobile-link {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  background: #222;
-  border: none;
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  width: 100%;
-  text-align: left;
-}
-
-.mobile-link:hover {
-  background: #333;
-  transform: translateX(4px);
-}
-
-.mobile-link i {
-  width: 20px;
-  margin-right: 1rem;
-  color: #ec4899;
-}
-
-.mobile-link span {
-  font-weight: 500;
-}
-
-/* Discord special */
-.mobile-link i.fa-discord {
-  color: #7289da;
-}
-</style>
-
-<script>
-function closeMobileMenu() {
-  const mobileMenu = document.getElementById('mobile-menu');
-  if (mobileMenu) {
-    mobileMenu.classList.add('hidden');
-  }
-}
-
-function toggleMobileMenu() {
-  const mobileMenu = document.getElementById('mobile-menu');
-  if (mobileMenu) {
-    mobileMenu.classList.toggle('hidden');
-  }
-}
-</script>
-
-  </nav>
-
-  <!-- Toast notification -->
-  <div id="toast" class="toast-container hidden">
-    <div class="toast-box">
-      <i class="fas fa-check-circle icon"></i>
-      <span id="toast-message">Copied to clipboard!</span>
-    </div>
-  </div>
-
-  <!-- Main content -->
-  <main class="pt-20 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-    <div id="content-area" class="opacity-0 transition-opacity duration-500 ease-in-out"></div>
-  </main>
-
-  <!-- Image modal -->
-  <div id="image-modal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
-    <div class="modal-content relative max-w-4xl w-full">
-      <button onclick="closeModal()" class="absolute -top-10 right-0 text-white hover:text-pink-300 text-2xl">
-        <i class="fas fa-times"></i>
-      </button>
-      <img id="modal-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full size preview" loading="lazy" class="w-full max-h-[90vh] object-contain rounded-none">
-    </div>
-  </div>
-
-  <!-- Main script -->
-  <script src="assets/js/app.min.js?v=1.4"></script>
-  <script src="assets/js/download-redirect.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Jawwad ART</title>
+		<meta name="description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
+		<meta name="theme-color" content="#000000">
+		<meta property="og:title" content="Jawwad ART - High Quality Assets">
+		<meta property="og:description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
+		<meta property="og:image" content="https://jawwad.site/assets/img/site_preview.png">
+		<meta property="og:url" content="https://jawwad.site/">
+		<meta property="og:type" content="website">
+		<!-- Preload critical resources -->
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+		<link rel="preload" href="assets/css/style.min.css?v=1.4" as="style">
+		<!-- Critical CSS -->
+		<link href="assets/css/style.min.css?v=1.4" rel="stylesheet">
+		<!-- Non-critical CSS -->
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/ico/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/svg+xml" href="assets/ico/favicon.svg">
+		<link rel="shortcut icon" href="assets/ico/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
+		<!-- External scripts with defer -->
+		<script src="https://cdn.tailwindcss.com" defer></script>
+		<script defer data-domain="jawwad.site" src="https://plausible.io/js/script.js"></script>
+		<script type="application/ld+json">
+			{
+			  "@context": "https://schema.org",
+			  "@type": "CreativeWork",
+			  "name": "Jawwad ART Assets"
+			}
+		</script>
+		<link rel="sitemap" href="https://jawwad.site/sitemap.xml">
+	</head>
+	<body class="min-h-screen">
+		<nav class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-50">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex items-center justify-between h-16">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							<span class="logo-animated" aria-label="Jawwad ART Logo" onclick="renderWelcomeContent()">Jawwad ART</span>
+						</div>
+						<div class="hidden md:block">
+							<div class="ml-10 flex items-baseline space-x-4">
+								<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="renderWelcomeContent()">
+								<i class="fa-solid fa-house"></i> Welcome
+								</a>
+								<button class="dropbtn" onclick="loadAllAssets()">Assets <i class="fa fa-layer-group"></i></button>
+								<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tutorials')">
+								<i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials
+								</a>
+								<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tools')">
+								<i class="fas fa-tools mr-2"></i> Tools
+								</a>
+								<button onclick="copyDiscordInvite()" class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center">
+								<i class="fab fa-discord mr-2"></i> Contact
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Mobile menu button -->
+					<div class="-mr-2 flex md:hidden">
+						<button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-none text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" aria-label="Main menu" aria-expanded="false">
+							<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- În body, unde vrei mobile menu -->
+			<div id="mobile-menu-container"></div>
+			<script>
+				// Încarcă mobile menu
+				document.addEventListener('DOMContentLoaded', () => {
+				  fetch('mobile-menu.html')
+				    .then(r => r.text())
+				    .then(html => {
+				      document.getElementById('mobile-menu-container').innerHTML = html;
+				    });
+				});
+			</script>
+		</nav>
+		<!-- Toast notification -->
+		<div id="toast" class="toast-container hidden">
+			<div class="toast-box">
+				<i class="fas fa-check-circle icon"></i>
+				<span id="toast-message">Copied to clipboard!</span>
+			</div>
+		</div>
+		<!-- Main content -->
+		<main class="pt-20 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+			<div id="content-area" class="opacity-0 transition-opacity duration-500 ease-in-out"></div>
+		</main>
+		<!-- Image modal -->
+		<div id="image-modal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+			<div class="modal-content relative max-w-4xl w-full">
+				<button onclick="closeModal()" class="absolute -top-10 right-0 text-white hover:text-pink-300 text-2xl">
+				<i class="fas fa-times"></i>
+				</button>
+				<img id="modal-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full size preview" loading="lazy" class="w-full max-h-[90vh] object-contain rounded-none">
+			</div>
+		</div>
+		<!-- La sfârșitul body-ului -->
+		<div id="footer"></div>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+			  fetch('footer.html')
+			    .then(r => r.text())
+			    .then(html => document.getElementById('footer').innerHTML = html);
+			});
+		</script>
+		<!-- Main script -->
+		<script src="assets/js/app.min.js?v=1.4"></script>
+		<script src="assets/js/download-redirect.js"></script>
+	</body>
 </html>
