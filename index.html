@@ -82,19 +82,167 @@
     </div>
     
     <!-- Mobile Menu -->
-    <div class="md:hidden hidden" id="mobile-menu">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black bg-opacity-90">
-        <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="renderWelcomeContent()">
-          <i class="fa-solid fa-house"></i> Welcome
-        </a>
-        <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadAllAssets()">Assets</a>
-        <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('tutorials')">Tutorials</a>
-        <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('tools')">Tools</a>
-        <button onclick="copyDiscordInvite()" class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none flex items-center">
-          <i class="fab fa-discord mr-2"></i> Contact
+<div class="md:hidden hidden" id="mobile-menu">
+  <div class="mobile-menu-backdrop">
+    <div class="mobile-menu-content">
+      <!-- Header simplu -->
+      <div class="mobile-header">
+        <span class="mobile-title">Menu</span>
+        <button class="mobile-close" onclick="toggleMobileMenu()">
+          <i class="fas fa-times"></i>
         </button>
       </div>
+
+      <!-- Links simple -->
+      <nav class="mobile-nav">
+        <a href="#" class="mobile-link" onclick="renderWelcomeContent(); closeMobileMenu();">
+          <i class="fas fa-home"></i>
+          <span>Welcome</span>
+        </a>
+        
+        <a href="#" class="mobile-link" onclick="loadAllAssets(); closeMobileMenu();">
+          <i class="fas fa-cube"></i>
+          <span>Assets</span>
+        </a>
+        
+        <a href="#" class="mobile-link" onclick="loadContent('tutorials'); closeMobileMenu();">
+          <i class="fas fa-play"></i>
+          <span>Tutorials</span>
+        </a>
+        
+        <a href="#" class="mobile-link" onclick="loadContent('tools'); closeMobileMenu();">
+          <i class="fas fa-tools"></i>
+          <span>Tools</span>
+        </a>
+        
+        <button class="mobile-link" onclick="copyDiscordInvite(); closeMobileMenu();">
+          <i class="fab fa-discord"></i>
+          <span>Contact</span>
+        </button>
+      </nav>
     </div>
+  </div>
+</div>
+
+<style>
+/* Mobile Menu - Simplu și Clean */
+.mobile-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mobile-menu-content {
+  background: #1a1a1a;
+  height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.mobile-header {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  padding: 1rem 0 2rem;
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+}
+
+.mobile-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ec4899;
+  flex: 1;
+}
+
+.mobile-close {
+  background: #333;
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.mobile-close:hover {
+  background: #444;
+}
+
+/* Navigation */
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #222;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.mobile-link:hover {
+  background: #333;
+  transform: translateX(4px);
+}
+
+.mobile-link i {
+  width: 20px;
+  margin-right: 1rem;
+  color: #ec4899;
+}
+
+.mobile-link span {
+  font-weight: 500;
+}
+
+/* Discord special */
+.mobile-link i.fa-discord {
+  color: #7289da;
+}
+</style>
+
+<script>
+function closeMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenu) {
+    mobileMenu.classList.add('hidden');
+  }
+}
+
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenu) {
+    mobileMenu.classList.toggle('hidden');
+  }
+}
+</script>
+
   </nav>
 
   <!-- Toast notification -->
