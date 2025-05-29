@@ -706,37 +706,6 @@ html {
   transform: scale(1.05);
 }
 
-/* Footer optimizations */
-.footer-glass {
-  background: rgba(17, 17, 17, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-top: 1px solid var(--glass-border);
-  transition: background var(--transition-normal);
-}
-
-.footer-glass:hover {
-  background: rgba(17, 17, 17, 0.75);
-}
-
-.discord-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #7289da, #99aab5);
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  will-change: transform;
-}
-
-.discord-icon:hover {
-  transform: scale(1.1) rotate(3deg);
-  box-shadow: 0 0 8px #7289da;
-}
-
 /* Performance optimizations */
 aside a.active {
   background-color: #ec4899 !important;
