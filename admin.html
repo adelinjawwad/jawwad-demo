@@ -2,53 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel</title>
+  <title>Admin Panel - Jawwad ART</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin panel for managing Jawwad ART content">
+  <meta name="robots" content="noindex, nofollow">
   
   <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" as="style">
-  <link rel="preload" href="assets/css/admin.css?v=1.3" as="style">
+  <link rel="preload" href="assets/css/admin.css?v=3.0" as="style">
   
   <!-- Critical CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="assets/css/admin.css?v=1.3" rel="stylesheet">
+  <link href="assets/css/admin.css?v=3.0" rel="stylesheet">
   
   <!-- Non-critical CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 min-h-screen flex flex-col">
+
   <!-- Login Screen -->
-  <div id="loginScreen" class="fixed inset-0 bg-gradient-to-tr from-gray-900 to-gray-800 flex items-center justify-center z-50 px-4 animate-fadeIn">
-    <div class="backdrop-blur-sm bg-gray-800/70 border border-gray-700 shadow-2xl rounded-2xl p-8 w-full max-w-sm text-center animate-scaleUp">
-      <h2 class="text-3xl font-bold text-white mb-6 tracking-wide">Admin Login</h2>
-      <input
-        type="password"
-        id="adminPassword"
-        placeholder="Enter password"
-        class="w-full px-4 py-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all duration-200 mb-5"
-        onkeypress="if(event.key==='Enter') checkPassword()"
+  <div id="loginContainer" class="login-container">
+    <div class="login-box">
+      <div class="login-title">
+        <i class="fas fa-shield-alt mr-3"></i>
+        Admin Access
+      </div>
+      
+      <div class="mb-6 text-center">
+        <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl">
+          <i class="fas fa-cog text-white text-2xl"></i>
+        </div>
+        <p class="text-gray-300 text-sm">Enter password to access admin panel</p>
+      </div>
+      
+      <input 
+        type="password" 
+        id="adminPassword" 
+        placeholder="Enter admin password" 
+        class="login-input"
+        autocomplete="current-password"
       />
-      <button
-        onclick="checkPassword()"
-        class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg font-semibold tracking-wide shadow-md hover:shadow-pink-600/40 transition duration-300"
-      >
+      
+      <button onclick="checkPassword()" class="login-button">
+        <i class="fas fa-unlock mr-2"></i>
         Login
       </button>
-      <p id="loginError" class="text-red-400 mt-4 hidden font-medium">Incorrect password!</p>
+      
+      <div id="loginError" class="login-error" style="display: none;"></div>
+      
+      <div class="mt-6 text-center text-xs text-gray-500">
+        <i class="fas fa-info-circle mr-1"></i>
+        Secure access to content management
+      </div>
     </div>
   </div>
-
-  <!-- Admin Topbar -->
-  <div id="adminTopbar" class="hidden animate-slideDown mb-8 flex justify-between items-center bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800/90 p-4 rounded-xl shadow-2xl border border-gray-700 backdrop-blur-sm text-white">
-    <span class="text-green-400 font-semibold text-lg flex items-center space-x-2">
-      <i class="fas fa-user-shield text-2xl"></i>
-      <span>Logged in as Admin</span>
-    </span>
-    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 flex items-center gap-2 rounded-lg shadow-md hover:shadow-red-700/40 transition duration-300">
-      <i class="fas fa-sign-out-alt"></i>
-      <span>Logout</span>
-    </button>
-  </div>
+  
+  <!-- Admin Header -->
+  <header id="adminTopbar" class="hidden animate-slideDown mb-8">
+    <div class="glass-effect p-4 rounded-xl shadow-2xl border border-gray-700/50">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <div class="w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+            <i class="fas fa-cog text-white"></i>
+          </div>
+          <div>
+            <span class="text-pink-400 font-semibold text-lg">Admin Panel</span>
+            <p class="text-gray-400 text-sm">Jawwad ART Management System</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <!-- Quick stats -->
+          <div class="hidden md:flex items-center space-x-4 text-sm">
+            <div class="text-center">
+              <div class="text-gray-400">Status</div>
+              <div class="text-green-400 font-semibold">Online</div>
+            </div>
+          </div>
+          
+          <div class="bg-green-600 px-4 py-2 flex items-center gap-2 rounded-lg shadow-md">
+            <i class="fas fa-check-circle"></i>
+            <span>Ready</span>
+          </div>
+          <button 
+            onclick="logout()" 
+            class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 px-4 py-2 flex items-center gap-2 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <!-- Toast notification -->
   <div id="admin-toast" class="toast-box hidden">
@@ -56,98 +107,368 @@
     <span id="admin-toast-message"></span>
   </div>
 
-  <!-- File toggle button -->
-  <button id="toggle-table-btn" class="mb-6 bg-gray-800 hover:bg-gray-700 text-white px-5 py-3 shadow-md transition duration-300">
-    📁 Afișează fișiere
-  </button>
+  <!-- File Management Section -->
+  <section class="mb-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+        <i class="fas fa-folder-open text-blue-400"></i>
+        File Management
+      </h2>
+      <button 
+        id="toggle-table-btn" 
+        class="glass-effect hover:bg-gray-700/50 text-white px-5 py-3 rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 hover-lift"
+      >
+        <i class="fas fa-folder"></i>
+        <span>Show Files</span>
+      </button>
+    </div>
 
-  <!-- File table wrapper -->
-  <div id="table-wrapper" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out shadow-lg border border-gray-700">
-    <table id="downloads-table" class="w-full text-sm text-left text-white overflow-hidden">
-      <thead class="bg-gray-800 text-gray-300 uppercase text-xs tracking-wide">
-        <tr>
-          <th class="px-6 py-4 border-b border-gray-700">Fișier</th>
-          <th class="px-6 py-4 border-b border-gray-700">Acțiuni</th>
-        </tr>
-      </thead>
-      <tbody id="downloads-list" class="divide-y divide-gray-700 bg-gray-900"></tbody>
-    </table>
-  </div>
+    <div id="table-wrapper" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out">
+      <div class="glass-effect rounded-xl border border-gray-700/50 overflow-hidden">
+        <table id="downloads-table" class="w-full text-sm text-left text-white">
+          <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-gray-300 uppercase text-xs tracking-wide">
+            <tr>
+              <th class="px-6 py-4 font-semibold">
+                <i class="fas fa-file mr-2"></i>
+                File Name
+              </th>
+              <th class="px-6 py-4 font-semibold">
+                <i class="fas fa-cog mr-2"></i>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="downloads-list" class="divide-y divide-gray-700/50"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  <!-- Main admin content -->
-  <h1 class="text-4xl font-extrabold mt-10 mb-8 tracking-tight text-pink-500 drop-shadow-lg">Admin Panel</h1>
+  <!-- Main Content -->
+  <main class="flex-1">
+    <div class="mb-8">
+      <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent drop-shadow-lg mb-2">
+        Content Management
+      </h1>
+      <p class="text-gray-400">Manage your website content with ease</p>
+    </div>
 
-  <!-- Category selection -->
-  <label for="categorySelect" class="block mb-3 font-semibold text-lg">Select Category:</label>
-  <select id="categorySelect" onchange="showRelevantFields()" class="bg-gray-800 text-white p-3 mb-6 w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-pink-500">
-    <option value="">-- Select --</option>
-    <option value="costumes">Costumes</option>
-    <option value="hairstyles">Hairstyles</option>
-    <option value="weapons">Weapons</option>
-    <option value="others">Others</option>
-    <option value="free">Free Stuff</option>
-    <option value="tutorials">Tutorials</option>
-    <option value="tools">Tools</option>
-  </select>
+    <!-- Category Selection -->
+    <section class="mb-8">
+      <div class="glass-effect p-6 rounded-xl border border-gray-700/50">
+        <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+          <i class="fas fa-layer-group text-purple-400"></i>
+          Category Selection
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label for="categorySelect" class="block mb-2 font-medium text-gray-300">
+              Select Category:
+            </label>
+            <select 
+              id="categorySelect" 
+              onchange="showRelevantFields()" 
+              class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
+            >
+              <option value="">-- Choose Category --</option>
+              <option value="costumes">👕 Costumes</option>
+              <option value="hairstyles">💇 Hairstyles</option>
+              <option value="weapons">⚔️ Weapons</option>
+              <option value="others">📦 Others</option>
+              <option value="free">🎁 Free Stuff</option>
+              <option value="tutorials">📚 Tutorials</option>
+              <option value="tools">🔧 Tools</option>
+            </select>
+          </div>
+          
+          <div class="flex items-end">
+            <button 
+              onclick="loadItems()" 
+              class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-6 py-3 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-download"></i>
+              Load Items
+            </button>
+          </div>
+        </div>
+        
+        <div id="itemsCount" class="text-gray-400 text-sm italic flex items-center gap-2">
+          <i class="fas fa-info-circle"></i>
+          <span>No items loaded</span>
+        </div>
+      </div>
+    </section>
 
-  <button onclick="loadItems()" class="bg-pink-600 hover:bg-pink-700 px-6 py-3 mb-10 font-semibold shadow-lg transition duration-300">
-    Load Items
-  </button>
+    <!-- Items Display -->
+    <section class="mb-8">
+      <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        <i class="fas fa-th-large text-blue-400"></i>
+        Current Items
+      </h3>
+      <div id="itemsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[200px]">
+        <div class="col-span-full text-center py-12 text-gray-400">
+          <i class="fas fa-inbox text-4xl mb-4 opacity-50"></i>
+          <p>Select a category and load items to get started</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- Items container -->
-  <div id="itemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-  <p id="itemsCount" class="text-gray-400 mt-3 mb-10 text-sm italic"></p>
+    <hr class="border-gray-700 my-8">
 
-  <hr class="my-10 border-gray-700">
+    <!-- Add/Edit Form -->
+    <section>
+      <div class="glass-effect p-6 rounded-xl border border-gray-700/50">
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <i class="fas fa-plus-circle text-green-400"></i>
+          Add / Edit Item
+        </h2>
+        
+        <form onsubmit="event.preventDefault(); addItem();" class="space-y-4">
+          <!-- Title Field -->
+          <div>
+            <label for="newTitle" class="block mb-2 font-medium text-gray-300">
+              <i class="fas fa-heading mr-2"></i>
+              Title *
+            </label>
+            <input 
+              id="newTitle" 
+              placeholder="Enter item title" 
+              class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+              required
+            />
+          </div>
 
-  <!-- Add/Edit form -->
-  <h2 class="text-3xl font-bold mb-6 tracking-wide text-pink-500">Add / Edit Item</h2>
-  
-  <input id="newTitle" placeholder="Title" class="w-full mb-4 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
+          <!-- Dynamic Fields Container -->
+          <div id="dynamicFields" class="space-y-4">
+            
+            <!-- Free Fields -->
+            <div id="freeFields" class="hidden space-y-4">
+              <div>
+                <label for="newFreeDesc" class="block mb-2 font-medium text-gray-300">
+                  <i class="fas fa-align-left mr-2"></i>
+                  Description / Password / Preview Link
+                </label>
+                <textarea 
+                  id="newFreeDesc" 
+                  placeholder="Enter description, password, or preview link for free items" 
+                  class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 resize-vertical"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
 
-  <!-- Free fields -->
-  <div id="freeFields" class="hidden mb-4">
-    <textarea id="newFreeDesc" placeholder="Description / Password / Preview link (pentru free)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
-  </div>
+            <!-- Shared Fields -->
+            <div id="sharedFields" class="hidden space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="newImg" class="block mb-2 font-medium text-gray-300">
+                    <i class="fas fa-image mr-2"></i>
+                    Image URL
+                  </label>
+                  <input 
+                    id="newImg" 
+                    placeholder="https://example.com/image.jpg" 
+                    class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                    type="url"
+                  />
+                </div>
+                
+                <div>
+                  <label for="newFull" class="block mb-2 font-medium text-gray-300">
+                    <i class="fas fa-expand mr-2"></i>
+                    Full Image URL
+                  </label>
+                  <input 
+                    id="newFull" 
+                    placeholder="https://example.com/full-image.jpg" 
+                    class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                    type="url"
+                  />
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="newPrice" class="block mb-2 font-medium text-gray-300">
+                    <i class="fas fa-dollar-sign mr-2"></i>
+                    Price (Optional)
+                  </label>
+                  <input 
+                    id="newPrice" 
+                    placeholder="10€" 
+                    class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                  />
+                </div>
+                
+                <div>
+                  <label for="newPreview" class="block mb-2 font-medium text-gray-300">
+                    <i class="fas fa-eye mr-2"></i>
+                    Preview Link (Optional)
+                  </label>
+                  <input 
+                    id="newPreview" 
+                    placeholder="https://example.com/preview" 
+                    class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                    type="url"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label for="newDownload" class="block mb-2 font-medium text-gray-300">
+                  <i class="fas fa-download mr-2"></i>
+                  Download Link (Optional)
+                </label>
+                <input 
+                  id="newDownload" 
+                  placeholder="https://example.com/download" 
+                  class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                  type="url"
+                />
+              </div>
+            </div>
 
-  <!-- Shared fields -->
-  <div id="sharedFields" class="hidden mb-4">
-    <input id="newDownload" placeholder="Download Link (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-    <input id="newImg" placeholder="Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-    <input id="newFull" placeholder="Full Image URL" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-    <input id="newPrice" placeholder="Price (opțional)" class="w-full mb-3 p-3 bg-gray-800 text-white" />
-    <input id="newPreview" placeholder="Preview Link (opțional)" class="w-full p-3 bg-gray-800 text-white" />
-  </div>
+            <!-- Tutorial Fields -->
+            <div id="tutorialFields" class="hidden space-y-4">
+              <div>
+                <label for="newYoutube" class="block mb-2 font-medium text-gray-300">
+                  <i class="fab fa-youtube mr-2"></i>
+                  YouTube Video ID *
+                </label>
+                <input 
+                  id="newYoutube" 
+                  placeholder="dQw4w9WgXcQ" 
+                  class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                />
+                <p class="text-xs text-gray-400 mt-1">
+                  <i class="fas fa-info-circle mr-1"></i>
+                  Extract the ID from YouTube URL: youtube.com/watch?v=<strong>VIDEO_ID</strong>
+                </p>
+              </div>
+              
+              <div>
+                <label for="newTutorialDesc" class="block mb-2 font-medium text-gray-300">
+                  <i class="fas fa-align-left mr-2"></i>
+                  Description (Optional)
+                </label>
+                <textarea 
+                  id="newTutorialDesc" 
+                  placeholder="Tutorial description or additional notes" 
+                  class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 resize-vertical"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
 
-  <!-- Tutorial fields -->
-  <div id="tutorialFields" class="hidden mb-4">
-    <input id="newYoutube" placeholder="YouTube Video ID" class="w-full mb-3 p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500" />
-    <textarea id="newTutorialDesc" placeholder="Description / Password (optional)" class="w-full p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
-  </div>
+            <!-- Tools Fields -->
+            <div id="toolsFields" class="hidden space-y-4">
+              <div>
+                <label for="newDesc" class="block mb-2 font-medium text-gray-300">
+                  <i class="fas fa-align-left mr-2"></i>
+                  Description *
+                </label>
+                <textarea 
+                  id="newDesc" 
+                  placeholder="Detailed description of the tool and its features" 
+                  class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 resize-vertical"
+                  rows="4"
+                ></textarea>
+              </div>
+              
+              <!-- Sale Fields for Tools -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex items-center space-x-3">
+                  <input 
+                    type="checkbox" 
+                    id="newOnSale" 
+                    class="w-5 h-5 text-pink-600 bg-gray-800 border-gray-600 rounded focus:ring-pink-500 focus:ring-2"
+                  />
+                  <label for="newOnSale" class="font-medium text-gray-300">
+                    <i class="fas fa-fire mr-2 text-orange-400"></i>
+                    Item on Sale
+                  </label>
+                </div>
+                
+                <div>
+                  <label for="newDiscount" class="block mb-2 font-medium text-gray-300">
+                    <i class="fas fa-percent mr-2"></i>
+                    Discount % (if on sale)
+                  </label>
+                  <input 
+                    id="newDiscount" 
+                    type="number" 
+                    min="0" 
+                    max="100" 
+                    placeholder="50" 
+                    class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <!-- Tools fields -->
-  <div id="toolsFields" class="hidden mb-4">
-    <textarea id="newDesc" placeholder="Description" class="w-full mb-3 p-3 bg-gray-800 text-white"></textarea>
-  </div>
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap gap-4 pt-4">
+            <button 
+              type="submit"
+              class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 px-6 py-3 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+            >
+              <i class="fas fa-plus"></i>
+              Add Item
+            </button>
+            
+            <button 
+              type="button"
+              onclick="clearInputs()" 
+              class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 px-6 py-3 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+            >
+              <i class="fas fa-eraser"></i>
+              Clear Form
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
 
-  <!-- Action buttons -->
-  <div class="flex space-x-4">
-    <button onclick="addItem()" class="bg-green-600 hover:bg-green-700 px-6 py-3 font-semibold shadow-md transition duration-300">
-      Add Item
-    </button>
-    <button onclick="clearInputs()" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 font-semibold shadow-md transition duration-300">
-      Clear
-    </button>
-  </div>
+    <hr class="border-gray-700 my-8" />
 
-  <hr class="my-10 border-gray-700" />
+    <!-- Save Section -->
+    <section>
+      <div class="glass-effect p-6 rounded-xl border border-gray-700/50 text-center">
+        <h3 class="text-xl font-semibold mb-4 flex items-center justify-center gap-2">
+          <i class="fas fa-save text-blue-400"></i>
+          Export Data
+        </h3>
+        <p class="text-gray-400 mb-6">Download your current category data as JSON file</p>
+        
+        <button 
+          onclick="saveData()" 
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-4 font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-3 mx-auto"
+        >
+          <i class="fas fa-download text-xl"></i>
+          <span>Save & Download JSON</span>
+        </button>
+        
+        <div class="mt-4 text-xs text-gray-500 flex items-center justify-center gap-2">
+          <i class="fas fa-keyboard"></i>
+          <span>Tip: Use Ctrl+S as shortcut</span>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <!-- Save button -->
-  <button onclick="saveData()" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 font-bold shadow-lg transition duration-300">
-    💾 Save and Download JSON
-  </button>
+  <!-- Footer -->
+  <footer class="mt-8 text-center text-gray-400 text-sm">
+    <div class="glass-effect p-4 rounded-lg border border-gray-700/50">
+      <p class="flex items-center justify-center gap-2">
+        <i class="fas fa-heart text-pink-400"></i>
+        <span>Jawwad ART Admin Panel - Enhanced & Secure! 🔐</span>
+      </p>
+    </div>
+  </footer>
 
-  <!-- Main script -->
-  <script src="assets/js/admin.min.js?v=1.3"></script>
+  <!-- Scripts -->
+  <script src="assets/js/admin.min.js?v=3.0" defer></script>
 </body>
 </html>
