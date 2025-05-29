@@ -480,8 +480,10 @@
     </div>
 
     <script>
-        // Get file parameter
-        const fileName = new URLSearchParams(window.location.search).get('file');
+        // Get file parameter and source
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileName = urlParams.get('file');
+        const sourceUrl = urlParams.get('source');
         
         // DOM elements
         const loadingState = document.getElementById('loadingState');
@@ -557,13 +559,17 @@
                     
                     // Trigger download
                     setTimeout(() => {
-                        const downloadUrl = `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${fileName}`;
+                        // Use source URL if provided, otherwise construct default URL
+                        const downloadUrl = sourceUrl || `https://adelinjawwad.github.io/jawwad-demo/assets/downloads/${fileName}`;
+                        
                         const a = document.createElement('a');
                         a.href = downloadUrl;
                         a.download = fileName;
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
+                        
+                        console.log(`📥 Download started: ${downloadUrl}`);
                     }, 500);
                     
                     clearInterval(interval);
