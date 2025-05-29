@@ -14,10 +14,10 @@
   
   <!-- Preload critical resources -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-  <link rel="preload" href="assets/css/style.min.css?v=1.3" as="style">
+  <link rel="preload" href="assets/css/style.min.css?v=1.4" as="style">
   
   <!-- Critical CSS -->
-  <link href="assets/css/style.min.css?v=1.3" rel="stylesheet">
+  <link href="assets/css/style.min.css?v=1.4" rel="stylesheet">
   
   <!-- Non-critical CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,15 +32,15 @@
   <!-- External scripts with defer -->
   <script src="https://cdn.tailwindcss.com" defer></script>
   <script defer data-domain="jawwad.site" src="https://plausible.io/js/script.js"></script>
-  <!-- Adaugă structured data pentru assets -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  "name": "Jawwad ART Assets"
-}
-</script>
-  <!-- Sitemap -->
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Jawwad ART Assets"
+  }
+  </script>
+  
   <link rel="sitemap" href="https://jawwad.site/sitemap.xml">
 </head>
 <body class="min-h-screen">
@@ -63,7 +63,7 @@
               <a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tools')">
                 <i class="fas fa-tools mr-2"></i> Tools
               </a>
-              <button onclick="copyDiscordTag()" class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center">
+              <button onclick="copyDiscordInvite()" class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center">
                 <i class="fab fa-discord mr-2"></i> Contact
               </button>
             </div>
@@ -90,7 +90,7 @@
         <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadAllAssets()">Assets</a>
         <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('tutorials')">Tutorials</a>
         <a href="#" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none" onclick="loadContent('tools')">Tools</a>
-        <button onclick="copyDiscordTag()" class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none flex items-center">
+        <button onclick="copyDiscordInvite()" class="block w-full text-left px-3 py-2 text-base font-medium text-white hover:bg-gray-800 rounded-none flex items-center">
           <i class="fab fa-discord mr-2"></i> Contact
         </button>
       </div>
@@ -129,6 +129,6 @@
   </footer>
 
   <!-- Main script -->
-  <script src="assets/js/app.min.js?v=1.3"></script>
+  <script src="assets/js/app.min.js?v=1.4"></script>
 </body>
 </html>

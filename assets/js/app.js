@@ -1,5 +1,4 @@
 // ======= PERFORMANCE OPTIMIZATIONS =======
-// Cache DOM elements to avoid repeated queries
 const DOM = {
   contentArea: null,
   mobileMenu: null,
@@ -9,133 +8,172 @@ const DOM = {
   imageModal: null,
   modalImage: null,
   init() {
-    this.contentArea = document.getElementById("content-area");
-    this.mobileMenu = document.getElementById("mobile-menu");
-    this.toast = document.getElementById("toast");
-    this.toastMessage = document.getElementById("toast-message");
-    this.toastBox = this.toast?.querySelector(".toast-box");
-    this.imageModal = document.getElementById("image-modal");
-    this.modalImage = document.getElementById("modal-image");
-  }
-};
+    this.contentArea = document.getElementById("content-area")
+    this.mobileMenu = document.getElementById("mobile-menu")
+    this.toast = document.getElementById("toast")
+    this.toastMessage = document.getElementById("toast-message")
+    this.toastBox = this.toast?.querySelector(".toast-box")
+    this.imageModal = document.getElementById("image-modal")
+    this.modalImage = document.getElementById("modal-image")
+  },
+}
 
-// Debounce function for scroll events
 const debounce = (func, wait) => {
-  let timeout;
+  let timeout
   return function executedFunction(...args) {
     const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
+      clearTimeout(timeout)
+      func(...args)
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
 
 // ======= UTILITY FUNCTIONS =======
+let toastTimeout
+function showToast(message, type = "success") {
+  const toast = document.getElementById("toast")
+  const toastBox = toast?.querySelector(".toast-box")
+  const toastMessage = document.getElementById("toast-message")
+
+  if (!toast || !toastBox || !toastMessage) {
+    console.log("Toast elements not found")
+    return
+  }
+
+  if (toastTimeout) {
+    clearTimeout(toastTimeout)
+  }
+
+  toastMessage.textContent = message
+  toast.classList.remove("hidden")
+  toastBox.classList.remove("hide")
+  toastBox.classList.add("show")
+
+  toastTimeout = setTimeout(() => {
+    toastBox.classList.remove("show")
+    toastBox.classList.add("hide")
+    setTimeout(() => {
+      toast.classList.add("hidden")
+    }, 500)
+  }, 2500)
+}
+
 const copyToClipboard = async (text, message) => {
   try {
-    await navigator.clipboard.writeText(text);
-    showToast(message);
+    await navigator.clipboard.writeText(text)
+    showToast(message)
   } catch (err) {
-    console.error('Failed to copy:', err);
-    showToast('Copy failed', 'error');
+    console.error("Failed to copy:", err)
+    const textArea = document.createElement("textarea")
+    textArea.value = text
+    textArea.style.position = "fixed"
+    textArea.style.left = "-999999px"
+    textArea.style.top = "-999999px"
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+    try {
+      document.execCommand("copy")
+      showToast(message)
+    } catch (fallbackErr) {
+      showToast("Copy failed - please copy manually", "error")
+    }
+    document.body.removeChild(textArea)
   }
-};
-
-function copyDiscordTag() {
-  copyToClipboard("1.3afb", "Discord tag copied to clipboard!");
 }
 
 function copyPassword(pass) {
-  copyToClipboard(pass, 'Password copied to clipboard!');
+  copyToClipboard(pass, "Password copied to clipboard!")
 }
 
 function copyDiscordInvite() {
-  copyToClipboard("https://discord.gg/BBX8vfN4gQ", "Discord invite link copied!");
+  copyToClipboard("https://discord.gg/BBX8vfN4gQ", "Discord invite link copied!")
 }
 
 function toggleDiscordInvite() {
-  const wrapper = document.getElementById("discord-invite-wrapper");
-  wrapper?.classList.toggle("open");
+  const wrapper = document.getElementById("discord-invite-wrapper")
+  wrapper?.classList.toggle("open")
 }
 
-// Optimized toast with better performance
-let toastTimeout;
-function showToast(message, type = 'success') {
-  if (!DOM.toast || !DOM.toastBox || !DOM.toastMessage) return;
-  
-  // Clear existing timeout
-  if (toastTimeout) {
-    clearTimeout(toastTimeout);
-  }
-  
-  DOM.toastMessage.textContent = message;
-  DOM.toast.classList.remove("hidden");
-  DOM.toastBox.classList.remove("hide");
-  DOM.toastBox.classList.add("show");
-
-  toastTimeout = setTimeout(() => {
-    DOM.toastBox.classList.remove("show");
-    DOM.toastBox.classList.add("hide");
-    setTimeout(() => {
-      DOM.toast.classList.add("hidden");
-    }, 500);
-  }, 2500);
-}
-
-// Optimized modal functions
 function openModal(src) {
-  if (!DOM.imageModal || !DOM.modalImage) return;
-  
-  DOM.modalImage.src = src;
-  DOM.imageModal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
+  const modal = document.getElementById("image-modal")
+  const modalImage = document.getElementById("modal-image")
+
+  if (!modal || !modalImage) return
+
+  modalImage.src = src
+  modal.classList.remove("hidden")
+  document.body.style.overflow = "hidden"
 }
 
 function closeModal() {
-  if (!DOM.imageModal) return;
-  
-  DOM.imageModal.classList.add("hidden");
-  document.body.style.overflow = "auto";
+  const modal = document.getElementById("image-modal")
+  if (!modal) return
+
+  modal.classList.add("hidden")
+  document.body.style.overflow = "auto"
 }
 
-// Optimized dropdown toggle
 function toggleDropdown() {
-  const dropdown = document.querySelector(".dropdown");
-  if (!dropdown) return;
-  
-  const icon = dropdown.querySelector(".dropbtn i");
-  const isActive = dropdown.classList.toggle("active");
-  
+  const dropdown = document.querySelector(".dropdown")
+  if (!dropdown) return
+
+  const icon = dropdown.querySelector(".dropbtn i")
+  const isActive = dropdown.classList.toggle("active")
+
   if (icon) {
-    icon.style.transform = isActive ? "rotate(180deg)" : "rotate(0deg)";
+    icon.style.transform = isActive ? "rotate(180deg)" : "rotate(0deg)"
   }
 }
 
 function animateContent() {
-  DOM.contentArea?.classList.remove("opacity-0");
+  const contentArea = document.getElementById("content-area")
+  contentArea?.classList.remove("opacity-0")
 }
 
 // ======= CONTENT RENDERING =======
 function renderWelcomeContent() {
-  localStorage.setItem("currentPage", "welcome");
-  if (!DOM.contentArea) return;
-  
-  DOM.contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  DOM.mobileMenu?.classList.add("hidden");
+  localStorage.setItem("currentPage", "welcome")
+  const contentArea = document.getElementById("content-area")
+  const mobileMenu = document.getElementById("mobile-menu")
+
+  if (!contentArea) return
+
+  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+  mobileMenu?.classList.add("hidden")
 
   setTimeout(() => {
-    DOM.contentArea.innerHTML = `
+    contentArea.innerHTML = `
       <section class="text-center mb-12">
-        <p class="motto-subtle text-gray-400 max-w-3xl mx-auto text-center text-lg md:text-xl">
-          Discover assets for your projects.<br>
-          <span class="highlight-subtle">High-quality costumes, hairstyles, weapons and more!</span>
-        </p>
+        <div class="hero-text-new">
+          <p class="hero-main-text">
+            Discover assets for your projects.
+          </p>
+          <p class="hero-sub-text">
+            High-quality costumes, hairstyles, weapons and more!
+          </p>
+        </div>
 
-        <button onclick="toggleDiscordInvite()" class="discord-button">
-          <i class="fab fa-discord mr-2"></i> Join our Discord server
-        </button>
+    <div class="w-full max-w-3xl mx-auto mt-6 mb-2">
+  <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+    
+    <!-- Buton Discord -->
+    <button onclick="toggleDiscordInvite()" class="discord-btn-new">
+      <i class="fab fa-discord mr-2"></i> Join our Discord server
+    </button>
+
+    <!-- Separator între butoane (doar pe desktop) -->
+    <div class="hidden md:block h-10 w-2 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full shadow-md"></div>
+
+    <!-- Buton About -->
+    <button onclick="loadContent('about')" class="premium-btn-new">
+      <i class="fas fa-user mr-2"></i> About Me
+    </button>
+
+  </div>
+</div>
 
         <div id="discord-invite-wrapper" class="discord-box-wrapper">
           <div id="discord-invite" class="discord-box">
@@ -148,468 +186,1132 @@ function renderWelcomeContent() {
             </div>
           </div>
         </div>
-        
-        <button onclick="loadContent('about')" class="btn-premium">
-          <i class="fas fa-user mr-2"></i> About Me
-        </button>
-        <br />
-        
-        <div class="animated-info-box">
-          <div class="animated-header">
-            <div class="animated-icon">
+
+        <div class="features-container-new">
+          <div class="features-header-new">
+            <div class="features-icon-pulse">
               <i class="fas fa-info-circle"></i>
             </div>
-            <div class="animated-title">Information</div>
+            <h3 class="features-title-new">What's Included</h3>
           </div>
-          <ul class="animated-list">
-            <li><i class="fas fa-check-circle"></i> MSM files are always included.</li>
-            <li><i class="fas fa-check-circle"></i> Icons are always included.</li>
-            <li><i class="fas fa-check-circle"></i> Granny 2.11 is required for all models.</li>
-          </ul>
+          
+          <div class="features-grid-new">
+            <div class="feature-card-new" style="animation-delay: 0.1s">
+              <div class="feature-icon-new">
+                <i class="fas fa-file-archive"></i>
+              </div>
+              <div class="feature-content-new">
+                <h4>MSM Files</h4>
+                <p>Always included with every purchase.</p>
+              </div>
+            </div>
+            
+            <div class="feature-card-new" style="animation-delay: 0.2s">
+              <div class="feature-icon-new">
+                <i class="fas fa-icons"></i>
+              </div>
+              <div class="feature-content-new">
+                <h4>Custom Icons</h4>
+                <p>High-quality icons included with purchased assets only.</p>
+              </div>
+            </div>
+            
+            <div class="feature-card-new" style="animation-delay: 0.3s">
+              <div class="feature-icon-new">
+                <i class="fas fa-cog"></i>
+              </div>
+              <div class="feature-content-new">
+                <h4>Granny 2.11</h4>
+                <p>All my 3D models are built for Granny 2.11</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-    `;
-    animateContent();
-  }, 300);
+    `
+    animateContent()
+  }, 300)
 }
 
-// Optimized content loading with better error handling
 async function loadContent(section) {
-  section = section.split("?")[0];
-  localStorage.setItem("currentPage", section);
-  
-  if (!DOM.contentArea) return;
-  
-  DOM.contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  DOM.mobileMenu?.classList.add("hidden");
+  section = section.split("?")[0]
+  localStorage.setItem("currentPage", section)
+
+  const contentArea = document.getElementById("content-area")
+  const mobileMenu = document.getElementById("mobile-menu")
+
+  if (!contentArea) return
+
+  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+  mobileMenu?.classList.add("hidden")
 
   setTimeout(async () => {
     if (section === "welcome") {
-      renderWelcomeContent();
-      return;
+      renderWelcomeContent()
+      return
     }
     if (section === "about") {
-      renderAboutMePage();
-      return;
+      renderAboutMePage()
+      return
     }
 
-    const title = section.charAt(0).toUpperCase() + section.slice(1);
-    const jsonUrl = section === 'tutorials' ? 'assets/data/tutorials.json' :
-                   section === 'tools' ? 'assets/data/tools.json' :
-                   `assets/data/${section}.json`;
+    const title = section.charAt(0).toUpperCase() + section.slice(1)
+    const jsonUrl =
+      section === "tutorials"
+        ? "assets/data/tutorials.json"
+        : section === "tools"
+          ? "assets/data/tools.json"
+          : `assets/data/${section}.json`
 
     try {
-      const response = await fetch(`${jsonUrl}?v=${Date.now()}`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
-      const data = await response.json();
-      renderContent(title, data, section);
+      const response = await fetch(`${jsonUrl}?v=${Date.now()}`)
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+
+      const data = await response.json()
+      renderContent(title, data, section)
     } catch (error) {
-      console.error('Failed to load content:', error);
-      DOM.contentArea.innerHTML = `
+      console.error("Failed to load content:", error)
+      contentArea.innerHTML = `
         <div class="text-center mt-24 text-red-400 text-lg">
           Failed to load content. Please try again later.
         </div>
-      `;
-      animateContent();
+      `
+      animateContent()
     }
-  }, 300);
+  }, 300)
 }
 
-// Optimized content rendering
 function renderContent(title, items, section) {
-  if (!DOM.contentArea || !Array.isArray(items)) return;
+  const contentArea = document.getElementById("content-area")
+  if (!contentArea || !Array.isArray(items)) return
 
-  const gridCols = ['tutorials', 'tools'].includes(section) ?
-    "grid-cols-1 sm:grid-cols-2" :
-    "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+  const gridCols = ["tutorials", "tools"].includes(section)
+    ? "grid-cols-1 sm:grid-cols-2"
+    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 
-  // Use DocumentFragment for better performance
-  const fragment = document.createDocumentFragment();
-  const container = document.createElement('section');
-  
-  container.innerHTML = `
-    <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
-    <div class="grid ${gridCols} gap-6">
-      ${items.map(item => renderItem(item, section)).join("")}
-    </div>
-  `;
-  
-  fragment.appendChild(container);
-  DOM.contentArea.innerHTML = '';
-  DOM.contentArea.appendChild(fragment);
-  animateContent();
+  const content = `
+    <section>
+      <h2 class="text-2xl font-semibold mb-6 text-white border-b border-gray-700 pb-2">${title}</h2>
+      <div class="grid ${gridCols} gap-6">
+        ${items.map((item) => renderItem(item, section)).join("")}
+      </div>
+    </section>
+  `
+
+  contentArea.innerHTML = content
+  animateContent()
 }
 
 // ======= ASSETS PAGE =======
 async function loadAllAssets() {
-  localStorage.setItem("currentPage", "assets");
-  
-  if (!DOM.contentArea) return;
-  
-  DOM.contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  DOM.mobileMenu?.classList.add("hidden");
+  localStorage.setItem("currentPage", "assets")
+  const contentArea = document.getElementById("content-area")
+  const mobileMenu = document.getElementById("mobile-menu")
 
-  const categories = ['costumes', 'hairstyles', 'weapons', 'others', 'free'];
+  if (!contentArea) return
+
+  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+  mobileMenu?.classList.add("hidden")
+
+  const categories = ["costumes", "hairstyles", "weapons", "others", "free"]
   const categoryTitles = {
     costumes: "Costumes",
-    hairstyles: "Hairstyles", 
+    hairstyles: "Hairstyles",
     weapons: "Weapons",
     others: "Others",
-    free: "Free stuff"
-  };
-
-  // Inject styles only once
-  if (!document.getElementById("floating-menu-style")) {
-    const style = document.createElement("style");
-    style.id = "floating-menu-style";
-    style.textContent = `
-      @keyframes fade-slide-left {
-        from { opacity: 0; transform: translateX(-16px); }
-        to   { opacity: 1; transform: translateX(0); }
-      }
-      .animate-fade-left {
-        animation: fade-slide-left 0.4s ease-out forwards;
-        opacity: 0;
-      }
-    `;
-    document.head.appendChild(style);
+    free: "Free stuff",
   }
 
   setTimeout(async () => {
     try {
-      // Fetch all categories in parallel for better performance
-      const fetchPromises = categories.map(async category => {
-        const response = await fetch(`assets/data/${category}.json?v=${Date.now()}`);
-        if (!response.ok) throw new Error(`Failed to fetch ${category}`);
-        const data = await response.json();
-        return { category, data };
-      });
+      const fetchPromises = categories.map(async (category) => {
+        const response = await fetch(`assets/data/${category}.json?v=${Date.now()}`)
+        if (!response.ok) throw new Error(`Failed to fetch ${category}`)
+        const data = await response.json()
+        return { category, data }
+      })
 
-      const results = await Promise.all(fetchPromises);
-      
-      let fullContent = '';
-      let floatingLinks = '';
+      const results = await Promise.all(fetchPromises)
+
+      let fullContent = ""
+      let floatingLinks = ""
+      let mobileLinks = ""
 
       results.forEach(({ category, data }) => {
         if (data.length > 0) {
           floatingLinks += `
             <a href="#${category}" 
-               class="category-link block px-4 py-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition duration-300 text-sm font-medium" 
+               class="nav-link-modern" 
                data-target="${category}" 
                id="link-${category}">
-              ${categoryTitles[category]}
+              <i class="category-icon fas fa-${getCategoryIcon(category)}"></i>
+              <span>${categoryTitles[category]}</span>
             </a>
-          `;
+          `
+
+          mobileLinks += `
+            <a href="#${category}" 
+               class="mobile-nav-link" 
+               data-target="${category}" 
+               id="mobile-link-${category}">
+              <i class="fas fa-${getCategoryIcon(category)}"></i>
+              <span>${categoryTitles[category]}</span>
+            </a>
+          `
 
           fullContent += `
             <section id="${category}">
-              <h2 class="text-2xl font-semibold mb-4 text-pink-400 border-b border-gray-700 pb-2">${categoryTitles[category]}</h2>
+              <h2 class="section-title text-2xl font-semibold mb-4 text-pink-400 border-b border-gray-700 pb-2">${categoryTitles[category]}</h2>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                ${data.map(item => renderItem(item, category)).join("")}
+                ${data.map((item) => renderItem(item, category)).join("")}
               </div>
             </section>
-          `;
+          `
         }
-      });
+      })
 
-      if (fullContent === '') {
-        DOM.contentArea.innerHTML = `
+      if (fullContent === "") {
+        contentArea.innerHTML = `
           <div class="text-center mt-24 text-gray-400 text-lg">No assets available at the moment. Please check back later!</div>
-        `;
+        `
       } else {
-        DOM.contentArea.innerHTML = `
-          <aside class="fixed top-1/2 -left-3 translate-y-[-50%] z-[9999] bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-r-3xl p-3 space-y-2 hover:translate-x-1 transition-all duration-300">
-            ${floatingLinks}
+        contentArea.innerHTML = `
+          <!-- Desktop Floating Menu -->
+          <aside class="floating-nav-modern">
+            <div class="nav-header">
+              <i class="fas fa-layer-group"></i>
+              <span>Categories</span>
+            </div>
+            <div class="nav-links">
+              ${floatingLinks}
+            </div>
           </aside>
+
+          <!-- Mobile Floating Menu -->
+          <div class="mobile-nav-container">
+            <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="mobile-nav-menu" id="mobile-nav-menu">
+              <div class="mobile-nav-header">
+                <span>Categories</span>
+                <button class="mobile-nav-close" id="mobile-nav-close">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="mobile-nav-links">
+                ${mobileLinks}
+              </div>
+            </div>
+            <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+          </div>
+
           <div class="space-y-12">${fullContent}</div>
-        `;
+        `
 
-        // Staggered animation for menu links
-        const links = document.querySelectorAll(".category-link");
-        links.forEach((link, index) => {
-          link.style.animationDelay = `${index * 0.15}s`;
-          link.classList.add("animate-fade-left");
-        });
-
-        setupScrollSpy(categories);
-        setupSmoothScrolling();
+        setupScrollSpy(categories)
+        setupSmoothScrolling()
+        setupMobileNav()
       }
 
-      animateContent();
+      animateContent()
     } catch (error) {
-      console.error('Failed to load assets:', error);
-      DOM.contentArea.innerHTML = `
+      console.error("Failed to load assets:", error)
+      contentArea.innerHTML = `
         <div class="text-center mt-24 text-red-400 text-lg">Failed to load assets. Please try again later.</div>
-      `;
-      animateContent();
+      `
+      animateContent()
     }
-  }, 300);
+  }, 300)
 }
 
-// Optimized smooth scrolling
+function getCategoryIcon(category) {
+  const icons = {
+    costumes: "tshirt",
+    hairstyles: "cut",
+    weapons: "sword",
+    others: "cube",
+    free: "gift",
+  }
+  return icons[category] || "folder"
+}
+
+function setupMobileNav() {
+  const toggle = document.getElementById("mobile-nav-toggle")
+  const close = document.getElementById("mobile-nav-close")
+  const overlay = document.getElementById("mobile-nav-overlay")
+  const menu = document.getElementById("mobile-nav-menu")
+
+  if (!toggle || !close || !overlay || !menu) return
+
+  const openMenu = () => {
+    menu.classList.add("active")
+    overlay.classList.add("active")
+    document.body.style.overflow = "hidden"
+  }
+
+  const closeMenu = () => {
+    menu.classList.remove("active")
+    overlay.classList.remove("active")
+    document.body.style.overflow = "auto"
+  }
+
+  toggle.addEventListener("click", openMenu)
+  close.addEventListener("click", closeMenu)
+  overlay.addEventListener("click", closeMenu)
+
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", closeMenu)
+  })
+}
+
 function setupSmoothScrolling() {
-  document.querySelectorAll(".category-link").forEach(link => {
+  document.querySelectorAll(".nav-link-modern").forEach((link) => {
     link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const categoryId = this.getAttribute("data-target");
-      const section = document.getElementById(categoryId);
+      e.preventDefault()
+      const categoryId = this.getAttribute("data-target")
+      const section = document.getElementById(categoryId)
       if (section) {
-        const title = section.querySelector("h2");
+        const title = section.querySelector(".section-title")
         if (title) {
-          const offset = title.getBoundingClientRect().top + window.scrollY - 100;
+          const offset = title.getBoundingClientRect().top + window.scrollY - 120
           window.scrollTo({
             top: offset,
-            behavior: "smooth"
-          });
+            behavior: "smooth",
+          })
         }
       }
-    });
-  });
+    })
+  })
+
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault()
+      const categoryId = this.getAttribute("data-target")
+      const section = document.getElementById(categoryId)
+      if (section) {
+        const title = section.querySelector(".section-title")
+        if (title) {
+          const offset = title.getBoundingClientRect().top + window.scrollY - 120
+          window.scrollTo({
+            top: offset,
+            behavior: "smooth",
+          })
+        }
+      }
+    })
+  })
 }
 
-// Optimized item rendering
 function renderItem(item, section) {
-  const imageWithPreviewButton = item.img ? `
+  const imageWithPreviewButton = item.img
+    ? `
     <div class="relative mb-4">
       <img loading="lazy" src="${item.img}" alt="${item.title}" class="asset-card-media">
       <button onclick="openModal('${item.full || item.img}')" class="absolute top-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded hover:bg-opacity-80 transition" title="Preview image">
         <i class="fas fa-expand"></i>
       </button>
-    </div>` : '';
+    </div>`
+    : ""
 
-  const priceBtn = item.price ? `
-    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm rounded-none">
-      Price: ${item.price}
-    </div>` : '';
+  const calculateDiscountedPrice = (originalPrice, discount) => {
+    if (!originalPrice || !discount) return null
+    const numericPrice = Number.parseFloat(originalPrice.replace(/[^\d.]/g, ""))
+    const discountedPrice = numericPrice * (1 - discount / 100)
+    const currency = originalPrice.replace(/[\d.]/g, "").trim()
+    return `${discountedPrice.toFixed(0)}${currency}`
+  }
 
-  const previewBtn = item.preview ? `
+  const createPriceButton = (item) => {
+    if (!item.price) return ""
+
+    if (item.onSale && item.discount) {
+      const discountedPrice = calculateDiscountedPrice(item.price, item.discount)
+      return `
+        <div class="modern-sale-container">
+          <div class="sale-badge-modern">
+            <span class="sale-text">SALE</span>
+            <span class="discount-percent">-${item.discount}%</span>
+          </div>
+          <div class="price-stack">
+            <span class="original-price-modern">${item.price}</span>
+            <span class="sale-price-modern">${discountedPrice}</span>
+          </div>
+        </div>
+      `
+    } else {
+      return `
+        <div class="regular-price-container">
+          <span class="regular-price">Price: ${item.price}</span>
+        </div>
+      `
+    }
+  }
+
+  const priceBtn = createPriceButton(item)
+
+  const previewBtn = item.preview
+    ? `
     <a href="${item.preview}" target="_blank" rel="noopener noreferrer" class="asset-action-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
       <i class="fas fa-eye"></i> Preview
-    </a>` : '';
+    </a>`
+    : ""
 
-  // Optimized rendering based on section
   const sectionRenderers = {
     free: () => `
-      <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
+      <div class="bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
         <div class="px-4 pb-4 flex flex-wrap gap-2">
-          ${item.download ? `<a href="${item.download}" download class="asset-action-btn bg-gradient-to-r from-green-500 to-teal-600 text-white"><i class="fas fa-download"></i> Download</a>` : ''}
+          ${item.download ? `<a href="${item.download}" download class="asset-action-btn bg-gradient-to-r from-green-500 to-teal-600 text-white"><i class="fas fa-download"></i> Download</a>` : ""}
           ${previewBtn}
-          ${item.extra ? `<button onclick="copyPassword('${item.extra}')" class="asset-action-btn bg-gradient-to-r from-purple-500 to-pink-600 text-white"><i class="fas fa-key"></i> Password</button>` : ''}
+          ${item.extra ? `<button onclick="copyPassword('${item.extra}')" class="asset-action-btn bg-gradient-to-r from-purple-500 to-pink-600 text-white"><i class="fas fa-key"></i> Password</button>` : ""}
         </div>
       </div>`,
-    
+
     tutorials: () => `
-      <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
+      <div class="bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         <iframe class="asset-card-iframe mb-4" src="https://www.youtube.com/embed/${item.youtube}" frameborder="0" allowfullscreen loading="lazy"></iframe>
       </div>`,
-    
+
     tools: () => `
-      <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
-        <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
+      <div class="tool-card-modern ${item.onSale ? "on-sale-modern" : ""} bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full relative overflow-hidden">
+        <h3 class="text-2xl font-bold text-white mb-4 relative z-10">${item.title}</h3>
         ${imageWithPreviewButton}
-        <p class="text-gray-300 mb-4 flex-1">${item.desc}</p>
-        <div class="flex flex-wrap gap-2 mt-auto">
+        <p class="text-gray-300 mb-4 flex-1 relative z-10">${item.desc}</p>
+        <div class="flex flex-wrap gap-2 mt-auto relative z-10">
           ${priceBtn}
           ${previewBtn}
         </div>
       </div>`,
-    
+
     default: () => `
-      <div class="bg-black bg-opacity-30 rounded-none p-6 flex flex-col h-full">
+      <div class="bg-black bg-opacity-30 rounded-lg p-6 flex flex-col h-full">
         <h3 class="text-2xl font-bold text-white mb-4">${item.title}</h3>
         ${imageWithPreviewButton}
         <div class="flex flex-wrap gap-2 mt-4">
           ${priceBtn}
           ${previewBtn}
         </div>
-      </div>`
-  };
+      </div>`,
+  }
 
-  return (sectionRenderers[section] || sectionRenderers.default)();
+  return (sectionRenderers[section] || sectionRenderers.default)()
 }
 
-// Optimized scroll spy with debouncing
 function setupScrollSpy(categories) {
-  const links = categories
-    .map(cat => document.getElementById(`link-${cat}`))
-    .filter(Boolean);
+  const desktopLinks = categories.map((cat) => document.getElementById(`link-${cat}`)).filter(Boolean)
+  const mobileLinks = categories.map((cat) => document.getElementById(`mobile-link-${cat}`)).filter(Boolean)
+  const sections = categories.map((cat) => document.getElementById(cat)).filter(Boolean)
 
-  const sections = categories
-    .map(cat => document.getElementById(cat))
-    .filter(Boolean);
-
-  if (sections.length === 0 || links.length === 0) return;
+  if (sections.length === 0) return
 
   const debouncedScrollHandler = debounce(() => {
-    let index = sections.length - 1;
+    let index = sections.length - 1
     for (let i = 0; i < sections.length; i++) {
       if (window.scrollY >= sections[i].offsetTop - 150) {
-        index = i;
+        index = i
       }
     }
-    
-    // Use requestAnimationFrame for smooth DOM updates
-    requestAnimationFrame(() => {
-      links.forEach(link => link.classList.remove('bg-pink-600'));
-      if (links[index]) {
-        links[index].classList.add('bg-pink-600');
-      }
-    });
-  }, 16); // ~60fps
 
-  window.addEventListener('scroll', debouncedScrollHandler, { passive: true });
+    requestAnimationFrame(() => {
+      desktopLinks.forEach((link) => link?.classList.remove("active"))
+      if (desktopLinks[index]) {
+        desktopLinks[index].classList.add("active")
+      }
+
+      mobileLinks.forEach((link) => link?.classList.remove("active"))
+      if (mobileLinks[index]) {
+        mobileLinks[index].classList.add("active")
+      }
+    })
+  }, 16)
+
+  window.addEventListener("scroll", debouncedScrollHandler, { passive: true })
 }
 
-// About page rendering
 function renderAboutMePage() {
-  if (!DOM.contentArea) return;
-  
+  const contentArea = document.getElementById("content-area");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (!contentArea) return;
+
   localStorage.setItem("currentPage", "about");
-  DOM.contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-  DOM.mobileMenu?.classList.add("hidden");
+  contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
+  mobileMenu?.classList.add("hidden");
 
   setTimeout(() => {
-    DOM.contentArea.innerHTML = `
-      <section class="text-center px-6 py-20 max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold text-pink-500 mb-6">About Me</h1>
-        <p class="text-lg text-gray-300 leading-relaxed mb-8">
-          Hi, I'm Jawwad! I specialize in 3D design and modeling for Metin2, with years of experience under my belt. I was one of the first designers to enter the scene and continue to bring creativity and skill to every project I take on.
-        </p>
-        <div class="grid sm:grid-cols-2 gap-6 text-left text-white">
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">🎨 Custom 2D Work</h2>
-            <p class="mb-2">I offer a range of fully customizable 2D design services for Metin2, including:</p>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Costumes, armors, hairstyles & weapons</li>
-              <li>Mounts, pets, and GR2-based objects</li>
-              <li>Specular creation and correction</li>
-              <li>Renders (full hd, 2k)</li>
-              <li>Icons (like official)</li>
-            </ul>
-          </div>
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">🧰 Custom 3D Work</h2>
-            <p class="mb-2">Bringing your Metin2 world to life with detailed, high-quality 3D models, tailored to your vision:</p>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Costumes, armors, hairstyles & weapons</li>
-              <li>Mounts, pets, and NPCs</li>
-              <li>Metin stones and animated objects</li>
-              <li>Custom-designed wings</li>
-              <li>Animations</li>
-            </ul>
-          </div>
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">🛠️ Tools</h2>
-            <p class="mb-2">Whether you're just starting out or already experienced, I've got the best and easiest-to-use tools to support your workflow:</p>
-            <ul class="list-disc list-inside space-y-1">
-              <li>MDE Path Changer – quickly update paths in your .mde files</li>
-              <li>GR2 Mesh Remover – remove unnecessary meshes with ease</li>
-            </ul>
-          </div>
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">📚 Tutorials</h2>
-            <p>On the site, you'll find some of the most useful and beginner-friendly tutorials to help you grow your skills in both 2D and 3D design — all completely free. Whether you're just starting out or looking to improve, there's something here for everyone.</p>
-          </div>
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">🎁 Free Stuff</h2>
-            <p>I offer a variety of free assets ready to enhance your Metin2 server — all pre-configured and easy to install. Just browse the site and download what you need, no strings attached!</p>
-          </div>
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">💬 Support</h2>
-            <p>Have a question or need help with something? I'm always available on Discord for support. Don't hesitate to reach out — no question is too small!</p>
-          </div>
-          <div class="bg-black bg-opacity-30 p-6 rounded-lg">
-            <h2 class="text-xl font-semibold mb-2">🔧 Many More</h2>
-            <p>I offer a wide range of services and assets — if what you're looking for isn't listed here, don't hesitate to ask. I might just have the solution you're looking for! 😉</p>
+    contentArea.innerHTML = `
+      <section class="about-page-container">
+        <div class="animated-bg">
+          <div class="bg-shape shape-1"></div>
+          <div class="bg-shape shape-2"></div>
+          <div class="bg-shape shape-3"></div>
+          <div class="bg-shape shape-4"></div>
+        </div>
+        
+        <div class="about-header">
+          <div class="header-content">
+            <h1 class="about-title">About <span>Me</span></h1>
+            <div class="title-underline"></div>
           </div>
         </div>
-        <button onclick="renderWelcomeContent()" class="mt-10 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition">
-          ← Back to Welcome
-        </button>
+        
+        <div class="bio-section">
+          <div class="bio-avatar">
+            <div class="avatar-container">
+              <div class="avatar-ring"></div>
+              <img src="https://cdn.discordapp.com/avatars/422119753490890752/cd76037e46edc86805f75348f3fd7dc1?size=1024" alt="Jawwad" class="avatar-img">
+            </div>
+          </div>
+          <div class="bio-content">
+            <p class="bio-text">
+              Hi, I'm <span class="highlight">Jawwad</span>! I specialize in 3D design and modeling for Metin2, with years of experience under my belt. I was one of the first designers to enter the scene and continue to bring creativity and skill to every project I take on.
+            </p>
+            <div class="bio-stats">
+              <div class="stat-item">
+                <div class="stat-value">7+</div>
+                <div class="stat-label">Years Experience</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">500+</div>
+                <div class="stat-label">Projects</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Satisfaction</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="services-section">
+          <h2 class="section-title">My <span>Services</span></h2>
+          
+          <div class="services-grid">
+            <div class="service-card" data-aos="fade-up">
+              <div class="card-icon">
+                <i class="fas fa-paint-brush"></i>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Custom 2D Work</h3>
+                <div class="card-description">
+                  <p>I offer a range of fully customizable 2D design services for Metin2, including:</p>
+                  <ul class="service-list">
+                    <li><i class="fas fa-check"></i> Costumes, armors, hairstyles & weapons</li>
+                    <li><i class="fas fa-check"></i> Mounts, pets, and GR2-based objects</li>
+                    <li><i class="fas fa-check"></i> Specular creation and correction</li>
+                    <li><i class="fas fa-check"></i> Renders (full hd, 2k)</li>
+                    <li><i class="fas fa-check"></i> Icons (like official)</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-glow"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="card-icon">
+                <i class="fas fa-cube"></i>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Custom 3D Work</h3>
+                <div class="card-description">
+                  <p>Bringing your Metin2 world to life with detailed, high-quality 3D models:</p>
+                  <ul class="service-list">
+                    <li><i class="fas fa-check"></i> Costumes, armors, hairstyles & weapons</li>
+                    <li><i class="fas fa-check"></i> Mounts, pets, and NPCs</li>
+                    <li><i class="fas fa-check"></i> Metin stones and animated objects</li>
+                    <li><i class="fas fa-check"></i> Custom-designed wings</li>
+                    <li><i class="fas fa-check"></i> Animations</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-glow"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="card-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Tools</h3>
+                <div class="card-description">
+                  <p>Whether you're just starting out or already experienced, I've got the best tools:</p>
+                  <ul class="service-list">
+                    <li><i class="fas fa-check"></i> MDE Path Changer – quickly update paths in your .mde files</li>
+                    <li><i class="fas fa-check"></i> GR2 Mesh Remover – remove unnecessary meshes with ease</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-glow"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="card-icon">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Tutorials</h3>
+                <div class="card-description">
+                  <p>On the site, you'll find some of the most useful and beginner-friendly tutorials to help you grow your skills in both 2D and 3D design — all completely free. Whether you're just starting out or looking to improve, there's something here for everyone.</p>
+                </div>
+              </div>
+              <div class="card-glow"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+              <div class="card-icon">
+                <i class="fas fa-gift"></i>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Free Stuff</h3>
+                <div class="card-description">
+                  <p>I offer a variety of free assets ready to enhance your Metin2 server — all pre-configured and easy to install. Just browse the site and download what you need, no strings attached!</p>
+                </div>
+              </div>
+              <div class="card-glow"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+              <div class="card-icon">
+                <i class="fas fa-headset"></i>
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Support</h3>
+                <div class="card-description">
+                  <p>Have a question or need help with something? I'm always available on Discord for support. Don't hesitate to reach out — no question is too small!</p>
+                </div>
+              </div>
+              <div class="card-glow"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="cta-section">
+          <div class="cta-content">
+            <h2 class="cta-title">Ready to work together?</h2>
+            <p class="cta-text">Let's create something amazing for your Metin2 server!</p>
+            <div class="cta-buttons">
+              <a href="https://discord.com/users/422119753490890752" target="_blank" class="cta-button discord-btn">
+                <i class="fab fa-discord"></i> Contact on Discord
+              </a>
+              <button onclick="renderWelcomeContent()" class="cta-button back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Welcome
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
+
+      <style>
+        .about-page-container {
+          position: relative;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 40px 20px 80px;
+          overflow: hidden;
+          z-index: 1;
+        }
+
+        .animated-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+          z-index: -1;
+        }
+
+        .bg-shape {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(60px);
+          opacity: 0.15;
+        }
+
+        .shape-1 {
+          top: 10%;
+          left: -10%;
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, rgba(236, 72, 153, 0.8), rgba(236, 72, 153, 0));
+          animation: floatAnimation 20s ease-in-out infinite alternate;
+        }
+
+        .shape-2 {
+          bottom: 20%;
+          right: -10%;
+          width: 400px;
+          height: 400px;
+          background: radial-gradient(circle, rgba(139, 92, 246, 0.8), rgba(139, 92, 246, 0));
+          animation: floatAnimation 15s ease-in-out infinite alternate-reverse;
+        }
+
+        .shape-3 {
+          top: 60%;
+          left: 10%;
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(14, 165, 233, 0.8), rgba(14, 165, 233, 0));
+          animation: floatAnimation 18s ease-in-out infinite alternate;
+        }
+
+        .shape-4 {
+          top: 30%;
+          right: 20%;
+          width: 250px;
+          height: 250px;
+          background: radial-gradient(circle, rgba(249, 115, 22, 0.8), rgba(249, 115, 22, 0));
+          animation: floatAnimation 12s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatAnimation {
+          0% {
+            transform: translate(0, 0) scale(1);
+          }
+          100% {
+            transform: translate(40px, 40px) scale(1.1);
+          }
+        }
+
+        .about-header {
+          text-align: center;
+          margin-bottom: 60px;
+          position: relative;
+        }
+
+        .header-content {
+          position: relative;
+          display: inline-block;
+        }
+
+        .about-title {
+          font-size: 4rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 10px;
+          position: relative;
+          letter-spacing: -1px;
+        }
+
+        .about-title span {
+          background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .title-underline {
+          height: 4px;
+          width: 80px;
+          background: linear-gradient(90deg, #ec4899, #8b5cf6);
+          margin: 0 auto;
+          border-radius: 2px;
+          position: relative;
+        }
+
+        .bio-section {
+          display: flex;
+          align-items: center;
+          gap: 40px;
+          margin-bottom: 80px;
+          flex-wrap: wrap;
+        }
+
+        .bio-avatar {
+          flex: 0 0 200px;
+        }
+
+        .avatar-container {
+          position: relative;
+          width: 200px;
+          height: 200px;
+          margin: 0 auto;
+        }
+
+        .avatar-ring {
+          position: absolute;
+          top: -10px;
+          left: -10px;
+          right: -10px;
+          bottom: -10px;
+          border-radius: 50%;
+          border: 2px solid transparent;
+          background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
+          mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          animation: rotateRing 10s linear infinite;
+        }
+
+        @keyframes rotateRing {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        .avatar-img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 4px solid rgba(255, 255, 255, 0.1);
+          background: #1e1e1e;
+        }
+
+        .bio-content {
+          flex: 1;
+          min-width: 300px;
+        }
+
+        .bio-text {
+          font-size: 1.2rem;
+          line-height: 1.8;
+          color: rgba(255, 255, 255, 0.9);
+          margin-bottom: 30px;
+        }
+
+        .bio-text .highlight {
+          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: 700;
+        }
+
+        .bio-stats {
+          display: flex;
+          gap: 30px;
+          flex-wrap: wrap;
+        }
+
+        .stat-item {
+          text-align: center;
+          min-width: 100px;
+        }
+
+        .stat-value {
+          font-size: 2.5rem;
+          font-weight: 700;
+          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          line-height: 1;
+          margin-bottom: 5px;
+        }
+
+        .stat-label {
+          font-size: 0.9rem;
+          color: rgba(255, 255, 255, 0.7);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .services-section {
+          margin-bottom: 80px;
+        }
+
+        .section-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          text-align: center;
+          margin-bottom: 50px;
+          color: #fff;
+        }
+
+        .section-title span {
+          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .services-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          gap: 30px;
+        }
+
+        .service-card {
+          position: relative;
+          background: rgba(30, 30, 30, 0.5);
+          backdrop-filter: blur(10px);
+          border-radius: 16px;
+          padding: 30px;
+          transition: all 0.3s ease;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          overflow: hidden;
+          height: 100%;
+        }
+
+        .service-card:hover {
+          transform: translateY(-5px);
+          border-color: rgba(139, 92, 246, 0.3);
+          box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(139, 92, 246, 0.2);
+        }
+
+        .service-card:hover .card-glow {
+          opacity: 1;
+        }
+
+        .card-glow {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .card-icon {
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+          font-size: 24px;
+          color: #fff;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .card-icon::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+          opacity: 0.8;
+          z-index: -1;
+        }
+
+        .card-title {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 15px;
+          color: #fff;
+        }
+
+        .card-description p {
+          color: rgba(255, 255, 255, 0.8);
+          margin-bottom: 15px;
+          line-height: 1.6;
+        }
+
+        .service-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .service-list li {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          margin-bottom: 10px;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        .service-list li i {
+          color: #8b5cf6;
+          margin-top: 5px;
+          font-size: 0.8rem;
+        }
+
+        .cta-section {
+          background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
+          border-radius: 20px;
+          padding: 60px 40px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .cta-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 15px;
+          background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .cta-text {
+          font-size: 1.2rem;
+          color: rgba(255, 255, 255, 0.8);
+          margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+
+        .cta-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .discord-btn {
+          background: linear-gradient(135deg, #5865f2, #7289da);
+          color: white;
+          border: none;
+        }
+
+        .discord-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
+        }
+
+        .back-btn {
+          background: transparent;
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+          .about-title {
+            font-size: 3rem;
+          }
+          
+          .bio-section {
+            flex-direction: column;
+            text-align: center;
+            gap: 30px;
+          }
+          
+          .bio-stats {
+            justify-content: center;
+          }
+          
+          .services-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .cta-section {
+            padding: 40px 20px;
+          }
+          
+          .cta-title {
+            font-size: 2rem;
+          }
+        }
+      </style>
+
+      <script>
+        document.querySelectorAll('[data-aos]').forEach(el => {
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  el.style.opacity = '1';
+                  el.style.transform = 'translateY(0)';
+                }, el.dataset.aosDelay || 0);
+                observer.unobserve(el);
+              }
+            });
+          }, { threshold: 0.1 });
+          
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(20px)';
+          el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          observer.observe(el);
+        });
+      </script>
     `;
+    
     animateContent();
   }, 300);
 }
 
 // ======= INITIALIZATION =======
 function initializeApp() {
-  DOM.init();
-  
-  // Set up event listeners with better performance
-  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  DOM.init()
+
+  const mobileMenuButton = document.getElementById("mobile-menu-button")
   if (mobileMenuButton) {
     mobileMenuButton.addEventListener("click", () => {
-      DOM.mobileMenu?.classList.toggle("hidden");
-    });
+      const mobileMenu = document.getElementById("mobile-menu")
+      mobileMenu?.classList.toggle("hidden")
+    })
   }
 
-  if (DOM.imageModal) {
-    DOM.imageModal.addEventListener("click", e => {
-      if (e.target === e.currentTarget) closeModal();
-    });
+  const imageModal = document.getElementById("image-modal")
+  if (imageModal) {
+    imageModal.addEventListener("click", (e) => {
+      if (e.target === e.currentTarget) closeModal()
+    })
   }
 
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeModal();
-  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal()
+  })
 
-  // Optimize dropdown links
-  document.querySelectorAll(".dropdown-content a").forEach(link => {
-    link.addEventListener("click", toggleDropdown);
-  });
+  document.querySelectorAll(".dropdown-content a").forEach((link) => {
+    link.addEventListener("click", toggleDropdown)
+  })
 
-  // Optimized intersection observer
   const observerOptions = {
     threshold: 0.1,
-    rootMargin: '50px'
-  };
+    rootMargin: "50px",
+  }
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-        observer.unobserve(entry.target);
+        entry.target.classList.add("opacity-100", "translate-y-0")
+        observer.unobserve(entry.target)
       }
-    });
-  }, observerOptions);
+    })
+  }, observerOptions)
 
-  // Observe fade images
-  document.querySelectorAll('.fade-img').forEach(img => {
-    observer.observe(img);
-  });
+  document.querySelectorAll(".fade-img").forEach((img) => {
+    observer.observe(img)
+  })
 
-  // Load initial page
-  const savedPage = localStorage.getItem("currentPage");
-  if (savedPage === 'assets') {
-    loadAllAssets();
+  const savedPage = localStorage.getItem("currentPage")
+  if (savedPage === "assets") {
+    loadAllAssets()
   } else if (savedPage) {
-    loadContent(savedPage);
+    loadContent(savedPage)
   } else {
-    renderWelcomeContent();
+    renderWelcomeContent()
   }
 }
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeApp);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeApp)
 } else {
-  initializeApp();
+  initializeApp()
 }
-
-// Mobile menu handler
-document.addEventListener("DOMContentLoaded", function () {
-  const menuBtn = document.querySelector(".menu-btn");
-  const navbarMenu = document.querySelector(".navbar-menu");
-
-  if (menuBtn && navbarMenu) {
-    menuBtn.addEventListener("click", () => {
-      navbarMenu.classList.toggle("active");
-      menuBtn.classList.toggle("active");
-    });
-  }
-});
