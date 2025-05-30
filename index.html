@@ -37,54 +37,326 @@
 		<link rel="sitemap" href="https://jawwad.site/sitemap.xml">
 	</head>
 	<body class="min-h-screen">
-		<nav class="bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg border-b border-gray-800 fixed w-full z-50">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="flex items-center justify-between h-16">
-					<div class="flex items-center">
-						<div class="flex-shrink-0">
-							<span class="logo-animated" aria-label="Jawwad ART Logo" onclick="renderWelcomeContent()">Jawwad ART</span>
-						</div>
-						<div class="hidden md:block">
-							<div class="ml-10 flex items-baseline space-x-4">
-								<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="renderWelcomeContent()">
-								<i class="fa-solid fa-house"></i> Welcome
-								</a>
-								<button class="dropbtn" onclick="loadAllAssets()">Assets <i class="fa fa-layer-group"></i></button>
-								<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tutorials')">
-								<i class="fas fa-chalkboard-teacher mr-2"></i> Tutorials
-								</a>
-								<a href="#" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-pink-300 transition" onclick="loadContent('tools')">
-								<i class="fas fa-tools mr-2"></i> Tools
-								</a>
-								<button onclick="copyDiscordInvite()" class="ml-4 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-none hover:from-purple-600 hover:to-pink-700 transition flex items-center">
-								<i class="fab fa-discord mr-2"></i> Contact
-								</button>
-							</div>
-						</div>
-					</div>
-					<!-- Mobile menu button -->
-					<div class="-mr-2 flex md:hidden">
-						<button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-none text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" aria-label="Main menu" aria-expanded="false">
-							<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-							</svg>
-						</button>
-					</div>
-				</div>
-			</div>
-			<!-- În body, unde vrei mobile menu -->
-			<div id="mobile-menu-container"></div>
-			<script>
-				// Încarcă mobile menu
-				document.addEventListener('DOMContentLoaded', () => {
-				  fetch('mobile-menu.html')
-				    .then(r => r.text())
-				    .then(html => {
-				      document.getElementById('mobile-menu-container').innerHTML = html;
-				    });
-				});
-			</script>
-		</nav>
+<nav class="premium-navbar">
+  <div class="navbar-container">
+    <div class="navbar-content">
+      <!-- Logo -->
+      <div class="navbar-brand">
+        <div class="brand-wrapper" onclick="renderWelcomeContent()">
+          <div class="brand-accent"></div>
+          <span class="brand-text">Jawwad ART</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="navbar-nav">
+        <a href="#" class="nav-item" onclick="renderWelcomeContent()">
+          <span class="nav-text">Welcome</span>
+          <span class="nav-indicator"></span>
+        </a>
+        
+        <a href="#" class="nav-item" onclick="loadAllAssets()">
+          <span class="nav-text">Assets</span>
+          <span class="nav-indicator"></span>
+        </a>
+        
+        <a href="#" class="nav-item" onclick="loadContent('tutorials')">
+          <span class="nav-text">Tutorials</span>
+          <span class="nav-indicator"></span>
+        </a>
+        
+        <a href="#" class="nav-item" onclick="loadContent('tools')">
+          <span class="nav-text">Tools</span>
+          <span class="nav-indicator"></span>
+        </a>
+      </div>
+
+      <!-- Contact Button -->
+      <div class="navbar-actions">
+        <button class="contact-btn" onclick="copyDiscordInvite()">
+          <span class="btn-text">Contact</span>
+          <span class="btn-icon">
+            <i class="fab fa-discord"></i>
+          </span>
+        </button>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button class="mobile-toggle" onclick="toggleMobileMenu()">
+        <div class="toggle-line"></div>
+        <div class="toggle-line"></div>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu-container"></div>
+</nav>
+
+<style>
+/* Premium Navbar */
+.premium-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(30, 20, 60, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+/* Brand */
+.navbar-brand {
+  flex-shrink: 0;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.brand-accent {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 70%;
+  background: linear-gradient(to bottom, #f472b6, #8b5cf6);
+  border-radius: 3px;
+  transition: height 0.3s ease;
+}
+
+.brand-wrapper:hover .brand-accent {
+  height: 90%;
+}
+
+.brand-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f9fafb, #d1d5db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* Navigation */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav-item {
+  position: relative;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.nav-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #f472b6, #8b5cf6);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-item:hover .nav-text {
+  color: rgba(255, 255, 255, 1);
+}
+
+.nav-item:hover .nav-indicator {
+  width: 100%;
+}
+
+/* Contact Button */
+.navbar-actions {
+  margin-left: 1rem;
+}
+
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.15), rgba(139, 92, 246, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact-btn:hover::before {
+  opacity: 1;
+}
+
+.btn-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease;
+}
+
+.contact-btn:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+.contact-btn:hover {
+  border-color: rgba(244, 114, 182, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.toggle-line {
+  width: 24px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.toggle-line:first-child {
+  width: 16px;
+  align-self: flex-end;
+}
+
+.mobile-toggle:hover .toggle-line {
+  background: rgba(255, 255, 255, 1);
+}
+
+.mobile-toggle:hover .toggle-line:first-child {
+  width: 24px;
+}
+
+/* Scroll Effect */
+.premium-navbar.scrolled {
+  background: rgba(30, 20, 60, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-nav, .navbar-actions {
+    display: none;
+  }
+  
+  .mobile-toggle {
+    display: flex;
+  }
+  
+  .navbar-container {
+    padding: 0 1.5rem;
+  }
+  
+  .navbar-content {
+    height: 65px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text {
+    font-size: 1.2rem;
+  }
+}
+</style>
+
+<script>
+// Load mobile menu
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('mobile-menu.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('mobile-menu-container').innerHTML = html;
+    });
+});
+
+// Scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.premium-navbar');
+  if (window.scrollY > 30) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Mobile menu toggle
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenu) {
+    mobileMenu.classList.toggle('hidden');
+  }
+}
+</script>
+
 		<!-- Toast notification -->
 		<div id="toast" class="toast-container hidden">
 			<div class="toast-box">
