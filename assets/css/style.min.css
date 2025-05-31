@@ -2014,23 +2014,19 @@ aside a.active {
 }
 
 .cta-section {
-	background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
-	border-radius: 20px;
-	padding: 60px 40px;
-	text-align: center;
-	position: relative;
-	overflow: hidden;
-	border: 1px solid rgba(139, 92, 246, 0.2);
-}
+  background: var(--glass-bg); /* fundal întunecat translucid, deja definit */
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
 
-.cta-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-bottom: 15px;
-	background: linear-gradient(135deg, #fff 0%, #ccc 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+  /* textură opțională, subtilă */
+  background-image: 
+    url('/assets/img/arches.png'), /* o imagine mică tip noise, gen 20x20px */
+    linear-gradient(135deg, var(--accent-tertiary), var(--accent-secondary));
+	background-blend-mode: overlay;
 }
 
 .cta-text {
@@ -2357,4 +2353,23 @@ aside a.active {
 	.contact-btn {
 		display: none;
 	}
+}
+
+.theme-heading {
+  font-size: 1.5rem; /* echivalentul text-2xl */
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.thematic-title {
+  font-size: 1.5rem; /* echivalent cu text-2xl */
+  font-weight: 700;  /* bold */
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 0.75rem;
+  transition: all 0.3s var(--transition-normal);
 }
