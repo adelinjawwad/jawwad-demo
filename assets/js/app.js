@@ -30,6 +30,50 @@ const debounce = (func, wait) => {
 	}
 }
 
+// ======= THEME SYSTEM =======
+let currentTheme = localStorage.getItem("theme") || "default"
+
+function initThemeSystem() {
+	document.documentElement.setAttribute("data-theme", currentTheme)
+	updateThemeUI()
+
+	// Setup theme dropdown click outside handler
+	document.addEventListener("click", (e) => {
+		const themeDropdown = document.getElementById("theme-dropdown")
+		const themeSwitcher = document.querySelector(".theme-switcher")
+
+		if (themeDropdown && themeSwitcher) {
+			if (!themeSwitcher.contains(e.target)) {
+				themeDropdown.classList.remove("active")
+			}
+		}
+	})
+}
+
+function toggleThemeDropdown() {
+	const dropdown = document.getElementById("theme-dropdown")
+	if (dropdown) {
+		dropdown.classList.toggle("active")
+	}
+}
+
+function setTheme(theme) {
+	currentTheme = theme
+	document.documentElement.setAttribute("data-theme", theme)
+	localStorage.setItem("theme", theme)
+	updateThemeUI()
+	toggleThemeDropdown()
+}
+
+function updateThemeUI() {
+	document.querySelectorAll(".theme-option").forEach((option) => {
+		option.classList.remove("active")
+		if (option.dataset.theme === currentTheme) {
+			option.classList.add("active")
+		}
+	})
+}
+
 // ======= UTILITY FUNCTIONS =======
 let toastTimeout
 
@@ -134,6 +178,18 @@ function animateContent() {
 	contentArea?.classList.remove("opacity-0")
 }
 
+function toggleMobileMenu() {
+	const mobileMenu = document.getElementById("mobile-menu")
+	mobileMenu?.classList.toggle("hidden")
+}
+
+function closeMobileMenu() {
+	const mobileMenu = document.getElementById("mobile-menu")
+	if (mobileMenu) {
+		mobileMenu.classList.add("hidden")
+	}
+}
+
 // ======= CONTENT RENDERING =======
 function renderWelcomeContent() {
 	localStorage.setItem("currentPage", "welcome")
@@ -148,86 +204,101 @@ function renderWelcomeContent() {
 	setTimeout(() => {
 		contentArea.innerHTML = `
       <section class="text-center mb-12">
-        <div class="hero-text-new">
-          <p class="hero-main-text">
-            Discover assets for your projects.
-          </p>
-          <p class="hero-sub-text">
-            High-quality costumes, hairstyles, weapons and more!
-          </p>
+<div class="hero-text-new" style="max-width: 800px;">
+  <p class="hero-main-text">
+    Discover assets for your projects.
+  </p>
+  <p class="hero-sub-text">
+    High-quality costumes, hairstyles, weapons and more!
+  </p>
+</div>
+
+        <div class="w-full max-w-3xl mx-auto mt-6 mb-2">
+          <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+            
+            <!-- About Me Button -->
+            <button onclick="loadContent('about')" class="premium-btn-new">
+              <i class="fas fa-user mr-2"></i> About Me
+            </button>
+
+          </div>
         </div>
 
-    <div class="w-full max-w-3xl mx-auto mt-6 mb-2">
-  <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
-    
-    <!-- Buton Discord -->
-    <button onclick="toggleDiscordInvite()" class="discord-btn-new">
-      <i class="fab fa-discord mr-2"></i> Join our Discord server
-    </button>
+<!-- Enhanced Discord Section -->
+<div class="discord-section">
+  <div class="discord-top-bar"></div>
 
-    <!-- Separator între butoane (doar pe desktop) -->
-    <div class="hidden md:block h-10 w-2 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full shadow-md"></div>
+  <h3 class="discord-title">
+    <i class="fab fa-discord discord-icon"></i>
+    Join Our Community
+  </h3>
+  <p class="discord-description">
+    Connect with other creators, get support, and stay updated with the latest releases!
+  </p>
 
-    <!-- Buton About -->
-    <button onclick="loadContent('about')" class="premium-btn-new">
-      <i class="fas fa-user mr-2"></i> About Me
-    </button>
-
+  <div class="discord-invite-box">
+    <div class="discord-invite-inner">
+      <div class="discord-info">
+        <div class="discord-icon-circle">
+          <i class="fab fa-discord discord-icon-white"></i>
+        </div>
+        <div class="discord-text">
+          <div class="discord-server-name">Jawwad ART Discord</div>
+          <div class="discord-server-link">discord.gg/BBX8vfN4gQ</div>
+        </div>
+      </div>
+      <button onclick="copyDiscordInvite()" class="discord-copy-btn">
+        <i class="fas fa-copy"></i> Copy Link
+      </button>
+    </div>
   </div>
 </div>
 
-        <div id="discord-invite-wrapper" class="discord-box-wrapper">
-          <div id="discord-invite" class="discord-box">
-            <p class="text-gray-300 mb-2">Join my Discord for chat, updates and support:</p>
-            <div class="flex items-center justify-between bg-gray-800 p-3 rounded">
-              <code class="text-purple-300">https://discord.gg/BBX8vfN4gQ</code>
-              <button onclick="copyDiscordInvite()" class="copy-btn" title="Copy to clipboard">
-                <i class="fas fa-copy"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+<div class="info-box-alt">
+  <div class="animated-gradient"></div>
 
-        <div class="features-container-new">
-          <div class="features-header-new">
-            <div class="features-icon-pulse">
-              <i class="fas fa-info-circle"></i>
-            </div>
-            <h3 class="features-title-new">Important Information</h3>
-          </div>
-          
-          <div class="features-grid-new">
-            <div class="feature-card-new" style="animation-delay: 0.1s">
-              <div class="feature-icon-new">
-                <i class="fas fa-file-archive"></i>
-              </div>
-              <div class="feature-content-new">
-                <h4>MSM Files</h4>
-                <p>Always included with every purchase.</p>
-              </div>
-            </div>
-            
-            <div class="feature-card-new" style="animation-delay: 0.2s">
-              <div class="feature-icon-new">
-                <i class="fas fa-icons"></i>
-              </div>
-              <div class="feature-content-new">
-                <h4>Custom Icons</h4>
-                <p>High-quality icons included with purchased assets only.</p>
-              </div>
-            </div>
-            
-            <div class="feature-card-new" style="animation-delay: 0.3s">
-              <div class="feature-icon-new">
-                <i class="fas fa-cog"></i>
-              </div>
-              <div class="feature-content-new">
-                <h4>Granny 2.11</h4>
-                <p>All my 3D models are built for Granny 2.11</p>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="particle particle1"></div>
+  <div class="particle particle2"></div>
+  <div class="particle particle3"></div>
+
+  <div class="header">
+    <div class="info-icon-alt">
+      <i class="fas fa-info-circle"></i>
+      <div class="rotating-border"></div>
+    </div>
+    <h3>Important Information</h3>
+  </div>
+
+  <ul>
+    <li class="item msm-files">
+      <div class="item-icon"><i class="fas fa-file-archive"></i></div>
+      <div class="item-text">
+        <div class="item-title">MSM Files</div>
+        <div class="item-desc">Always included with every purchase</div>
+      </div>
+      <div class="pulse-dot"></div>
+    </li>
+
+    <li class="item custom-icons">
+      <div class="item-icon"><i class="fas fa-icons"></i></div>
+      <div class="item-text">
+        <div class="item-title">Custom Icons</div>
+        <div class="item-desc">High-quality icons included with purchased assets only</div>
+      </div>
+      <div class="pulse-dot"></div>
+    </li>
+
+    <li class="item granny">
+      <div class="item-icon"><i class="fas fa-cog"></i></div>
+      <div class="item-text">
+        <div class="item-title">Granny 2.11</div>
+        <div class="item-desc">All my 3D models are built for Granny 2.11</div>
+      </div>
+      <div class="pulse-dot"></div>
+    </li>
+  </ul>
+</div>
+
       </section>
     `
 		animateContent()
@@ -331,7 +402,7 @@ async function loadAllAssets() {
 				const data = await response.json()
 				return {
 					category,
-					data
+					data,
 				}
 			})
 
@@ -368,7 +439,7 @@ async function loadAllAssets() {
 
 					fullContent += `
             <section id="${category}">
-              <h2 class="section-title text-2xl font-semibold mb-4 text-pink-400 border-b border-gray-700 pb-2">${categoryTitles[category]}</h2>
+              <h2 class="section-title">${categoryTitles[category]}</h2>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 ${data.map((item) => renderItem(item, category)).join("")}
               </div>
@@ -636,19 +707,19 @@ function setupScrollSpy(categories) {
 	}, 16)
 
 	window.addEventListener("scroll", debouncedScrollHandler, {
-		passive: true
+		passive: true,
 	})
 }
 
 function renderAboutMePage() {
-	const contentArea = document.getElementById("content-area");
-	const mobileMenu = document.getElementById("mobile-menu");
+	const contentArea = document.getElementById("content-area")
+	const mobileMenu = document.getElementById("mobile-menu")
 
-	if (!contentArea) return;
+	if (!contentArea) return
 
-	localStorage.setItem("currentPage", "about");
-	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300");
-	mobileMenu?.classList.add("hidden");
+	localStorage.setItem("currentPage", "about")
+	contentArea.classList.add("opacity-0", "transition-opacity", "duration-300")
+	mobileMenu?.classList.add("hidden")
 
 	setTimeout(() => {
 		contentArea.innerHTML = `
@@ -833,15 +904,18 @@ function renderAboutMePage() {
           observer.observe(el);
         });
       </script>
-    `;
+    `
 
-		animateContent();
-	}, 300);
+		animateContent()
+	}, 300)
 }
 
 // ======= INITIALIZATION =======
 function initializeApp() {
 	DOM.init()
+
+	// Initialize theme system
+	initThemeSystem()
 
 	const mobileMenuButton = document.getElementById("mobile-menu-button")
 	if (mobileMenuButton) {

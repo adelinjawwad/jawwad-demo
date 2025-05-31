@@ -37,129 +37,120 @@
 		<link rel="sitemap" href="https://jawwad.site/sitemap.xml">
 	</head>
 	<body class="min-h-screen">
-        <!-- Enhanced Navbar -->
-        <nav class="premium-navbar">
-          <div class="navbar-container">
-            <div class="navbar-content">
-              <!-- Logo -->
-              <div class="navbar-brand">
-                <div class="brand-wrapper" onclick="renderWelcomeContent()">
-                  <div class="brand-accent"></div>
-                  <span class="brand-text">Jawwad ART</span>
-                </div>
-              </div>
-
-              <!-- Navigation -->
-              <div class="navbar-nav">
-                <a href="#" class="nav-item" onclick="renderWelcomeContent()">
-                  <span class="nav-text">Welcome</span>
-                  <span class="nav-indicator"></span>
-                </a>
-                
-                <a href="#" class="nav-item" onclick="loadAllAssets()">
-                  <span class="nav-text">Assets</span>
-                  <span class="nav-indicator"></span>
-                </a>
-                
-                <a href="#" class="nav-item" onclick="loadContent('tutorials')">
-                  <span class="nav-text">Tutorials</span>
-                  <span class="nav-indicator"></span>
-                </a>
-                
-                <a href="#" class="nav-item" onclick="loadContent('tools')">
-                  <span class="nav-text">Tools</span>
-                  <span class="nav-indicator"></span>
-                </a>
-              </div>
-
-              <!-- Theme Switcher & Contact -->
-              <div class="navbar-actions">
-                <div class="theme-switcher">
-                  <button class="theme-toggle" onclick="toggleThemeDropdown()">
-                    <i class="fas fa-palette"></i>
-                    <span>Theme</span>
-                    <i class="fas fa-chevron-down"></i>
-                  </button>
-                  <div class="theme-dropdown" id="theme-dropdown">
-                    <div class="theme-option active" onclick="setTheme('default')" data-theme="default">
-                      <div class="theme-preview default"></div>
-                      <span>Default</span>
-                    </div>
-                    <div class="theme-option" onclick="setTheme('ocean')" data-theme="ocean">
-                      <div class="theme-preview ocean"></div>
-                      <span>Ocean</span>
-                    </div>
-                    <div class="theme-option" onclick="setTheme('forest')" data-theme="forest">
-                      <div class="theme-preview forest"></div>
-                      <span>Forest</span>
-                    </div>
-                    <div class="theme-option" onclick="setTheme('sunset')" data-theme="sunset">
-                      <div class="theme-preview sunset"></div>
-                      <span>Sunset</span>
-                    </div>
-                    <div class="theme-option" onclick="setTheme('royal')" data-theme="royal">
-                      <div class="theme-preview royal"></div>
-                      <span>Royal</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Contact Button -->
-                <button class="contact-btn" onclick="copyDiscordInvite()">
-                  <span class="btn-text">Contact</span>
-                  <span class="btn-icon">
-                    <i class="fab fa-discord"></i>
-                  </span>
-                </button>
-              </div>
-
-              <!-- Mobile Toggle -->
-              <button class="mobile-toggle" onclick="toggleMobileMenu()">
-                <div class="toggle-line"></div>
-                <div class="toggle-line"></div>
-              </button>
-            </div>
-          </div>
-        </nav>
-
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden" id="mobile-menu">
-          <div class="mobile-menu-backdrop">
-            <div class="mobile-menu-content">
-              <!-- Header simplu -->
-              <div class="mobile-header">
-                <span class="mobile-title">Menu</span>
-                <button class="mobile-close" onclick="toggleMobileMenu()">
-                <i class="fas fa-times"></i>
-                </button>
-              </div>
-              <!-- Links simple -->
-              <nav class="mobile-nav">
-                <a href="#" class="mobile-link" onclick="renderWelcomeContent(); closeMobileMenu();">
-                <i class="fas fa-home"></i>
-                <span>Welcome</span>
-                </a>
-                <a href="#" class="mobile-link" onclick="loadAllAssets(); closeMobileMenu();">
-                <i class="fas fa-cube"></i>
-                <span>Assets</span>
-                </a>
-                <a href="#" class="mobile-link" onclick="loadContent('tutorials'); closeMobileMenu();">
-                <i class="fas fa-play"></i>
-                <span>Tutorials</span>
-                </a>
-                <a href="#" class="mobile-link" onclick="loadContent('tools'); closeMobileMenu();">
-                <i class="fas fa-tools"></i>
-                <span>Tools</span>
-                </a>
-                <button class="mobile-link" onclick="copyDiscordInvite(); closeMobileMenu();">
-                <i class="fab fa-discord"></i>
-                <span>Contact</span>
-                </button>
-              </nav>
-            </div>
-          </div>
-        </div>
-
+		<!-- Enhanced Navbar -->
+		<nav class="premium-navbar">
+			<div class="navbar-container">
+				<div class="navbar-content">
+					<!-- Logo -->
+					<div class="navbar-brand">
+						<div class="brand-wrapper" onclick="renderWelcomeContent()">
+							<div class="brand-accent"></div>
+							<span class="brand-text">Jawwad ART</span>
+						</div>
+					</div>
+					<!-- Navigation -->
+					<div class="navbar-nav">
+						<a href="#" class="nav-item" onclick="renderWelcomeContent()">
+						<span class="nav-text">Welcome</span>
+						<span class="nav-indicator"></span>
+						</a>
+						<a href="#" class="nav-item" onclick="loadAllAssets()">
+						<span class="nav-text">Assets</span>
+						<span class="nav-indicator"></span>
+						</a>
+						<a href="#" class="nav-item" onclick="loadContent('tutorials')">
+						<span class="nav-text">Tutorials</span>
+						<span class="nav-indicator"></span>
+						</a>
+						<a href="#" class="nav-item" onclick="loadContent('tools')">
+						<span class="nav-text">Tools</span>
+						<span class="nav-indicator"></span>
+						</a>
+					</div>
+					<!-- Theme Switcher & Contact -->
+					<div class="navbar-actions">
+						<div class="theme-switcher">
+							<button class="theme-toggle" onclick="toggleThemeDropdown()">
+							<i class="fas fa-palette"></i>
+							<span>Theme</span>
+							<i class="fas fa-chevron-down"></i>
+							</button>
+							<div class="theme-dropdown" id="theme-dropdown">
+								<div class="theme-option active" onclick="setTheme('default')" data-theme="default">
+									<div class="theme-preview default"></div>
+									<span>Default</span>
+								</div>
+								<div class="theme-option" onclick="setTheme('ocean')" data-theme="ocean">
+									<div class="theme-preview ocean"></div>
+									<span>Ocean</span>
+								</div>
+								<div class="theme-option" onclick="setTheme('forest')" data-theme="forest">
+									<div class="theme-preview forest"></div>
+									<span>Forest</span>
+								</div>
+								<div class="theme-option" onclick="setTheme('sunset')" data-theme="sunset">
+									<div class="theme-preview sunset"></div>
+									<span>Sunset</span>
+								</div>
+								<div class="theme-option" onclick="setTheme('royal')" data-theme="royal">
+									<div class="theme-preview royal"></div>
+									<span>Royal</span>
+								</div>
+							</div>
+						</div>
+						<!-- Contact Button -->
+						<button class="contact-btn" onclick="copyDiscordInvite()">
+						<span class="btn-text">Contact</span>
+						<span class="btn-icon">
+						<i class="fab fa-discord"></i>
+						</span>
+						</button>
+					</div>
+					<!-- Mobile Toggle -->
+					<button class="mobile-toggle" onclick="toggleMobileMenu()">
+						<div class="toggle-line"></div>
+						<div class="toggle-line"></div>
+					</button>
+				</div>
+			</div>
+		</nav>
+		<!-- Mobile Menu -->
+		<div class="md:hidden hidden" id="mobile-menu">
+			<div class="mobile-menu-backdrop">
+				<div class="mobile-menu-content">
+					<!-- Header simplu -->
+					<div class="mobile-header">
+						<span class="mobile-title">Menu</span>
+						<button class="mobile-close" onclick="toggleMobileMenu()">
+						<i class="fas fa-times"></i>
+						</button>
+					</div>
+					<!-- Links simple -->
+					<nav class="mobile-nav">
+						<a href="#" class="mobile-link" onclick="renderWelcomeContent(); closeMobileMenu();">
+						<i class="fas fa-home"></i>
+						<span>Welcome</span>
+						</a>
+						<a href="#" class="mobile-link" onclick="loadAllAssets(); closeMobileMenu();">
+						<i class="fas fa-cube"></i>
+						<span>Assets</span>
+						</a>
+						<a href="#" class="mobile-link" onclick="loadContent('tutorials'); closeMobileMenu();">
+						<i class="fas fa-play"></i>
+						<span>Tutorials</span>
+						</a>
+						<a href="#" class="mobile-link" onclick="loadContent('tools'); closeMobileMenu();">
+						<i class="fas fa-tools"></i>
+						<span>Tools</span>
+						</a>
+						<button class="mobile-link" onclick="copyDiscordInvite(); closeMobileMenu();">
+						<i class="fab fa-discord"></i>
+						<span>Contact</span>
+						</button>
+					</nav>
+				</div>
+			</div>
+		</div>
 		<!-- Toast notification -->
 		<div id="toast" class="toast-container hidden">
 			<div class="toast-box">
@@ -180,19 +171,17 @@
 				<img id="modal-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full size preview" loading="lazy" class="w-full max-h-[90vh] object-contain rounded-none">
 			</div>
 		</div>
-		
-        <!-- Footer -->
-        <footer class="simple-footer">
-          <div class="footer-content">
-            <span class="footer-text">© 2024 Jawwad ART</span>
-            <div class="footer-social">
-              <button onclick="copyDiscordInvite()" class="social-icon">
-              <i class="fab fa-discord"></i>
-              </button>
-            </div>
-          </div>
-        </footer>
-
+		<!-- Footer -->
+		<footer class="simple-footer">
+			<div class="footer-content">
+				<span class="footer-text">© 2024 Jawwad ART</span>
+				<div class="footer-social">
+					<button onclick="copyDiscordInvite()" class="social-icon">
+					<i class="fab fa-discord"></i>
+					</button>
+				</div>
+			</div>
+		</footer>
 		<!-- Main script -->
 		<script src="assets/js/app.min.js?v=2.0"></script>
 		<script src="assets/js/download-redirect.js"></script>
