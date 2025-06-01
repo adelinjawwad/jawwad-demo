@@ -3,233 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - SYSTEM FAILURE</title>
+    <title>404 Not Found | Premium Dark Theme</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @font-face {
-            font-family: 'Cyber';
-            src: url('https://fonts.cdnfonts.com/css/cyberpunk-is-not-dead') format('woff2');
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
         }
-        
-        @keyframes glitch {
-            0% { text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff; }
-            14% { text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff; }
-            15% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff; }
-            49% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff; }
-            50% { text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff; }
-            99% { text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff; }
-            100% { text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff; }
+        .floating {
+            animation: float 6s ease-in-out infinite;
         }
-        
-        @keyframes scanline {
-            0% { background-position: 0 -100vh; }
-            100% { background-position: 0 100vh; }
+        .glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
-        
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-            20%, 22%, 24%, 55% { opacity: 0.5; }
+        .gradient-text {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        
-        @keyframes terminal-typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        
-        @keyframes neon-pulse {
-            0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
-            50% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6; }
-        }
-        
-        .cyber-font {
-            font-family: 'Cyber', sans-serif;
-        }
-        
-        .glitch {
-            animation: glitch 2s infinite;
-        }
-        
-        .scanlines {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .scanlines::before {
-            content: "";
+        .particle {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                to bottom,
-                transparent 0%,
-                rgba(0, 255, 252, 0.05) 50%,
-                transparent 100%
-            );
-            background-size: 100% 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
             pointer-events: none;
-            animation: scanline 4s linear infinite;
-            z-index: 1;
-        }
-        
-        .flicker {
-            animation: flicker 3s infinite;
-        }
-        
-        .terminal-line {
-            overflow: hidden;
-            white-space: nowrap;
-            animation: terminal-typing 3s steps(40) 1s both;
-        }
-        
-        .neon-text {
-            animation: neon-pulse 1.5s ease-in-out infinite alternate;
-        }
-        
-        .cyber-btn {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(0, 255, 252, 0.5);
-        }
-        
-        .cyber-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 20px rgba(0, 255, 252, 0.8);
-        }
-        
-        .cyber-btn::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                transparent 45%,
-                rgba(0, 255, 252, 0.5) 50%,
-                transparent 55%
-            );
-            transform: rotate(45deg);
-            transition: all 0.3s;
-        }
-        
-        .cyber-btn:hover::before {
-            left: 100%;
         }
     </style>
 </head>
-<body class="min-h-screen bg-black text-green-400 flex items-center justify-center scanlines">
-    <div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
-        <!-- Cyberpunk city skyline silhouette -->
-        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-0">
-            <div class="flex justify-between px-10">
-                <div class="h-32 w-16 bg-purple-900 clip-path-polygon"></div>
-                <div class="h-40 w-12 bg-blue-900"></div>
-                <div class="h-48 w-20 bg-pink-900 clip-path-polygon"></div>
-                <div class="h-36 w-24 bg-indigo-900"></div>
-                <div class="h-52 w-16 bg-purple-900 clip-path-polygon"></div>
-                <div class="h-44 w-20 bg-blue-900"></div>
-            </div>
-        </div>
-        
-        <div class="relative">
-            <!-- Error display with glitch effect -->
-            <div class="text-center mb-12 flicker">
-                <h1 class="cyber-font text-8xl md:text-9xl font-bold glitch mb-4">404</h1>
-                <h2 class="cyber-font text-4xl md:text-5xl font-semibold neon-text">SYSTEM FAILURE</h2>
-                <div class="w-full h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent my-6"></div>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col items-center justify-center overflow-hidden relative">
+    <!-- Particles background -->
+    <div id="particles-container" class="absolute inset-0 overflow-hidden"></div>
+    
+    <div class="container mx-auto px-4 z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Animated 404 text -->
+            <div class="floating mb-8">
+                <h1 class="text-9xl font-bold gradient-text">404</h1>
             </div>
             
-            <!-- Hacking terminal animation -->
-            <div class="bg-black bg-opacity-80 border-2 border-green-400 p-6 mb-12 font-mono text-sm md:text-base">
-                <div class="terminal-line">> INITIATING SYSTEM SCAN...</div>
-                <div class="terminal-line" style="animation-delay: 3s;">> ERROR: TARGET PAGE NOT FOUND IN DATABASE</div>
-                <div class="terminal-line" style="animation-delay: 6s;">> SEARCHING BACKUP SERVERS...</div>
-                <div class="terminal-line" style="animation-delay: 9s;">> WARNING: BACKUP SERVERS OFFLINE</div>
-                <div class="terminal-line" style="animation-delay: 12s;">> SUGGESTED ACTION: RETURN TO HOME SECTOR</div>
-                <div class="blink" style="animation-delay: 15s;">> _</div>
-            </div>
+            <h2 class="text-4xl font-bold mb-4">Oops! Page Not Found</h2>
+            <p class="text-xl text-gray-400 mb-8 max-w-lg mx-auto">
+                The page you're looking for doesn't exist or has been moved. 
+                Let's get you back on track.
+            </p>
             
-            <!-- Cyberpunk buttons -->
-            <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 justify-center">
-                <a href="https://jawwad.site/" class="cyber-btn px-8 py-4 bg-black text-green-400 border-2 border-green-400 cyber-font text-lg flex items-center justify-center">
-                    <i class="fas fa-terminal mr-3"></i> RETURN TO HOME SECTOR
-                </a>
-                <a href="https://discord.gg/BBX8vfN4gQ" class="cyber-btn px-8 py-4 bg-black text-pink-400 border-2 border-pink-400 cyber-font text-lg flex items-center justify-center">
-                    <i class="fas fa-user-secret mr-3"></i> REQUEST EXTRACTION
-                </a>
-            </div>
+            <!-- Return home button with icon -->
+            <a href="/" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold text-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 glow">
+                <i class="fas fa-home mr-3"></i>
+                Return Home
+            </a>
             
-            <!-- Matrix rain effect in the background -->
-<div class="absolute -top-20 -left-20 -right-20 -bottom-20 overflow-hidden z-0 opacity-20" style="pointer-events: none;">
-    <canvas id="matrix" class="w-full h-full"></canvas>
-</div>
-
+            <!-- Additional decorative elements -->
+            <div class="mt-16 flex justify-center space-x-8">
+                <div class="w-16 h-16 rounded-full bg-blue-500 opacity-20"></div>
+                <div class="w-16 h-16 rounded-full bg-purple-500 opacity-20"></div>
+                <div class="w-16 h-16 rounded-full bg-pink-500 opacity-20"></div>
+            </div>
         </div>
     </div>
+    
+    <!-- Footer -->
+    <footer class="absolute bottom-0 w-full py-6 text-center text-gray-500 text-sm z-10">
+        <p>© 2023 Premium Dark Theme. All rights reserved.</p>
+    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Matrix rain effect
-            const canvas = document.getElementById('matrix');
-            const ctx = canvas.getContext('2d');
+        // Create floating particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
             
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            
-            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const nums = '0123456789';
-            const alphabet = katakana + latin + nums;
-            
-            const fontSize = 16;
-            const columns = canvas.width / fontSize;
-            
-            const rainDrops = [];
-            for (let x = 0; x < columns; x++) {
-                rainDrops[x] = 1;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 5 + 1;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const animationDuration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                
+                // Apply styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `float ${animationDuration}s ease-in-out ${delay}s infinite`;
+                
+                container.appendChild(particle);
             }
             
-            const draw = () => {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Make particles follow mouse (subtle effect)
+            document.addEventListener('mousemove', function(e) {
+                const particles = document.querySelectorAll('.particle');
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
                 
-                ctx.fillStyle = '#0f0';
-                ctx.font = fontSize + 'px monospace';
-                
-                for (let i = 0; i < rainDrops.length; i++) {
-                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                particles.forEach(particle => {
+                    const particleX = parseFloat(particle.style.left) + (particle.offsetWidth / 2);
+                    const particleY = parseFloat(particle.style.top) + (particle.offsetHeight / 2);
                     
-                    if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        rainDrops[i] = 0;
-                    }
-                    rainDrops[i]++;
-                }
-            };
-            
-            setInterval(draw, 30);
-            
-            // Glitch effect on buttons
-            const buttons = document.querySelectorAll('.cyber-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('mouseenter', () => {
-                    btn.style.textShadow = '0 0 5px #0f0, 0 0 10px #0f0';
+                    const distX = mouseX - particleX;
+                    const distY = mouseY - particleY;
+                    
+                    // Only move particles slightly towards mouse
+                    particle.style.transform = `translate(${distX * 0.01}px, ${distY * 0.01}px)`;
                 });
-                
-                btn.addEventListener('mouseleave', () => {
-                    btn.style.textShadow = 'none';
-                });
-            });
-            
-            // Window resize handler
-            window.addEventListener('resize', () => {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
             });
         });
     </script>

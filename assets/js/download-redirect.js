@@ -1,7 +1,7 @@
 (() => {
-  const DOWNLOAD_PAGE_URL = "short.html";
-  const DOWNLOAD_FOLDER = "https://jawwad.site/assets/downloads/";
-  const DOWNLOAD_EXTENSIONS = [
+  const DOWNLOAD_PAGE = "short.html";
+  const DOWNLOAD_BASE_URL = "https://jawwad.site/assets/downloads/";
+  const EXTENSIONS = [
     ".zip", ".rar", ".7z", ".tar", ".gz",
     ".exe", ".msi", ".dmg", ".pkg",
     ".pdf", ".doc", ".docx", ".xls", ".xlsx",
@@ -13,50 +13,52 @@
   ];
 
   function isDownloadLink(href) {
-    if (!href.startsWith(DOWNLOAD_FOLDER)) return false;
-
-    const lowerHref = href.toLowerCase();
-    return DOWNLOAD_EXTENSIONS.some(ext => lowerHref.endsWith(ext));
+    if (!href.startsWith(DOWNLOAD_BASE_URL)) return false;
+    const lower = href.toLowerCase();
+    return EXTENSIONS.some(ext => lower.endsWith(ext));
   }
 
-  function extractFileName(url) {
+  function getFileNameFromURL(url) {
     try {
-      const urlObj = new URL(url);
-      return urlObj.pathname.split("/").pop() || "download";
+      const u = new URL(url);
+      return u.pathname.split("/").pop() || "download";
     } catch {
       return "download";
     }
   }
 
   function redirectToDownloadPage(url) {
-    const fileName = extractFileName(url);
-    const targetUrl = `${DOWNLOAD_PAGE_URL}?file=${encodeURIComponent(fileName)}&source=${encodeURIComponent(url)}`;
-    window.location.href = targetUrl;
+    const fileName = getFileNameFromURL(url);
+    const redirectUrl = `${DOWNLOAD_PAGE}?file=${encodeURIComponent(fileName)}&source=${encodeURIComponent(url)}`;
+    window.location.href = redirectUrl;
   }
 
-  function processLinks() {
+  function processDownloadLinks() {
     const links = document.querySelectorAll("a[href]");
     links.forEach(link => {
       const href = link.getAttribute("href");
       if (!href) return;
-      if (link.dataset.downloadProcessed === "true") return;
+      if (link.dataset.downloadProcessed) return;
 
       if (isDownloadLink(href)) {
         link.dataset.downloadProcessed = "true";
 
-        if (link.hasAttribute('download')) {
-          link.removeAttribute('download');
+        // Remove native download attribute to prevent instant download
+        if (link.hasAttribute("download")) {
+          link.removeAttribute("download");
         }
 
+        // Add download icon (optional)
         if (!link.querySelector(".download-indicator")) {
-          const indicator = document.createElement("i");
-          indicator.className = "fas fa-download download-indicator";
-          indicator.style.marginLeft = "0.5rem";
-          indicator.style.opacity = "0.7";
-          indicator.style.fontSize = "0.8em";
-          link.appendChild(indicator);
+          const icon = document.createElement("i");
+          icon.className = "fas fa-download download-indicator";
+          icon.style.marginLeft = "0.5rem";
+          icon.style.opacity = "0.7";
+          icon.style.fontSize = "0.8em";
+          link.appendChild(icon);
         }
 
+        // Add click listener that redirects instead of downloading immediately
         link.addEventListener("click", e => {
           e.preventDefault();
           e.stopImmediatePropagation();
@@ -67,8 +69,8 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", processLinks);
+    document.addEventListener("DOMContentLoaded", processDownloadLinks);
   } else {
-    processLinks();
+    processDownloadLinks();
   }
 })();
