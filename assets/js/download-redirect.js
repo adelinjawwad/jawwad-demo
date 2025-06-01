@@ -12,7 +12,6 @@
     ".json", ".xml", ".csv", ".txt"
   ];
 
-  // Verifică dacă linkul este din folderul downloads și are extensie validă
   function isDownloadLink(href) {
     if (!href.startsWith(DOWNLOAD_FOLDER)) return false;
 
@@ -20,7 +19,6 @@
     return DOWNLOAD_EXTENSIONS.some(ext => lowerHref.endsWith(ext));
   }
 
-  // Extrage numele fișierului din URL
   function extractFileName(url) {
     try {
       const urlObj = new URL(url);
@@ -30,14 +28,12 @@
     }
   }
 
-  // Redirect la pagina de download
   function redirectToDownloadPage(url) {
     const fileName = extractFileName(url);
     const targetUrl = `${DOWNLOAD_PAGE_URL}?file=${encodeURIComponent(fileName)}&source=${encodeURIComponent(url)}`;
     window.location.href = targetUrl;
   }
 
-  // Procesarea tuturor linkurilor din pagină
   function processLinks() {
     const links = document.querySelectorAll("a[href]");
     links.forEach(link => {
@@ -48,7 +44,10 @@
       if (isDownloadLink(href)) {
         link.dataset.downloadProcessed = "true";
 
-        // Adaugă iconiță dacă nu există deja
+        if (link.hasAttribute('download')) {
+          link.removeAttribute('download');
+        }
+
         if (!link.querySelector(".download-indicator")) {
           const indicator = document.createElement("i");
           indicator.className = "fas fa-download download-indicator";
@@ -58,21 +57,18 @@
           link.appendChild(indicator);
         }
 
-        // Previne descărcarea directă și face redirect
         link.addEventListener("click", e => {
           e.preventDefault();
+          e.stopImmediatePropagation();
           redirectToDownloadPage(href);
         });
       }
     });
   }
 
-  // Pornim procesarea când DOM-ul e gata
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", processLinks);
   } else {
     processLinks();
   }
-
-  // Opțional: dacă se adaugă linkuri noi dinamic, poți activa MutationObserver
 })();
