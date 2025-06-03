@@ -10,19 +10,19 @@ const finalSound = document.getElementById("finalSound");
 
 // Romantic messages that change during loading
 const romanticMessages = [{
-		main: "Pregătesc ceva special pentru tine...",
-		sub: "Fiecare secundă merită așteptarea ♥"
+		main: "Mai am puţin şi sunt gata...",
+		sub: "O să fii surprinsă iubirea mea ♥"
 	},
 	{
 		main: "Adun toate momentele frumoase...",
 		sub: "Ca să-ți arăt cât de mult înseamnă pentru mine ♥"
 	},
 	{
-		main: "Împachetez dragostea mea...",
+		main: "Adaug şi dragostea mea...",
 		sub: "În fiecare pixel al acestei pagini ♥"
 	},
 	{
-		main: "Pregătesc surpriza ta...",
+		main: "Mă gândesc la mesaje speciale de dragoste...",
 		sub: "Pentru că meriți tot ce e mai frumos ♥"
 	},
 	{
@@ -265,7 +265,7 @@ const interval = setInterval(() => {
 		const subMessageElement = document.getElementById('sub-message');
 
 		if (messageElement && subMessageElement) {
-			messageElement.textContent = "Gata! Totul e pregătit pentru tine ♥";
+			messageElement.textContent = "Totul e pregătit pentru tine ♥";
 			subMessageElement.textContent = "Să începem această călătorie frumoasă...";
 		}
 
