@@ -1,8 +1,25 @@
 [
-    {
+  {
     "title": "Bartender",
+    "tags": [
+      "NPC",
+      "Animations"
+    ],
+    "description": "Bartender NPC with idle animations, plus additional custom animations available!",
     "img": "https://i.gyazo.com/e72c99ba1cc0598e47cf15079391a278.gif",
-    "full": "https://i.gyazo.com/e72c99ba1cc0598e47cf15079391a278.gif",
     "price": "3€"
+  },
+  {
+    "title": "Arena",
+    "tags": [
+      "No Icons",
+      "No MSM",
+      "Only Object",
+      "Only GR2",
+      "No Animations"
+    ],
+    "description": "This arena is a .gr2 file ready for mappers to include in their work.",
+    "img": "/assets/img/arena_1.jpg",
+    "price": "5€"
   }
 ]

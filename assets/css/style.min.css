@@ -2440,3 +2440,113 @@ aside a.active {
 	min-width: 28px;
 	text-align: center;
 }
+
+/* Tag system styles */
+.item-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	margin: 0.5rem 0;
+}
+
+.item-tag {
+	background: linear-gradient(135deg, rgba(236, 72, 153, 0.8), rgba(99, 102, 241, 0.8));
+	color: white;
+	padding: 0.125rem 0.5rem;
+	border-radius: 12px;
+	font-size: 0.625rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.item-tag.premium {
+	background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.item-tag.npc {
+	background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.item-tag.weapons {
+	background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.item-tag.no-icons {
+	background: linear-gradient(135deg, #6b7280, #4b5563);
+}
+
+/* Enhanced description display */
+.item-description {
+	color: #d1d5db;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	margin: 0.5rem 0;
+	padding: 0.5rem;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	border-left: 3px solid var(--accent-primary, #ec4899);
+}
+
+/* Smart thumbnail improvements */
+.asset-card-media {
+	width: 100%;
+	height: 400px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 12px;
+	transition: transform 0.3s ease;
+	background: #374151;
+}
+
+.item-tag.positive {
+	background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.item-tag.negative {
+	background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.item-tag.full-set {
+	background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.item-tag.costume {
+	background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.item-tag.hairstyle {
+	background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.item-tag.weapon {
+	background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.item-tag.pet {
+	background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.item-tag.mount {
+	background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.item-tag.npc {
+	background: linear-gradient(135deg, #14b8a6, #0d9488);
+}
+
+.item-tag.animations {
+	background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.item-tag.no-icons,
+.item-tag.no-msm,
+.item-tag.only-object,
+.item-tag.only-gr2,
+.item-tag.no-animations {
+	background: linear-gradient(135deg, #ef4444, #dc2626);
+}
