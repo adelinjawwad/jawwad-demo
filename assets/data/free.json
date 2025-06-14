@@ -1,59 +1,89 @@
 [
   {
     "title": "Antaras",
+    "tags": [
+      "Weapon",
+      "No Icons"
+    ],
     "img": "assets/img/antaras_weapons.jpg",
-    "full": "assets/img/antaras_weapons.jpg",
     "download": "assets/downloads/antaras_weapons.rar"
   },
   {
     "title": "Dynasty",
+    "tags": [
+      "Weapon",
+      "No Icons"
+    ],
     "img": "assets/img/dynasty_weapons.jpg",
-    "full": "assets/img/dynasty_weapons.jpg",
     "download": "assets/downloads/dynasty_weapons.rar",
     "extra": "jawwad@wk"
   },
   {
     "title": "Silver Hunter",
+    "tags": [
+      "Weapon",
+      "No Icons"
+    ],
     "img": "assets/img/silver_hunter_weapons.jpg",
-    "full": "assets/img/silver_hunter_weapons.jpg",
     "download": "assets/downloads/silver_hunter_weapons.rar",
-    "preview": "https://vimeo.com/534330489",
-    "extra": ""
+    "preview": "https://vimeo.com/534330489"
   },
   {
     "title": "God Awakening",
+    "tags": [
+      "Weapon",
+      "No Icons"
+    ],
     "img": "assets/img/god_awakening_weapons.jpg",
-    "full": "assets/img/god_awakening_weapons.jpg",
     "download": "assets/downloads/god_awakening_weapons.rar"
   },
   {
     "title": "Dark Crystal",
+    "tags": [
+      "Weapon",
+      "No Icons"
+    ],
     "img": "assets/img/dark_crystal_weapons.jpg",
-    "full": "assets/img/dark_crystal_weapons.jpg",
     "download": "assets/downloads/dark_crystal_weapons.rar"
   },
   {
     "title": "Gift Metinstone - Stone 2",
+    "tags": [
+      "NPC",
+      "Animations",
+      "No MSM"
+    ],
     "img": "https://metin2.download/picture/Ivbfl6vgG06C4v94CCfYR5AcBg049qyv/.gif",
-    "full": "https://metin2.download/picture/Ivbfl6vgG06C4v94CCfYR5AcBg049qyv/.gif",
     "download": "https://mega.nz/file/Jn4EjACK#JXoTHdUkJQNeYxTd3Rb_D0SqInha7U3ZUXcEonk18BM"
   },
   {
     "title": "Dispenser Metinstone - Stone 1",
+    "tags": [
+      "NPC",
+      "Animations",
+      "No MSM"
+    ],
     "img": "https://metin2.download/picture/i2J14Fs2FT7N9vsQ6t31LX8wf4YU1MBq/.gif",
-    "full": "https://metin2.download/picture/i2J14Fs2FT7N9vsQ6t31LX8wf4YU1MBq/.gif",
     "download": "https://mega.nz/file/VyQXUbKQ#Nt6WrqDberF0rHAfKT_8z3UJZbWP5IQDjLXR7lHfSL0"
   },
   {
     "title": "General Store talking on phone",
+    "tags": [
+      "NPC",
+      "Animations",
+      "No MSM"
+    ],
     "img": "https://metin2.download/picture/1kiDT945r1Acb4vTpn7e51U6yy77EGd7/.png",
-    "full": "https://metin2.download/picture/1kiDT945r1Acb4vTpn7e51U6yy77EGd7/.png",
     "download": "https://mega.nz/file/xi41XTgC#3e0WQtA_eQTLpzcevg7kSVzs6TQ7f55nWlTtm66xmhw"
   },
   {
     "title": "Chest - 01",
+    "tags": [
+      "NPC",
+      "Animations",
+      "No MSM"
+    ],
     "img": "https://metin2.download/picture/07Tzg21fAFcvhD5CgVZVz75Np3Yf1FVu/.gif",
-    "full": "https://metin2.download/picture/07Tzg21fAFcvhD5CgVZVz75Np3Yf1FVu/.gif",
     "download": "https://mega.nz/file/MuB0QCLC#1u-jkDu8Tkg7mr1_S1H7ieQVdi9et5GfEl-CTv-7arg",
     "extra": "jaw"
   }

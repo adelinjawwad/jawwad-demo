@@ -2473,7 +2473,7 @@ aside a.active {
 }
 
 .item-tag.weapons {
-	background: linear-gradient(135deg, #ef4444, #dc2626);
+	background: linear-gradient(135deg, #a244ef, #a226dc);
 }
 
 .item-tag.no-icons {
@@ -2524,7 +2524,7 @@ aside a.active {
 }
 
 .item-tag.weapon {
-	background: linear-gradient(135deg, #ef4444, #dc2626);
+	background: linear-gradient(135deg, #6944ef, #2629dc);
 }
 
 .item-tag.pet {
