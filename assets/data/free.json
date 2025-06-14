@@ -86,5 +86,14 @@
     "img": "https://metin2.download/picture/07Tzg21fAFcvhD5CgVZVz75Np3Yf1FVu/.gif",
     "download": "https://mega.nz/file/MuB0QCLC#1u-jkDu8Tkg7mr1_S1H7ieQVdi9et5GfEl-CTv-7arg",
     "extra": "jaw"
+  },
+  {
+    "title": "Azrael Weapons",
+    "tags": [
+      "Full Set",
+      "No Icons"
+    ],
+    "img": "assets/img/azrael_weapons.png",
+    "download": "assets/downloads/azrael_weapons.rar"
   }
 ]
