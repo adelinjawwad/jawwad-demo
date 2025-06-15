@@ -465,7 +465,7 @@ body {
 .sidebar-toggle {
   position: absolute;
   top: 1rem;
-  right: -20px;
+  right: 14px;
   width: 40px;
   height: 40px;
   background: var(--admin-primary);
