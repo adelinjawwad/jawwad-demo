@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Payment Portal</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Jawwad ART</title>
+		<meta name="description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
+		<meta name="theme-color" content="#000000">
+		<meta property="og:title" content="Jawwad ART - High Quality Assets">
+		<meta property="og:description" content="Discover free and premium assets for your projects — costumes, hairstyles, weapons and more. Jawwad ART.">
+		<meta property="og:image" content="https://jawwad.site/assets/img/site_preview.png">
+		<meta property="og:url" content="https://jawwad.site/">
+		<meta property="og:type" content="website">
+        		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/ico/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/svg+xml" href="assets/ico/favicon.svg">
+		<link rel="shortcut icon" href="assets/ico/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -71,13 +83,170 @@
             -ms-user-select: text;
         }
 
-        /* Simple Discord Styles */
-        .discord-card {
-            transition: all 0.3s ease;
+        /* Enhanced Discord UI Styles */
+        .discord-container {
+            background: #36393f;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
         }
-        .discord-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(88, 101, 242, 0.4);
+        .discord-header {
+            background: #2f3136;
+            border-bottom: 1px solid #202225;
+            padding: 12px 16px;
+        }
+        .discord-chat-area {
+            background: #36393f;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .discord-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        .discord-input-area {
+            padding: 16px;
+            background: #36393f;
+            border-top: 1px solid #40444b;
+        }
+        .discord-input-wrapper {
+            background: #40444b;
+            border-radius: 8px;
+            padding: 11px 16px;
+            display: flex;
+            align-items: center;
+        }
+        .discord-input {
+            background: transparent;
+            border: none;
+            color: #dcddde;
+            flex: 1;
+            outline: none;
+            font-size: 14px;
+        }
+        .discord-input::placeholder {
+            color: #72767d;
+        }
+        .discord-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .discord-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .online-indicator {
+            width: 14px;
+            height: 14px;
+            background: #3ba55c;
+            border: 3px solid #2f3136;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+        }
+        .online-indicator-large {
+            width: 24px;
+            height: 24px;
+            background: #3ba55c;
+            border: 6px solid #2f3136;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+        }
+        .message-left {
+            background: #40444b;
+            color: #dcddde;
+            padding: 10px 16px;
+            border-radius: 18px 18px 18px 4px;
+            max-width: 80%;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        .message-right {
+            background: #5865f2;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 18px 18px 4px 18px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        .system-message {
+            text-align: center;
+            color: #72767d;
+            font-size: 14px;
+            margin: 16px 0;
+            font-weight: 500;
+        }
+        .typing-dots {
+            display: none;
+            color: #72767d;
+            font-style: italic;
+            font-size: 14px;
+            margin-bottom: 10px;
+            padding-left: 16px;
+        }
+        .typing-dots.show {
+            display: block;
+        }
+        .send-button {
+            background: #5865f2;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-left: 8px;
+        }
+        .send-button:hover {
+            background: #4752c4;
+        }
+        .send-button:disabled {
+            background: #4f545c;
+            cursor: not-allowed;
+        }
+        .note-box {
+            background: #faa61a;
+            background: linear-gradient(90deg, #faa61a 0%, #f57c00 100%);
+            border-radius: 4px;
+            padding: 12px;
+            margin: 16px;
+            color: #000;
+            font-weight: 500;
+        }
+        .username-copy {
+            background: #2f3136;
+            color: #faa61a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+        .discord-logo {
+            color: #5865f2;
+            font-size: 28px;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -102,7 +271,7 @@
         </div>
 
         <!-- Payment Options -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
             <!-- PayPal Option -->
             <div class="payment-option bg-gradient-to-br from-blue-900/50 to-blue-800/70 rounded-xl shadow-lg overflow-hidden border border-blue-500/30 hover:border-blue-400">
                 <div class="payment-header p-4 flex items-center rounded-t-xl bg-gradient-to-r from-blue-600 to-blue-500">
@@ -189,79 +358,95 @@
             </div>
         </div>
 
-        <!-- Clean Discord Contact Section -->
-        <div class="mt-8 bg-gray-800/40 backdrop-blur-sm rounded-xl shadow-lg p-6 max-w-4xl mx-auto border border-gray-700/50">
-            <h3 class="text-xl font-semibold text-gray-100 mb-6 flex items-center">
-                <i class="fab fa-discord text-indigo-400 mr-3 text-2xl"></i>
-                Discord Contact
-            </h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Personal Discord -->
-                <div class="discord-card bg-gray-700/30 p-4 rounded-lg border border-gray-600/50 hover:bg-gray-700/50 transition-all duration-300">
+        <!-- Enhanced Discord Interface -->
+        <div class="max-w-4xl mx-auto">
+            <div class="discord-container">
+                <!-- Discord Header -->
+                <div class="discord-header">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                            <div class="bg-indigo-600 p-2 rounded-lg mr-3">
-                                <i class="fab fa-discord text-white"></i>
+                            <div class="relative mr-3">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cd76037e46edc86805f75348f3fd7dc1.jpg-SYcSl7LE4rKCHCkWpRjH74T2aqRUbu.jpeg" alt="1.3afb" class="discord-avatar-large">
+                                <div class="online-indicator-large"></div>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-100">Personal</h4>
-                                <p class="text-indigo-300 font-mono text-sm">1.3afb</p>
+                                <h2 class="text-white text-xl font-semibold">1.3afb</h2>
+                                <div class="flex items-center mt-1">
+                                    <div class="w-3 h-3 bg-green-400 rounded-full mr-2"></div>
+                                    <span class="text-green-400 text-sm font-medium">Online</span>
+                                </div>
                             </div>
                         </div>
-                        <button onclick="copyToClipboard('1.3afb', this)" class="copy-button bg-gray-600/70 text-gray-300 p-2 rounded-md hover:bg-indigo-600 hover:text-white transition-all duration-300">
-                            <i class="far fa-copy"></i>
-                        </button>
+                        <i class="fab fa-discord discord-logo"></i>
                     </div>
                 </div>
 
-                <!-- Discord Server -->
-                <div class="discord-card bg-gray-700/30 p-4 rounded-lg border border-gray-600/50 hover:bg-gray-700/50 transition-all duration-300">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="bg-indigo-600 p-2 rounded-lg mr-3">
-                                <i class="fas fa-users text-white"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-gray-100">Server</h4>
-                                <a href="https://discord.gg/BBX8vfN4gQ" target="_blank" class="text-indigo-300 hover:text-indigo-200 text-sm transition-colors">
-                                    discord.gg/BBX8vfN4gQ
-                                </a>
-                            </div>
+                <!-- Chat Area -->
+                <div class="discord-chat-area">
+                    <div class="discord-messages" id="messages-container">
+                        <div class="system-message">
+                            This is the beginning of your direct message history with <strong>1.3afb</strong>
                         </div>
-                        <a href="https://discord.gg/BBX8vfN4gQ" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-md text-sm transition-colors">
-                            Join
-                        </a>
+                        
+                        <div class="message-left fade-in">
+                            Hey! 👋 Thanks for visiting my payment portal. If you need any help or have questions about payments, feel free to ask!
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                    
+                    <div class="typing-dots" id="typing-indicator">
+                        <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px; animation: bounce 1.4s infinite;"></i>
+                        <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px; animation: bounce 1.4s infinite 0.2s;"></i>
+                        <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px; animation: bounce 1.4s infinite 0.4s;"></i>
+                        <span style="margin-left: 8px;">1.3afb is typing...</span>
+                    </div>
 
-        <!-- Additional Info -->
-        <div class="mt-12 bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-8 max-w-4xl mx-auto border border-gray-700/50">
-            <h3 class="text-xl font-semibold text-gray-100 mb-4">Payment Instructions</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="flex items-start">
-                    <div class="bg-indigo-900 bg-opacity-30 p-3 rounded-full mr-4">
-                        <i class="fas fa-check-circle text-indigo-400"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-medium text-gray-300">Family & Friends Only</h4>
-                        <p class="text-gray-400 text-sm mt-1">Always select the personal payment option to avoid fees and ensure your payment is accepted.</p>
+                    <!-- Input Area -->
+                    <div class="discord-input-area">
+                        <div class="discord-input-wrapper">
+                            <input 
+                                type="text" 
+                                id="message-input"
+                                placeholder="Message @1.3afb" 
+                                class="discord-input"
+                                onkeypress="handleKeyPress(event)"
+                            >
+                            <button 
+                                onclick="sendMessage()" 
+                                class="send-button"
+                                id="send-button"
+                            >
+                                <i class="fas fa-paper-plane" style="font-size: 14px;"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="flex items-start">
-                    <div class="bg-green-900 bg-opacity-30 p-3 rounded-full mr-4">
-                        <i class="fas fa-shield-alt text-green-400"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-medium text-gray-300">Secure Transactions</h4>
-                        <p class="text-gray-400 text-sm mt-1">All payments are processed through secure, encrypted platforms.</p>
+
+                <!-- Note Box -->
+                <div class="note-box">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle mr-3 mt-1"></i>
+                        <div>
+                            <strong>Note:</strong> This is a demo interface. To actually message me:
+                            <br>
+                            1. Copy my username: <span class="username-copy">1.3afb</span>
+                            <button onclick="copyToClipboard('1.3afb', this)" class="ml-2 hover:opacity-80">
+                                <i class="far fa-copy"></i>
+                            </button>
+                            <br>
+                            2. Open Discord and send me a friend request or DM
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+    </style>
 
     <script>
         function copyToClipboard(text, button) {
@@ -304,17 +489,66 @@
         function showCopySuccess(button) {
             const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="fas fa-check"></i>';
-            button.classList.remove('text-purple-300', 'bg-gray-600', 'text-gray-300');
-            button.classList.add('text-white', 'bg-green-600');
             
             setTimeout(function() {
                 button.innerHTML = originalHTML;
-                button.classList.remove('text-white', 'bg-green-600');
-                if (button.classList.contains('copy-button')) {
-                    button.classList.add('text-purple-300', 'bg-gray-600');
-                } else {
-                    button.classList.add('text-gray-300', 'bg-gray-600');
-                }
+            }, 2000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+
+            // Add user message
+            const messagesContainer = document.getElementById('messages-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-right fade-in';
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+
+            // Clear input and disable button
+            input.value = '';
+            const sendButton = document.getElementById('send-button');
+            sendButton.disabled = true;
+
+            // Show typing indicator
+            const typingIndicator = document.getElementById('typing-indicator');
+            typingIndicator.classList.add('show');
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Simulate response after delay
+            setTimeout(() => {
+                typingIndicator.classList.remove('show');
+                
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'message-left fade-in';
+                
+                // Smart responses
+                const responses = [
+                    "Thanks for your message! To actually reach me, please add me on Discord: 1.3afb 😊",
+                    "Hey! This is just a demo. Copy my username (1.3afb) and message me on Discord directly! ✨",
+                    "I'd love to help! Since this is a demo interface, please find me on Discord at 1.3afb 🚀",
+                    "Great question! For real-time chat, add me on Discord: 1.3afb 💬"
+                ];
+                
+                responseDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
+                messagesContainer.appendChild(responseDiv);
+                
+                // Re-enable button
+                sendButton.disabled = false;
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 2000);
         }
 
