@@ -42,16 +42,92 @@
         .revolut-header {
             background: linear-gradient(90deg, #6d28d9 0%, #8b5cf6 100%);
         }
+        
+        /* Enhanced Warning Banner */
         .warning-banner {
-            animation: pulse 2s infinite;
-            background: linear-gradient(90deg, #991b1b 0%, #7f1d1d 100%);
-            border: none;
+            animation: warningPulse 3s ease-in-out infinite;
+            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 50%, #dc2626 100%);
+            border: 2px solid #ef4444;
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        
+        .warning-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: warningShine 4s ease-in-out infinite;
         }
+        
+        .warning-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+            animation: warningGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes warningPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7), 0 8px 32px rgba(239, 68, 68, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 15px rgba(239, 68, 68, 0), 0 12px 40px rgba(239, 68, 68, 0.4);
+                transform: scale(1.02);
+            }
+        }
+        
+        @keyframes warningShine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes warningGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .warning-icon {
+            animation: warningBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes warningBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(0deg); }
+            10% { transform: translateY(-3px) rotate(-5deg); }
+            30% { transform: translateY(-2px) rotate(5deg); }
+            40% { transform: translateY(-1px) rotate(-2deg); }
+            60% { transform: translateY(-1px) rotate(2deg); }
+        }
+        
+        .warning-text {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .highlight-text {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
@@ -168,8 +244,10 @@
             padding: 10px 16px;
             border-radius: 18px 18px 18px 4px;
             max-width: 80%;
+            width: fit-content;
             margin-bottom: 8px;
             word-wrap: break-word;
+            display: inline-block;
         }
         .message-right {
             background: #5865f2;
@@ -177,9 +255,21 @@
             padding: 10px 16px;
             border-radius: 18px 18px 4px 18px;
             max-width: 80%;
+            width: fit-content;
             margin-left: auto;
             margin-bottom: 8px;
             word-wrap: break-word;
+            display: inline-block;
+        }
+        .message-container-left {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 8px;
+        }
+        .message-container-right {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 8px;
         }
         .system-message {
             text-align: center;
@@ -253,62 +343,44 @@
 <body class="bg-gray-900 min-h-screen">
     <div class="container mx-auto px-4 py-8">
 
-        <!-- Warning Banner -->
-        <div class="warning-banner bg-gradient-to-r from-rose-900/80 to-rose-800/90 text-rose-50 p-6 mb-8 rounded-xl max-w-4xl mx-auto border border-rose-700/50 shadow-lg">
-            <div class="flex items-start">
-                <div class="flex-shrink-0 p-2 bg-white/10 rounded-full">
-                    <i class="fas fa-exclamation-circle text-rose-300 text-xl"></i>
+        <!-- Enhanced Warning Banner -->
+        <div class="warning-banner text-rose-50 p-8 mb-8 rounded-2xl max-w-4xl mx-auto shadow-2xl relative">
+            <div class="warning-text flex items-start">
+                <div class="flex-shrink-0 p-3 bg-white/20 rounded-full mr-4 warning-icon">
+                    <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl"></i>
                 </div>
-                <div class="ml-4">
-                    <h3 class="text-lg font-semibold tracking-tight">Payment Instructions</h3>
-                    <div class="mt-2 text-sm leading-relaxed">
-                        <p>• All payments must be sent as <span class="font-medium text-rose-100">"Family and Friends"</span></p>
-                        <p>• Business payments will be <span class="font-medium text-rose-100">automatically refused</span></p>
-                        <p>• No purchase protection should be selected</p>
+                <div>
+                    <h3 class="text-2xl font-bold tracking-tight mb-4 flex items-center">
+                        <i class="fas fa-shield-alt mr-3 text-yellow-300"></i>
+                        IMPORTANT Payment Instructions
+                    </h3>
+                    <div class="text-lg leading-relaxed space-y-3">
+                        <p class="flex items-center">
+                            <i class="fas fa-heart text-pink-400 mr-3"></i>
+                            All payments must be sent as <span class="highlight-text mx-2">"Family and Friends"</span>
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-ban text-red-400 mr-3"></i>
+                            Business payments will be <span class="highlight-text mx-2">automatically refused</span>
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-3"></i>
+                            No purchase protection should be selected
+                        </p>
+                    </div>
+                    <div class="mt-6 p-4 bg-yellow-500/20 rounded-lg border border-yellow-400/50">
+                        <p class="text-yellow-200 font-semibold flex items-center">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>
+                            Following these instructions ensures your payment is processed quickly!
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Payment Options -->
+        <!-- Payment Options - REVOLUT FIRST -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
-            <!-- PayPal Option -->
-            <div class="payment-option bg-gradient-to-br from-blue-900/50 to-blue-800/70 rounded-xl shadow-lg overflow-hidden border border-blue-500/30 hover:border-blue-400">
-                <div class="payment-header p-4 flex items-center rounded-t-xl bg-gradient-to-r from-blue-600 to-blue-500">
-                    <i class="fab fa-paypal text-white text-3xl mr-3"></i>
-                    <h2 class="text-white text-2xl font-bold">PayPal</h2>
-                </div>
-                <div class="p-6">
-                    <div class="mb-6">
-                        <p class="text-white mb-2">Send payment to:</p>
-                        <div class="bg-gray-700 p-4 rounded-lg flex items-center justify-between border border-gray-600 hover:border-purple-400 transition-all duration-300 group">
-                            <span class="font-mono text-lg text-gray-100 group-hover:text-white transition-colors duration-300 selectable-text">recordwanse@gmail.com</span>
-                            <button onclick="copyToClipboard('recordwanse@gmail.com', this)" class="copy-button bg-gray-600/70 text-purple-300 p-2 rounded-md hover:bg-purple-700 hover:text-white transition-all duration-300 group/copy">
-                                <i class="far fa-copy group-hover/copy:scale-110 transition-transform"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-blue-900/50 border-l-4 border-blue-400 p-4 rounded">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-info-circle text-yellow-500"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm text-yellow-300">
-                                    Remember to select <span class="font-bold">"Sending to a friend"</span> option when making the payment.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <a href="https://www.paypal.com" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300">
-                            Go to PayPal <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Revolut Option -->
+            <!-- Revolut Option - NOW FIRST -->
             <div class="payment-option bg-gradient-to-br from-purple-900/60 to-purple-800/80 rounded-xl overflow-hidden border border-purple-500/40 hover:border-purple-300 float-animation">
                 <div class="background-pattern bg-[url('https://www.transparenttextures.com/patterns/dark-stripes.png')]"></div>
                 <div class="revolut-header p-4 flex items-center rounded-t-xl bg-gradient-to-r from-purple-600 to-purple-800 relative">
@@ -356,6 +428,42 @@
                     </div>
                 </div>
             </div>
+
+            <!-- PayPal Option - NOW SECOND -->
+            <div class="payment-option bg-gradient-to-br from-blue-900/50 to-blue-800/70 rounded-xl shadow-lg overflow-hidden border border-blue-500/30 hover:border-blue-400">
+                <div class="payment-header p-4 flex items-center rounded-t-xl bg-gradient-to-r from-blue-600 to-blue-500">
+                    <i class="fab fa-paypal text-white text-3xl mr-3"></i>
+                    <h2 class="text-white text-2xl font-bold">PayPal</h2>
+                </div>
+                <div class="p-6">
+                    <div class="mb-6">
+                        <p class="text-white mb-2">Send payment to:</p>
+<div class="bg-gray-700 p-4 rounded-lg flex items-center justify-between border border-gray-600 hover:border-blue-400 transition-all duration-300 group">
+                            <span class="font-mono text-lg text-gray-100 group-hover:text-white transition-colors duration-300 selectable-text">recordwanse@gmail.com</span>
+                            <button onclick="copyToClipboard('recordwanse@gmail.com', this)" class="copy-button bg-gray-600/70 text-blue-300 p-2 rounded-md hover:bg-blue-700 hover:text-white transition-all duration-300 group/copy">
+                                <i class="far fa-copy group-hover/copy:scale-110 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-blue-900/50 border-l-4 border-blue-400 p-4 rounded">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-yellow-500"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-yellow-300">
+                                    Remember to select <span class="font-bold">"Sending to a friend"</span> option when making the payment.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <a href="https://www.paypal.com" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300">
+                            Go to PayPal <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Enhanced Discord Interface -->
@@ -388,8 +496,10 @@
                             This is the beginning of your direct message history with <strong>1.3afb</strong>
                         </div>
                         
-                        <div class="message-left fade-in">
-                            Hey! 👋 Thanks for visiting my payment portal. If you need any help or have questions about payments, feel free to ask!
+                        <div class="message-container-left">
+                            <div class="message-left fade-in">
+                                Hey! 👋 Thanks for visiting my payment portal. If you need any help or have questions about payments, feel free to ask!
+                            </div>
                         </div>
                     </div>
                     
@@ -507,12 +617,17 @@
             
             if (message === '') return;
 
-            // Add user message
+            // Add user message with container
             const messagesContainer = document.getElementById('messages-container');
+            const messageContainer = document.createElement('div');
+            messageContainer.className = 'message-container-right';
+            
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message-right fade-in';
             messageDiv.textContent = message;
-            messagesContainer.appendChild(messageDiv);
+            
+            messageContainer.appendChild(messageDiv);
+            messagesContainer.appendChild(messageContainer);
 
             // Clear input and disable button
             input.value = '';
@@ -530,6 +645,9 @@
             setTimeout(() => {
                 typingIndicator.classList.remove('show');
                 
+                const responseContainer = document.createElement('div');
+                responseContainer.className = 'message-container-left';
+                
                 const responseDiv = document.createElement('div');
                 responseDiv.className = 'message-left fade-in';
                 
@@ -542,7 +660,8 @@
                 ];
                 
                 responseDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
-                messagesContainer.appendChild(responseDiv);
+                responseContainer.appendChild(responseDiv);
+                messagesContainer.appendChild(responseContainer);
                 
                 // Re-enable button
                 sendButton.disabled = false;
