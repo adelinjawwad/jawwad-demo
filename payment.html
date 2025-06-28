@@ -19,40 +19,135 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .payment-option {
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-            position: relative;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            z-index: -2;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Page Transitions */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
             z-index: 1;
         }
-        .payment-option:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(199, 210, 254, 0.5);
+
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+            z-index: 2;
         }
-        .payment-header {
-            background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+
+        /* Landing Page Styles */
+        .hero-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
         }
-        .revolut-header {
-            background: linear-gradient(90deg, #6d28d9 0%, #8b5cf6 100%);
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite alternate;
         }
-        
-        /* Enhanced Warning Banner */
-        .warning-banner {
-            animation: warningPulse 3s ease-in-out infinite;
-            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 50%, #dc2626 100%);
-            border: 2px solid #ef4444;
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: #a0a0a0;
+            margin-bottom: 4rem;
+            max-width: 600px;
+        }
+
+        .payment-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .payment-btn {
             position: relative;
+            padding: 2.5rem 3rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+            backdrop-filter: blur(20px);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .warning-banner::before {
+
+        .payment-btn i {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .payment-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -60,506 +155,420 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: warningShine 4s ease-in-out infinite;
-        }
-        
-        .warning-banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
-            animation: warningGlow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes warningPulse {
-            0%, 100% { 
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7), 0 8px 32px rgba(239, 68, 68, 0.3);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 0 0 15px rgba(239, 68, 68, 0), 0 12px 40px rgba(239, 68, 68, 0.4);
-                transform: scale(1.02);
-            }
-        }
-        
-        @keyframes warningShine {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-        
-        @keyframes warningGlow {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
-        .warning-icon {
-            animation: warningBounce 2s ease-in-out infinite;
-        }
-        
-        @keyframes warningBounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(0deg); }
-            10% { transform: translateY(-3px) rotate(-5deg); }
-            30% { transform: translateY(-2px) rotate(5deg); }
-            40% { transform: translateY(-1px) rotate(-2deg); }
-            60% { transform: translateY(-1px) rotate(2deg); }
-        }
-        
-        .warning-text {
-            position: relative;
-            z-index: 10;
-        }
-        
-        .highlight-text {
-            background: linear-gradient(45deg, #fbbf24, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes textGlow {
-            0% { filter: brightness(1); }
-            100% { filter: brightness(1.2); }
+            transition: left 0.6s;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
-        }
-        .copy-button {
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-        }
-        .revolut-content {
-            position: relative;
-            z-index: 5;
-        }
-        .background-pattern {
-            position: absolute;
-            inset: 0;
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .selectable-text {
-            user-select: text;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
+        .payment-btn:hover::before {
+            left: 100%;
         }
 
-        /* Enhanced Discord UI Styles */
-        .discord-container {
-            background: #36393f;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+        .payment-btn:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
         }
-        .discord-header {
-            background: #2f3136;
-            border-bottom: 1px solid #202225;
-            padding: 12px 16px;
+
+        .revolut-btn {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            color: white;
         }
-        .discord-chat-area {
-            background: #36393f;
-            min-height: 500px;
+
+        .revolut-btn:hover {
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.5);
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .paypal-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            color: white;
+        }
+
+        .paypal-btn:hover {
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.5);
+            border-color: rgba(59, 130, 246, 0.6);
+        }
+
+        /* Payment Page Styles */
+        .payment-page {
+            padding: 2rem;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        .discord-messages {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            max-height: 400px;
-        }
-        .discord-input-area {
-            padding: 16px;
-            background: #36393f;
-            border-top: 1px solid #40444b;
-        }
-        .discord-input-wrapper {
-            background: #40444b;
-            border-radius: 8px;
-            padding: 11px 16px;
-            display: flex;
-            align-items: center;
-        }
-        .discord-input {
-            background: transparent;
-            border: none;
-            color: #dcddde;
-            flex: 1;
-            outline: none;
-            font-size: 14px;
-        }
-        .discord-input::placeholder {
-            color: #72767d;
-        }
-        .discord-avatar {
-            width: 40px;
-            height: 40px;
+
+        .back-btn {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            position: relative;
-        }
-        .discord-avatar-large {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            position: relative;
-        }
-        .online-indicator {
-            width: 14px;
-            height: 14px;
-            background: #3ba55c;
-            border: 3px solid #2f3136;
-            border-radius: 50%;
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-        }
-        .online-indicator-large {
-            width: 24px;
-            height: 24px;
-            background: #3ba55c;
-            border: 6px solid #2f3136;
-            border-radius: 50%;
-            position: absolute;
-            bottom: -3px;
-            right: -3px;
-        }
-        .message-left {
-            background: #40444b;
-            color: #dcddde;
-            padding: 10px 16px;
-            border-radius: 18px 18px 18px 4px;
-            max-width: 80%;
-            width: fit-content;
-            margin-bottom: 8px;
-            word-wrap: break-word;
-            display: inline-block;
-        }
-        .message-right {
-            background: #5865f2;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 18px 18px 4px 18px;
-            max-width: 80%;
-            width: fit-content;
-            margin-left: auto;
-            margin-bottom: 8px;
-            word-wrap: break-word;
-            display: inline-block;
-        }
-        .message-container-left {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 8px;
-        }
-        .message-container-right {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 8px;
-        }
-        .system-message {
-            text-align: center;
-            color: #72767d;
-            font-size: 14px;
-            margin: 16px 0;
-            font-weight: 500;
-        }
-        .typing-dots {
-            display: none;
-            color: #72767d;
-            font-style: italic;
-            font-size: 14px;
-            margin-bottom: 10px;
-            padding-left: 16px;
-        }
-        .typing-dots.show {
-            display: block;
-        }
-        .send-button {
-            background: #5865f2;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             cursor: pointer;
-            transition: background-color 0.2s;
-            margin-left: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            color: white;
+            font-size: 1.2rem;
         }
-        .send-button:hover {
-            background: #4752c4;
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
         }
-        .send-button:disabled {
-            background: #4f545c;
-            cursor: not-allowed;
+
+        .payment-content {
+            max-width: 500px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .note-box {
-            background: #faa61a;
-            background: linear-gradient(90deg, #faa61a 0%, #f57c00 100%);
-            border-radius: 4px;
-            padding: 12px;
-            margin: 16px;
-            color: #000;
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .payment-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .revolut-logo {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        }
+
+        .paypal-logo {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .payment-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-subtitle {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            margin-bottom: 2rem;
+            animation: cardSlideIn 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-info {
+            margin-bottom: 2rem;
+        }
+
+        .payment-label {
+            color: #a0a0a0;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
             font-weight: 500;
         }
-        .username-copy {
-            background: #2f3136;
-            color: #faa61a;
-            padding: 2px 6px;
-            border-radius: 3px;
+
+        .payment-value {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #a0a0a0;
+            font-size: 1rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .revolut-action {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            color: white;
+        }
+
+        .revolut-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .paypal-action {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .paypal-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            animation: warningPulse 3s ease-in-out infinite;
+            color: #000;
             font-weight: 600;
         }
-        .discord-logo {
-            color: #5865f2;
-            font-size: 28px;
+
+        @keyframes warningPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
         }
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .hero-container {
+                padding: 1rem;
+            }
+            
+            .payment-buttons {
+                max-width: 100%;
+            }
+            
+            .payment-btn {
+                padding: 2rem;
+                font-size: 1.3rem;
+                min-height: 100px;
+            }
+            
+            .payment-btn i {
+                font-size: 1.5rem;
+            }
+            
+            .payment-page {
+                padding: 1rem;
+            }
+            
+            .back-btn {
+                top: 1rem;
+                left: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+            
+            .payment-card {
+                padding: 2rem;
+            }
+            
+            .payment-logo {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            
+            .payment-title {
+                font-size: 2rem;
+            }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @media (min-width: 768px) {
+            .payment-buttons {
+                flex-direction: row;
+                max-width: 800px;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
+<body>
+    <div class="animated-bg"></div>
 
-        <!-- Enhanced Warning Banner -->
-        <div class="warning-banner text-rose-50 p-8 mb-8 rounded-2xl max-w-4xl mx-auto shadow-2xl relative">
-            <div class="warning-text flex items-start">
-                <div class="flex-shrink-0 p-3 bg-white/20 rounded-full mr-4 warning-icon">
-                    <i class="fas fa-exclamation-triangle text-yellow-300 text-2xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold tracking-tight mb-4 flex items-center">
-                        <i class="fas fa-shield-alt mr-3 text-yellow-300"></i>
-                        IMPORTANT Payment Instructions
-                    </h3>
-                    <div class="text-lg leading-relaxed space-y-3">
-                        <p class="flex items-center">
-                            <i class="fas fa-heart text-pink-400 mr-3"></i>
-                            All payments must be sent as <span class="highlight-text mx-2">"Family and Friends"</span>
-                        </p>
-                        <p class="flex items-center">
-                            <i class="fas fa-ban text-red-400 mr-3"></i>
-                            Business payments will be <span class="highlight-text mx-2">automatically refused</span>
-                        </p>
-                        <p class="flex items-center">
-                            <i class="fas fa-times-circle text-red-400 mr-3"></i>
-                            No purchase protection should be selected
-                        </p>
-                    </div>
-                    <div class="mt-6 p-4 bg-yellow-500/20 rounded-lg border border-yellow-400/50">
-                        <p class="text-yellow-200 font-semibold flex items-center">
-                            <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>
-                            Following these instructions ensures your payment is processed quickly!
-                        </p>
-                    </div>
-                </div>
+    <!-- Landing Page -->
+    <div id="landing" class="page active">
+        <div class="hero-container">
+            <h1 class="hero-title">Payment Portal</h1>
+            <p class="hero-subtitle">Choose your preferred payment method for fast and secure transactions</p>
+            
+            <div class="payment-buttons">
+                <button class="payment-btn revolut-btn" onclick="showPage('revolut')">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Revolut
+                </button>
+                <button class="payment-btn paypal-btn" onclick="showPage('paypal')">
+                    <i class="fab fa-paypal"></i>
+                    PayPal
+                </button>
             </div>
         </div>
+    </div>
 
-        <!-- Payment Options - REVOLUT FIRST -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
-            <!-- Revolut Option - NOW FIRST -->
-            <div class="payment-option bg-gradient-to-br from-purple-900/60 to-purple-800/80 rounded-xl overflow-hidden border border-purple-500/40 hover:border-purple-300 float-animation">
-                <div class="background-pattern bg-[url('https://www.transparenttextures.com/patterns/dark-stripes.png')]"></div>
-                <div class="revolut-header p-4 flex items-center rounded-t-xl bg-gradient-to-r from-purple-600 to-purple-800 relative">
-                    <div class="absolute right-4 top-4 opacity-20 pointer-events-none">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z" fill="white"/>
-                            <path d="M20 36C28.8366 36 36 28.8366 36 20C36 11.1634 28.8366 4 20 4C11.1634 4 4 11.1634 4 20C4 28.8366 11.1634 36 20 36Z" fill="#7C3AED"/>
-                        </svg>
+    <!-- Revolut Page -->
+    <div id="revolut" class="page">
+        <div class="payment-page">
+            <button class="back-btn" onclick="showPage('landing')">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <div class="payment-content">
+                <div class="payment-header">
+                    <div class="payment-logo revolut-logo">
+                        <i class="fas fa-money-bill-wave"></i>
                     </div>
-                    <i class="fas fa-money-bill-wave text-white text-3xl mr-3"></i>
-                    <h2 class="text-white text-2xl font-bold tracking-tight">Revolut</h2>
-                    <span class="ml-auto bg-white/20 text-xs font-semibold px-2 py-1 rounded-full text-white">RECOMMENDED</span>
-                </div>
-                <div class="revolut-content p-6">
-                    <div class="mb-6">
-                        <p class="text-white mb-2">Send payment to:</p>
-                        <div class="bg-gray-800/70 p-4 rounded-lg border border-gray-600 hover:border-purple-400 transition-all duration-300">
-                            <div class="flex items-center justify-between mb-2">
-                                <p class="font-mono text-lg text-gray-100 selectable-text">
-                                    Revolut ID: <span class="font-bold text-white">109manu</span>
-                                </p>
-                                <button onclick="copyToClipboard('109manu', this)" class="copy-button bg-gray-600/70 text-purple-300 p-2 rounded-md hover:bg-purple-700 hover:text-white transition-all duration-300">
-                                    <i class="far fa-copy"></i>
-                                </button>
-                            </div>
-                            <p class="text-sm text-gray-300">or use the direct link below</p>
-                        </div>
-                    </div>
-                    <div class="bg-purple-900/50 border-l-4 border-purple-400 p-4 rounded">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-bolt text-purple-400"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm text-white">
-                                    Instant transfers with no fees when using Revolut.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <a href="https://revolut.me/109manu" target="_blank" rel="noopener noreferrer" class="block w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300 hover:shadow-lg hover:shadow-purple-500/20 relative z-10">
-                            Pay with Revolut <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PayPal Option - NOW SECOND -->
-            <div class="payment-option bg-gradient-to-br from-blue-900/50 to-blue-800/70 rounded-xl shadow-lg overflow-hidden border border-blue-500/30 hover:border-blue-400">
-                <div class="payment-header p-4 flex items-center rounded-t-xl bg-gradient-to-r from-blue-600 to-blue-500">
-                    <i class="fab fa-paypal text-white text-3xl mr-3"></i>
-                    <h2 class="text-white text-2xl font-bold">PayPal</h2>
-                </div>
-                <div class="p-6">
-                    <div class="mb-6">
-                        <p class="text-white mb-2">Send payment to:</p>
-<div class="bg-gray-700 p-4 rounded-lg flex items-center justify-between border border-gray-600 hover:border-blue-400 transition-all duration-300 group">
-                            <span class="font-mono text-lg text-gray-100 group-hover:text-white transition-colors duration-300 selectable-text">recordwanse@gmail.com</span>
-                            <button onclick="copyToClipboard('recordwanse@gmail.com', this)" class="copy-button bg-gray-600/70 text-blue-300 p-2 rounded-md hover:bg-blue-700 hover:text-white transition-all duration-300 group/copy">
-                                <i class="far fa-copy group-hover/copy:scale-110 transition-transform"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-blue-900/50 border-l-4 border-blue-400 p-4 rounded">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-info-circle text-yellow-500"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm text-yellow-300">
-                                    Remember to select <span class="font-bold">"Sending to a friend"</span> option when making the payment.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <a href="https://www.paypal.com" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300">
-                            Go to PayPal <i class="fas fa-external-link-alt ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced Discord Interface -->
-        <div class="max-w-4xl mx-auto">
-            <div class="discord-container">
-                <!-- Discord Header -->
-                <div class="discord-header">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="relative mr-3">
-                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cd76037e46edc86805f75348f3fd7dc1.jpg-SYcSl7LE4rKCHCkWpRjH74T2aqRUbu.jpeg" alt="1.3afb" class="discord-avatar-large">
-                                <div class="online-indicator-large"></div>
-                            </div>
-                            <div>
-                                <h2 class="text-white text-xl font-semibold">1.3afb</h2>
-                                <div class="flex items-center mt-1">
-                                    <div class="w-3 h-3 bg-green-400 rounded-full mr-2"></div>
-                                    <span class="text-green-400 text-sm font-medium">Online</span>
-                                </div>
-                            </div>
-                        </div>
-                        <i class="fab fa-discord discord-logo"></i>
-                    </div>
+                    <h2 class="payment-title">Revolut Payment</h2>
+                    <p class="payment-subtitle">Fast, secure, and fee-free transfers</p>
                 </div>
 
-                <!-- Chat Area -->
-                <div class="discord-chat-area">
-                    <div class="discord-messages" id="messages-container">
-                        <div class="system-message">
-                            This is the beginning of your direct message history with <strong>1.3afb</strong>
-                        </div>
-                        
-                        <div class="message-container-left">
-                            <div class="message-left fade-in">
-                                Hey! 👋 Thanks for visiting my payment portal. If you need any help or have questions about payments, feel free to ask!
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="typing-dots" id="typing-indicator">
-                        <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px; animation: bounce 1.4s infinite;"></i>
-                        <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px; animation: bounce 1.4s infinite 0.2s;"></i>
-                        <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px; animation: bounce 1.4s infinite 0.4s;"></i>
-                        <span style="margin-left: 8px;">1.3afb is typing...</span>
-                    </div>
-
-                    <!-- Input Area -->
-                    <div class="discord-input-area">
-                        <div class="discord-input-wrapper">
-                            <input 
-                                type="text" 
-                                id="message-input"
-                                placeholder="Message @1.3afb" 
-                                class="discord-input"
-                                onkeypress="handleKeyPress(event)"
-                            >
-                            <button 
-                                onclick="sendMessage()" 
-                                class="send-button"
-                                id="send-button"
-                            >
-                                <i class="fas fa-paper-plane" style="font-size: 14px;"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Note Box -->
-                <div class="note-box">
-                    <div class="flex items-start">
-                        <i class="fas fa-info-circle mr-3 mt-1"></i>
-                        <div>
-                            <strong>Note:</strong> This is a demo interface. To actually message me:
-                            <br>
-                            1. Copy my username: <span class="username-copy">1.3afb</span>
-                            <button onclick="copyToClipboard('1.3afb', this)" class="ml-2 hover:opacity-80">
+                <div class="payment-card">
+                    <div class="payment-info">
+                        <div class="payment-label">Revolut ID</div>
+                        <div class="payment-value">
+                            <span>109manu</span>
+                            <button class="copy-btn" onclick="copyToClipboard('109manu', this)">
                                 <i class="far fa-copy"></i>
                             </button>
-                            <br>
-                            2. Open Discord and send me a friend request or DM
                         </div>
                     </div>
+
+                    <a href="https://revolut.me/109manu" target="_blank" class="action-btn revolut-action">
+                        <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
+                        Open Revolut
+                    </a>
+                </div>
+
+                <div style="text-align: center; font-size: 0.9rem; color: #666;">
+                    <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                    Secure payment powered by Revolut
                 </div>
             </div>
         </div>
     </div>
 
-    <style>
-        @keyframes bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
-        }
-    </style>
+    <!-- PayPal Page -->
+    <div id="paypal" class="page">
+        <div class="payment-page">
+            <button class="back-btn" onclick="showPage('landing')">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <div class="payment-content">
+                <div class="payment-header">
+                    <div class="payment-logo paypal-logo">
+                        <i class="fab fa-paypal"></i>
+                    </div>
+                    <h2 class="payment-title">PayPal Payment</h2>
+                    <p class="payment-subtitle">Trusted worldwide payment solution</p>
+                </div>
+
+                <div class="warning-box">
+                    <div style="display: flex; align-items: center;">
+                        <i class="fas fa-exclamation-triangle" style="margin-right: 12px; font-size: 1.2rem;"></i>
+                        <div>
+                            <strong>Important:</strong> Send as "Family & Friends" only
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-card">
+                    <div class="payment-info">
+                        <div class="payment-label">PayPal Email</div>
+                        <div class="payment-value">
+                            <span>recordwanse@gmail.com</span>
+                            <button class="copy-btn" onclick="copyToClipboard('recordwanse@gmail.com', this)">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <a href="https://www.paypal.com" target="_blank" class="action-btn paypal-action">
+                        <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
+                        Open PayPal
+                    </a>
+                </div>
+
+                <div style="text-align: center; font-size: 0.9rem; color: #666;">
+                    <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                    Secure payment powered by PayPal
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
+        function showPage(pageId) {
+            console.log('Switching to page:', pageId); // Debug log
+            
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page with small delay for smooth transition
+            setTimeout(() => {
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    console.log('Page activated:', pageId); // Debug log
+                } else {
+                    console.error('Page not found:', pageId); // Debug log
+                }
+            }, 150);
+        }
+
         function copyToClipboard(text, button) {
+            console.log('Copying to clipboard:', text); // Debug log
+            
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text).then(function() {
                     showCopySuccess(button);
@@ -586,8 +595,6 @@
                 const successful = document.execCommand('copy');
                 if (successful) {
                     showCopySuccess(button);
-                } else {
-                    console.error('Fallback copy failed');
                 }
             } catch (err) {
                 console.error('Fallback copy error: ', err);
@@ -599,88 +606,30 @@
         function showCopySuccess(button) {
             const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="fas fa-check"></i>';
+            button.style.color = '#10b981';
             
             setTimeout(function() {
                 button.innerHTML = originalHTML;
+                button.style.color = '';
             }, 2000);
         }
 
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('message-input');
-            const message = input.value.trim();
-            
-            if (message === '') return;
-
-            // Add user message with container
-            const messagesContainer = document.getElementById('messages-container');
-            const messageContainer = document.createElement('div');
-            messageContainer.className = 'message-container-right';
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message-right fade-in';
-            messageDiv.textContent = message;
-            
-            messageContainer.appendChild(messageDiv);
-            messagesContainer.appendChild(messageContainer);
-
-            // Clear input and disable button
-            input.value = '';
-            const sendButton = document.getElementById('send-button');
-            sendButton.disabled = true;
-
-            // Show typing indicator
-            const typingIndicator = document.getElementById('typing-indicator');
-            typingIndicator.classList.add('show');
-
-            // Scroll to bottom
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // Simulate response after delay
-            setTimeout(() => {
-                typingIndicator.classList.remove('show');
-                
-                const responseContainer = document.createElement('div');
-                responseContainer.className = 'message-container-left';
-                
-                const responseDiv = document.createElement('div');
-                responseDiv.className = 'message-left fade-in';
-                
-                // Smart responses
-                const responses = [
-                    "Thanks for your message! To actually reach me, please add me on Discord: 1.3afb 😊",
-                    "Hey! This is just a demo. Copy my username (1.3afb) and message me on Discord directly! ✨",
-                    "I'd love to help! Since this is a demo interface, please find me on Discord at 1.3afb 🚀",
-                    "Great question! For real-time chat, add me on Discord: 1.3afb 💬"
-                ];
-                
-                responseDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
-                responseContainer.appendChild(responseDiv);
-                messagesContainer.appendChild(responseContainer);
-                
-                // Re-enable button
-                sendButton.disabled = false;
-                
-                // Scroll to bottom
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }, 2000);
-        }
-
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const links = document.querySelectorAll('a[href]');
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.target === '_blank') {
-                        e.preventDefault();
-                        window.open(this.href, '_blank', 'noopener,noreferrer');
-                    }
-                });
-            });
+            console.log('Page loaded, initializing...'); // Debug log
+            
+            // Ensure landing page is active
+            showPage('landing');
+            
+            // Prevent zoom on double tap for mobile
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
         });
     </script>
 </body>

@@ -21,5 +21,14 @@
     "description": "This arena is a .gr2 file ready for mappers to include in their work.",
     "img": "/assets/img/arena_1.jpg",
     "price": "3€"
+  },
+  {
+    "title": "Rotation Animation",
+    "tags": [
+      "Animations"
+    ],
+    "description": "A pack of rotation (360°) of all characters male/female",
+    "img": "https://imgur.com/uIdzbXS.gif",
+    "price": "15€"
   }
 ]
