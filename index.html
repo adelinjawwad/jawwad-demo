@@ -141,7 +141,7 @@
 					<i class="fas fa-tools"></i>
 					<span>Tools</span>
 					</a>
-					<button class="mobile-nav-link" onclick="openContactModalAfterMenuClose(); closeMobileMenu();">
+					<button class="contact-btn" onclick="window.open('/payment.html', '_blank')">
 					<i class="fab fa-discord"></i>
 					<span>Contact</span>
 					</button>
@@ -166,37 +166,6 @@
 				<i class="fas fa-times"></i>
 				</button>
 				<img id="modal-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full size preview" loading="lazy" class="w-full max-h-[90vh] object-contain rounded-none">
-			</div>
-		</div>
-		<!-- Modal Structure -->
-		<div id="contactModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-			<div class="modal-content">
-				<span class="close-btn" onclick="closeContactModal()" aria-label="Close contact modal">&times;</span>
-				<h2 id="modalTitle">Contact & Payments</h2>
-				<p>Reach out to me through any of the following channels:</p>
-				<ul class="contact-list">
-					<li>
-						<span class="contact-icon"><i class="fab fa-discord"></i></span>
-						<a href="https://discord.gg/BBX8vfN4gQ" target="_blank" rel="noopener noreferrer">Server Discord</a>
-					</li>
-					<li>
-						<span class="contact-icon"><i class="fab fa-discord"></i></span>
-						<span>Personal Discord: <strong>1.3afb</strong></span>
-					</li>
-					<li>
-						<span class="contact-icon"><i class="fas fa-envelope"></i></span>
-						<a href="mailto:recordwanse@gmail.com">recordwanse@gmail.com</a>
-					</li>
-					<li>
-						<span class="contact-icon"><i class="fas fa-credit-card"></i></span>
-						<span>Revolut: <strong>109manu</strong></span>
-					</li>
-				</ul>
-				<hr style="margin: 24px 0; border-color: var(--glass-border);" />
-				<h3 style="color: var(--accent-primary); margin-bottom: 10px;">Payment Info</h3>
-				<p style="color: var(--text-secondary); font-size: 15px;">
-					I accept payments <strong>only</strong> via <span style="color: var(--accent-primary); font-weight: 700;">PayPal</span> or <span style="color: var(--accent-primary); font-weight: 700;">Revolut</span>. No other payment methods supported.
-				</p>
 			</div>
 		</div>
 		<!-- Footer -->
