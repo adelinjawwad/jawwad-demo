@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biologie Animală - Bacalaureat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-dna text-green-400 text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold text-white">Biologie Animală</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showPage('dashboard')" class="nav-btn">
+                        <i class="fas fa-chart-line mr-2"></i>Progres
+                    </button>
+                    <button onclick="showPage('lessons')" class="nav-btn">
+                        <i class="fas fa-book mr-2"></i>Lecții
+                    </button>
+                    <button onclick="showPage('quiz')" class="nav-btn">
+                        <i class="fas fa-question-circle mr-2"></i>Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard" class="page active">
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">
+                    <i class="fas fa-graduation-cap text-green-400 mr-3"></i>
+                    Dashboard Progres
+                </h2>
+                <p class="text-gray-300">Urmărește-ți progresul prin materia de biologie animală</p>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-book-open text-blue-400 mr-3"></i>
+                        Progres Lecții
+                    </h3>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Completate</span>
+                            <span id="lesson-progress-text">0/12</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-3">
+                            <div id="lesson-progress-bar" class="bg-blue-500 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-trophy text-yellow-400 mr-3"></i>
+                        Scor Quiz-uri
+                    </h3>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Scor mediu</span>
+                            <span id="quiz-average">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-3">
+                            <div id="quiz-progress-bar" class="bg-yellow-500 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid md:grid-cols-3 gap-4">
+                <button onclick="showPage('lessons')" class="action-card bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                    <i class="fas fa-play text-2xl mb-3"></i>
+                    <h3 class="font-semibold">Continuă Lecțiile</h3>
+                    <p class="text-sm opacity-90">Învață materia pas cu pas</p>
+                </button>
+
+                <button onclick="startQuiz()" class="action-card bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800">
+                    <i class="fas fa-brain text-2xl mb-3"></i>
+                    <h3 class="font-semibold">Quiz Rapid</h3>
+                    <p class="text-sm opacity-90">Testează-ți cunoștințele</p>
+                </button>
+
+                <button onclick="showStats()" class="action-card bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800">
+                    <i class="fas fa-chart-bar text-2xl mb-3"></i>
+                    <h3 class="font-semibold">Statistici</h3>
+                    <p class="text-sm opacity-90">Vezi progresul detaliat</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lessons Page -->
+    <div id="lessons" class="page">
+        <div class="max-w-4xl mx-auto p-6">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <i class="fas fa-book text-blue-400 mr-3"></i>
+                Lecții Biologie Animală
+            </h2>
+            
+            <div id="lessons-list" class="space-y-4">
+                <!-- Lessons will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Lesson Detail Page -->
+    <div id="lesson-detail" class="page">
+        <div class="max-w-4xl mx-auto p-6">
+            <button onclick="showPage('lessons')" class="mb-6 flex items-center text-blue-400 hover:text-blue-300">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Înapoi la lecții
+            </button>
+            <div id="lesson-content">
+                <!-- Lesson content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Page -->
+    <div id="quiz" class="page">
+        <div class="max-w-4xl mx-auto p-6">
+            <div id="quiz-start" class="text-center">
+                <h2 class="text-3xl font-bold mb-6">
+                    <i class="fas fa-brain text-green-400 mr-3"></i>
+                    Quiz Biologie Animală
+                </h2>
+                <p class="text-gray-300 mb-8">Testează-ți cunoștințele cu 30 de întrebări randomizate</p>
+                <button onclick="startQuiz()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+                    <i class="fas fa-play mr-3"></i>
+                    Începe Quiz-ul
+                </button>
+            </div>
+
+            <div id="quiz-content" class="hidden">
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-lg font-semibold">Întrebarea <span id="current-question">1</span> din 30</span>
+                        <span class="text-sm text-gray-400">Timp: <span id="quiz-timer">--:--</span></span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div id="quiz-progress" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 3.33%"></div>
+                    </div>
+                </div>
+
+                <div id="question-container" class="bg-gray-800 rounded-lg p-6 mb-6">
+                    <!-- Question content will be loaded here -->
+                </div>
+
+                <div id="quiz-navigation" class="flex justify-between">
+                    <button id="prev-btn" onclick="previousQuestion()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50" disabled>
+                        <i class="fas fa-chevron-left mr-2"></i>Anterior
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Următorul<i class="fas fa-chevron-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="quiz-results" class="hidden">
+                <!-- Quiz results will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
