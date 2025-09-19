@@ -6,157 +6,257 @@
     <title>Inventar Bar - Sistem de Gestionare</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .tab-button.active { background-color: #3b82f6; color: white; }
-        .badge-destructive { background-color: #ef4444; color: white; }
-        .badge-secondary { background-color: #6b7280; color: white; }
-        .badge-default { background-color: #e5e7eb; color: #374151; }
-        .text-destructive { color: #ef4444; }
-        .border-destructive { border-color: #ef4444; }
-        .bg-destructive { background-color: #ef4444; }
-        .hover\:bg-destructive:hover { background-color: #dc2626; }
+        /* Dark theme with improved colors */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #262626;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --border: #404040;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #111111 100%);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-card);
+        }
+        
+        .input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 100%;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        
+        .badge-ok { background: var(--success); color: white; }
+        .badge-low { background: var(--warning); color: white; }
+        .badge-critical { background: var(--danger); color: white; }
+        
+        .tab-active {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .tab-inactive {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+        
+        /* PDF export styles */
+        @media print {
+            body { background: white !important; color: black !important; }
+            .card { background: white !important; border: 1px solid #ccc !important; }
+            .no-print { display: none !important; }
+        }
+        
+        .pdf-export {
+            background: white;
+            color: black;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .pdf-export .card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            z-index: 50;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
     </style>
 </head>
-<body class="min-h-screen bg-gray-50">
-    <div class="max-w-7xl mx-auto p-4">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2">Inventar Bar</h1>
-            <p class="text-gray-600">Sistem automat de gestionare stoc și vânzări</p>
-        </div>
-
-        <!-- Tabs Navigation -->
-        <div class="mb-6">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-2 bg-gray-100 p-1 rounded-lg">
-                <button class="tab-button active px-4 py-2 rounded-md font-medium transition-colors" data-tab="dashboard">Dashboard</button>
-                <button class="tab-button px-4 py-2 rounded-md font-medium transition-colors" data-tab="inventory">Inventar</button>
-                <button class="tab-button px-4 py-2 rounded-md font-medium transition-colors" data-tab="sales">Vânzări</button>
-                <button class="tab-button px-4 py-2 rounded-md font-medium transition-colors" data-tab="entries">Intrări marfă</button>
-                <button class="tab-button px-4 py-2 rounded-md font-medium transition-colors" data-tab="reports">Rapoarte</button>
-            </div>
-        </div>
-
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content active">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                <div class="bg-white p-6 rounded-lg shadow-sm border">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-sm font-medium text-gray-600">Venituri totale</h3>
-                        <span class="text-gray-400">💰</span>
-                    </div>
-                    <div class="text-2xl font-bold text-gray-900" id="totalRevenue">0 lei</div>
-                    <p class="text-xs text-gray-500">din vânzări</p>
+<body class="min-h-screen">
+    <div class="sticky-header p-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-2xl sm:text-4xl font-bold">Inventar Bar</h1>
+                    <p class="text-sm sm:text-base" style="color: var(--text-muted)">Sistem automat de gestionare stoc</p>
                 </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm border">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-sm font-medium text-gray-600">Produse în stoc</h3>
-                        <span class="text-gray-400">📦</span>
-                    </div>
-                    <div class="text-2xl font-bold text-gray-900" id="totalProducts">0</div>
-                    <p class="text-xs text-gray-500">bucăți totale</p>
+                <div class="flex gap-2 flex-wrap">
+                    <!-- Added new week button and PDF export -->
+                    <button onclick="newWeek()" class="btn-primary text-sm">
+                        📅 Săptămână nouă
+                    </button>
+                    <button onclick="exportToPDF()" class="btn-secondary text-sm">
+                        📄 Export PDF
+                    </button>
+                    <button onclick="viewHistory()" class="btn-secondary text-sm">
+                        📊 Istoric
+                    </button>
                 </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm border">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-sm font-medium text-gray-600">Produse vândute</h3>
-                        <span class="text-gray-400">📈</span>
-                    </div>
-                    <div class="text-2xl font-bold text-gray-900" id="totalSold">0</div>
-                    <p class="text-xs text-gray-500">bucăți vândute</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm border">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-sm font-medium text-gray-600">Stoc scăzut</h3>
-                        <span class="text-gray-400">⚠️</span>
-                    </div>
-                    <div class="text-2xl font-bold text-red-600" id="lowStockCount">0</div>
-                    <p class="text-xs text-gray-500">produse critice</p>
-                </div>
-            </div>
-
-            <!-- Low Stock Alerts -->
-            <div id="lowStockAlerts" class="bg-white rounded-lg shadow-sm border p-6 hidden">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="text-red-500">⚠️</span>
-                    <h3 class="text-lg font-semibold">Alerte stoc scăzut</h3>
-                </div>
-                <p class="text-gray-600 mb-4">Produsele următoare necesită reaprovizionare</p>
-                <div id="lowStockList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-            </div>
-
-            <!-- Export Button -->
-            <div class="mt-6">
-                <button id="exportPDF" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                    📄 Exportă PDF
-                </button>
-            </div>
-        </div>
-
-        <!-- Inventory Tab -->
-        <div id="inventory" class="tab-content">
-            <div class="bg-white rounded-lg shadow-sm border p-6">
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold mb-2">Gestionare inventar</h3>
-                    <p class="text-gray-600">Actualizează stocurile inițiale și finale</p>
-                </div>
-                <div id="inventoryList" class="space-y-6"></div>
-            </div>
-        </div>
-
-        <!-- Sales Tab -->
-        <div id="sales" class="tab-content">
-            <div class="bg-white rounded-lg shadow-sm border p-6">
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold mb-2">Înregistrare vânzări</h3>
-                    <p class="text-gray-600">Marchează produsele vândute pentru actualizarea automată a stocului</p>
-                </div>
-                <div id="salesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-            </div>
-        </div>
-
-        <!-- Stock Entries Tab -->
-        <div id="entries" class="tab-content">
-            <div class="bg-white rounded-lg shadow-sm border p-6">
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold mb-2">Intrări marfă</h3>
-                    <p class="text-gray-600">Adaugă marfă nouă în stoc</p>
-                </div>
-                <div id="entriesList" class="space-y-6"></div>
-            </div>
-        </div>
-
-        <!-- Reports Tab -->
-        <div id="reports" class="tab-content">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white rounded-lg shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold mb-4">Raport vânzări pe categorii</h3>
-                    <div id="categoryReport" class="space-y-4"></div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-sm border p-6">
-                    <h3 class="text-lg font-semibold mb-4">Top produse vândute</h3>
-                    <div id="topProducts" class="space-y-3"></div>
-                </div>
-            </div>
-
-            <!-- History Section -->
-            <div class="bg-white rounded-lg shadow-sm border p-6 mt-6">
-                <h3 class="text-lg font-semibold mb-4">Istoric modificări</h3>
-                <div id="historyList" class="space-y-2 max-h-96 overflow-y-auto"></div>
-                <button id="clearHistory" class="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                    Șterge istoric
-                </button>
             </div>
         </div>
     </div>
 
+    <div class="max-w-7xl mx-auto p-4">
+        <!-- Removed sales tab, kept only dashboard, inventory, and reports -->
+        <div class="mb-6">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="setActiveTab('dashboard')" id="tab-dashboard" class="px-4 py-2 rounded-lg text-sm font-medium tab-active">
+                    Dashboard
+                </button>
+                <button onclick="setActiveTab('inventory')" id="tab-inventory" class="px-4 py-2 rounded-lg text-sm font-medium tab-inactive">
+                    Inventar
+                </button>
+                <button onclick="setActiveTab('reports')" id="tab-reports" class="px-4 py-2 rounded-lg text-sm font-medium tab-inactive">
+                    Rapoarte
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="content-dashboard" class="tab-content">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="card p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium" style="color: var(--text-secondary)">Venituri totale</h3>
+                        <span class="text-xl">💰</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold" id="total-revenue">0 lei</div>
+                    <p class="text-xs" style="color: var(--text-muted)">din vânzări</p>
+                </div>
+
+                <div class="card p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium" style="color: var(--text-secondary)">Produse în stoc</h3>
+                        <span class="text-xl">📦</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold" id="total-products">0</div>
+                    <p class="text-xs" style="color: var(--text-muted)">bucăți totale</p>
+                </div>
+
+                <div class="card p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium" style="color: var(--text-secondary)">Produse vândute</h3>
+                        <span class="text-xl">📈</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold" id="total-sold">0</div>
+                    <p class="text-xs" style="color: var(--text-muted)">bucăți vândute</p>
+                </div>
+
+                <div class="card p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium" style="color: var(--text-secondary)">Stoc scăzut</h3>
+                        <span class="text-xl">⚠️</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold" style="color: var(--danger)" id="low-stock">0</div>
+                    <p class="text-xs" style="color: var(--text-muted)">produse critice</p>
+                </div>
+            </div>
+
+            <div id="low-stock-alerts" class="card p-4 mb-6" style="display: none;">
+                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    ⚠️ Alerte stoc scăzut
+                </h3>
+                <div id="low-stock-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div id="content-inventory" class="tab-content" style="display: none;">
+            <div class="card p-4 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Intrări marfă</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                    <button onclick="quickAddStock(5)" class="btn-secondary text-sm">+5 toate</button>
+                    <button onclick="quickAddStock(10)" class="btn-secondary text-sm">+10 toate</button>
+                    <button onclick="quickAddStock(20)" class="btn-secondary text-sm">+20 toate</button>
+                    <button onclick="customAddStock()" class="btn-primary text-sm">Custom</button>
+                </div>
+            </div>
+
+            <div id="inventory-categories"></div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="content-reports" class="tab-content" style="display: none;">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="card p-4">
+                    <h3 class="text-lg font-semibold mb-4">Raport vânzări pe categorii</h3>
+                    <div id="category-report"></div>
+                </div>
+
+                <div class="card p-4">
+                    <h3 class="text-lg font-semibold mb-4">Top produse vândute</h3>
+                    <div id="top-products"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" style="display: none; z-index: 100;">
+        <div class="card p-6 max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold">Istoric săptămâni</h3>
+                <button onclick="closeHistory()" class="btn-secondary">✕</button>
+            </div>
+            <div id="history-content"></div>
+        </div>
+    </div>
+
     <script>
-        // Initial products data
-        const initialProducts = [
+        let products = [
             { id: "1", name: "Fanta struguri", initialStock: 21, currentStock: 21, price: 9, sold: 0, category: "bauturi_racoritoare" },
             { id: "2", name: "Cola zero", initialStock: 46, currentStock: 46, price: 9, sold: 0, category: "bauturi_racoritoare" },
             { id: "3", name: "Schw. bitter", initialStock: 33, currentStock: 33, price: 9, sold: 0, category: "bauturi_racoritoare" },
@@ -181,99 +281,281 @@
             { id: "22", name: "Figa", initialStock: 9, currentStock: 9, price: 11, sold: 0, category: "energizante" }
         ];
 
-        let products = [];
-        let history = [];
-
-        // Category names
-        const categoryNames = {
-            bauturi_racoritoare: "Băuturi răcoritoare",
-            bere: "Bere",
-            energizante: "Energizante",
-            apa: "Apă"
-        };
+        let activeTab = 'dashboard';
+        let weeklyHistory = [];
 
         // Load data from localStorage
         function loadData() {
             const savedProducts = localStorage.getItem('barInventory');
-            const savedHistory = localStorage.getItem('barHistory');
+            const savedHistory = localStorage.getItem('barInventoryHistory');
             
             if (savedProducts) {
                 products = JSON.parse(savedProducts);
-            } else {
-                products = [...initialProducts];
             }
             
             if (savedHistory) {
-                history = JSON.parse(savedHistory);
+                weeklyHistory = JSON.parse(savedHistory);
             }
         }
 
         // Save data to localStorage
         function saveData() {
             localStorage.setItem('barInventory', JSON.stringify(products));
-            localStorage.setItem('barHistory', JSON.stringify(history));
+            localStorage.setItem('barInventoryHistory', JSON.stringify(weeklyHistory));
         }
 
-        // Add to history
-        function addToHistory(action, productName, details) {
-            const timestamp = new Date().toLocaleString('ro-RO');
-            history.unshift({
-                timestamp,
-                action,
-                productName,
-                details
+        function newWeek() {
+            if (confirm('Ești sigur că vrei să începi o săptămână nouă? Datele curente vor fi arhivate.')) {
+                // Archive current week
+                const currentWeek = {
+                    weekStart: getWeekStart(new Date()),
+                    weekEnd: new Date().toISOString().split('T')[0],
+                    products: JSON.parse(JSON.stringify(products)),
+                    totalRevenue: products.reduce((sum, p) => sum + p.sold * p.price, 0),
+                    totalSold: products.reduce((sum, p) => sum + p.sold, 0)
+                };
+                
+                weeklyHistory.unshift(currentWeek);
+                
+                // Keep only last 12 weeks
+                if (weeklyHistory.length > 12) {
+                    weeklyHistory = weeklyHistory.slice(0, 12);
+                }
+                
+                // Reset current week - keep current stock as initial stock, reset sold
+                products = products.map(p => ({
+                    ...p,
+                    initialStock: p.currentStock,
+                    sold: 0
+                }));
+                
+                saveData();
+                updateDisplay();
+                alert('Săptămână nouă începută! Datele anterioare au fost arhivate.');
+            }
+        }
+
+        function getWeekStart(date) {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day; // Sunday is 0
+            return new Date(d.setDate(diff)).toISOString().split('T')[0];
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            
+            // Header
+            pdf.setFontSize(20);
+            pdf.text('Raport Inventar Bar', 20, 20);
+            
+            pdf.setFontSize(12);
+            pdf.text(`Data: ${new Date().toLocaleDateString('ro-RO')}`, 20, 30);
+            
+            // Statistics
+            const totalRevenue = products.reduce((sum, p) => sum + p.sold * p.price, 0);
+            const totalProducts = products.reduce((sum, p) => sum + p.currentStock, 0);
+            const totalSold = products.reduce((sum, p) => sum + p.sold, 0);
+            
+            pdf.text(`Venituri totale: ${totalRevenue} lei`, 20, 45);
+            pdf.text(`Produse în stoc: ${totalProducts} bucăți`, 20, 55);
+            pdf.text(`Produse vândute: ${totalSold} bucăți`, 20, 65);
+            
+            // Products table
+            let y = 80;
+            pdf.setFontSize(14);
+            pdf.text('Inventar detaliat:', 20, y);
+            y += 10;
+            
+            pdf.setFontSize(10);
+            pdf.text('Produs', 20, y);
+            pdf.text('Stoc', 80, y);
+            pdf.text('Vândute', 110, y);
+            pdf.text('Venituri', 140, y);
+            pdf.text('Status', 170, y);
+            y += 5;
+            
+            // Draw line
+            pdf.line(20, y, 190, y);
+            y += 5;
+            
+            products.forEach(product => {
+                if (y > 270) {
+                    pdf.addPage();
+                    y = 20;
+                }
+                
+                const revenue = product.sold * product.price;
+                const status = product.currentStock <= 3 ? 'CRITIC' : 
+                              product.currentStock <= 5 ? 'SCĂZUT' : 'OK';
+                
+                pdf.text(product.name.substring(0, 20), 20, y);
+                pdf.text(product.currentStock.toString(), 80, y);
+                pdf.text(product.sold.toString(), 110, y);
+                pdf.text(`${revenue} lei`, 140, y);
+                pdf.text(status, 170, y);
+                y += 8;
             });
             
-            // Keep only last 100 entries
-            if (history.length > 100) {
-                history = history.slice(0, 100);
-            }
-            
-            saveData();
+            pdf.save(`inventar-bar-${new Date().toISOString().split('T')[0]}.pdf`);
         }
 
-        // Get stock status
-        function getStockStatus(stock) {
-            if (stock <= 3) return { color: 'destructive', text: 'Critic' };
-            if (stock <= 5) return { color: 'secondary', text: 'Scăzut' };
-            return { color: 'default', text: 'OK' };
-        }
-
-        // Update statistics
-        function updateStats() {
-            const totalRevenue = products.reduce((sum, product) => sum + (product.sold * product.price), 0);
-            const totalProducts = products.reduce((sum, product) => sum + product.currentStock, 0);
-            const totalSold = products.reduce((sum, product) => sum + product.sold, 0);
-            const lowStockProducts = products.filter(product => product.currentStock <= 5);
-
-            document.getElementById('totalRevenue').textContent = `${totalRevenue} lei`;
-            document.getElementById('totalProducts').textContent = totalProducts;
-            document.getElementById('totalSold').textContent = totalSold;
-            document.getElementById('lowStockCount').textContent = lowStockProducts.length;
-
-            // Update low stock alerts
-            const alertsContainer = document.getElementById('lowStockAlerts');
-            const alertsList = document.getElementById('lowStockList');
+        function viewHistory() {
+            const modal = document.getElementById('history-modal');
+            const content = document.getElementById('history-content');
             
-            if (lowStockProducts.length > 0) {
-                alertsContainer.classList.remove('hidden');
-                alertsList.innerHTML = lowStockProducts.map(product => `
-                    <div class="flex items-center justify-between p-3 border rounded-lg">
-                        <div>
-                            <p class="font-medium">${product.name}</p>
-                            <p class="text-sm text-gray-500">${categoryNames[product.category]}</p>
+            if (weeklyHistory.length === 0) {
+                content.innerHTML = '<p style="color: var(--text-muted)">Nu există istoric disponibil.</p>';
+            } else {
+                content.innerHTML = weeklyHistory.map((week, index) => `
+                    <div class="card p-4 mb-4">
+                        <h4 class="font-semibold mb-2">Săptămâna ${index + 1} (${week.weekStart} - ${week.weekEnd})</h4>
+                        <div class="grid grid-cols-3 gap-4 text-sm">
+                            <div>Venituri: <strong>${week.totalRevenue} lei</strong></div>
+                            <div>Vândute: <strong>${week.totalSold} bucăți</strong></div>
+                            <div>Produse: <strong>${week.products.length}</strong></div>
                         </div>
-                        <span class="badge-destructive px-2 py-1 rounded text-xs font-medium">${product.currentStock} buc</span>
                     </div>
                 `).join('');
-            } else {
-                alertsContainer.classList.add('hidden');
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeHistory() {
+            document.getElementById('history-modal').style.display = 'none';
+        }
+
+        function setActiveTab(tab) {
+            activeTab = tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.className = btn.className.replace('tab-active', 'tab-inactive');
+            });
+            document.getElementById(`tab-${tab}`).className = 
+                document.getElementById(`tab-${tab}`).className.replace('tab-inactive', 'tab-active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(`content-${tab}`).style.display = 'block';
+            
+            updateDisplay();
+        }
+
+        function updateStock(id, change) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                const newStock = Math.max(0, product.currentStock + change);
+                const soldChange = change < 0 ? Math.abs(change) : 0;
+                
+                product.currentStock = newStock;
+                product.sold += soldChange;
+                
+                saveData();
+                updateDisplay();
             }
         }
 
-        // Render inventory
-        function renderInventory() {
-            const container = document.getElementById('inventoryList');
+        function updateInitialStock(id, value) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                product.initialStock = Math.max(0, parseInt(value) || 0);
+                saveData();
+                updateDisplay();
+            }
+        }
+
+        function updateCurrentStock(id, value) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                product.currentStock = Math.max(0, parseInt(value) || 0);
+                saveData();
+                updateDisplay();
+            }
+        }
+
+        function quickAddStock(amount) {
+            products.forEach(product => {
+                product.currentStock += amount;
+            });
+            saveData();
+            updateDisplay();
+        }
+
+        function customAddStock() {
+            const amount = prompt('Câte bucăți vrei să adaugi la toate produsele?');
+            if (amount && !isNaN(amount)) {
+                quickAddStock(parseInt(amount));
+            }
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'bauturi_racoritoare': 'Băuturi răcoritoare',
+                'bere': 'Bere',
+                'energizante': 'Energizante',
+                'apa': 'Apă'
+            };
+            return names[category] || category;
+        }
+
+        function getStockStatus(stock) {
+            if (stock <= 3) return { class: 'badge-critical', text: 'CRITIC' };
+            if (stock <= 5) return { class: 'badge-low', text: 'SCĂZUT' };
+            return { class: 'badge-ok', text: 'OK' };
+        }
+
+        function updateDisplay() {
+            // Update dashboard stats
+            const totalRevenue = products.reduce((sum, p) => sum + p.sold * p.price, 0);
+            const totalProducts = products.reduce((sum, p) => sum + p.currentStock, 0);
+            const totalSold = products.reduce((sum, p) => sum + p.sold, 0);
+            const lowStockProducts = products.filter(p => p.currentStock <= 5);
+
+            document.getElementById('total-revenue').textContent = `${totalRevenue} lei`;
+            document.getElementById('total-products').textContent = totalProducts;
+            document.getElementById('total-sold').textContent = totalSold;
+            document.getElementById('low-stock').textContent = lowStockProducts.length;
+
+            // Update low stock alerts
+            const alertsDiv = document.getElementById('low-stock-alerts');
+            const alertsList = document.getElementById('low-stock-list');
+            
+            if (lowStockProducts.length > 0) {
+                alertsDiv.style.display = 'block';
+                alertsList.innerHTML = lowStockProducts.map(product => {
+                    const status = getStockStatus(product.currentStock);
+                    return `
+                        <div class="flex items-center justify-between p-3 border rounded-lg" style="border-color: var(--border)">
+                            <div>
+                                <p class="font-medium">${product.name}</p>
+                                <p class="text-sm" style="color: var(--text-muted)">${getCategoryName(product.category)}</p>
+                            </div>
+                            <span class="px-2 py-1 rounded text-xs font-medium ${status.class}">${product.currentStock} buc</span>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                alertsDiv.style.display = 'none';
+            }
+
+            // Update inventory
+            if (activeTab === 'inventory') {
+                updateInventoryDisplay();
+            }
+
+            // Update reports
+            if (activeTab === 'reports') {
+                updateReportsDisplay();
+            }
+        }
+
+        function updateInventoryDisplay() {
+            const categoriesDiv = document.getElementById('inventory-categories');
             const categories = {};
             
             products.forEach(product => {
@@ -283,30 +565,30 @@
                 categories[product.category].push(product);
             });
 
-            container.innerHTML = Object.entries(categories).map(([category, categoryProducts]) => `
-                <div class="space-y-3">
-                    <h3 class="text-lg font-semibold">${categoryNames[category]}</h3>
+            categoriesDiv.innerHTML = Object.entries(categories).map(([category, categoryProducts]) => `
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">${getCategoryName(category)}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         ${categoryProducts.map(product => {
                             const status = getStockStatus(product.currentStock);
                             return `
-                                <div class="bg-gray-50 p-4 rounded-lg border">
+                                <div class="card p-4">
                                     <div class="flex items-center justify-between mb-3">
-                                        <h4 class="font-medium">${product.name}</h4>
-                                        <span class="badge-${status.color} px-2 py-1 rounded text-xs font-medium">${status.text}</span>
+                                        <h4 class="font-medium text-sm">${product.name}</h4>
+                                        <span class="px-2 py-1 rounded text-xs font-medium ${status.class}">${status.text}</span>
                                     </div>
-                                    <div class="space-y-2 text-sm text-gray-600">
+                                    <div class="space-y-2 text-sm" style="color: var(--text-secondary)">
                                         <div class="flex justify-between">
                                             <span>Stoc inițial:</span>
                                             <input type="number" value="${product.initialStock}" 
-                                                   class="w-16 px-2 py-1 border rounded text-center"
-                                                   onchange="updateInitialStock('${product.id}', this.value)">
+                                                   onchange="updateInitialStock('${product.id}', this.value)"
+                                                   class="input w-16 text-xs p-1">
                                         </div>
                                         <div class="flex justify-between">
                                             <span>Stoc curent:</span>
                                             <input type="number" value="${product.currentStock}" 
-                                                   class="w-16 px-2 py-1 border rounded text-center"
-                                                   onchange="updateCurrentStock('${product.id}', this.value)">
+                                                   onchange="updateCurrentStock('${product.id}', this.value)"
+                                                   class="input w-16 text-xs p-1">
                                         </div>
                                         <div class="flex justify-between">
                                             <span>Preț:</span>
@@ -317,6 +599,15 @@
                                             <span class="font-medium">${product.sold} buc</span>
                                         </div>
                                     </div>
+                                    <div class="flex items-center gap-2 mt-4">
+                                        <button onclick="updateStock('${product.id}', -1)" 
+                                                class="btn-secondary text-xs px-2 py-1" 
+                                                ${product.currentStock === 0 ? 'disabled' : ''}>-1</button>
+                                        <button onclick="updateStock('${product.id}', 1)" 
+                                                class="btn-primary text-xs px-2 py-1">+1</button>
+                                        <button onclick="updateStock('${product.id}', 5)" 
+                                                class="btn-primary text-xs px-2 py-1">+5</button>
+                                    </div>
                                 </div>
                             `;
                         }).join('')}
@@ -325,75 +616,9 @@
             `).join('');
         }
 
-        // Render sales
-        function renderSales() {
-            const container = document.getElementById('salesList');
-            const availableProducts = products.filter(p => p.currentStock > 0);
-            
-            container.innerHTML = availableProducts.map(product => `
-                <div class="bg-gray-50 p-4 rounded-lg border">
-                    <div class="flex items-center justify-between mb-3">
-                        <h4 class="font-medium">${product.name}</h4>
-                        <span class="text-sm text-gray-600">${product.price} lei</span>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-sm">Stoc: ${product.currentStock}</span>
-                        <span class="text-sm">Vândute: ${product.sold}</span>
-                    </div>
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors ${product.currentStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}"
-                            onclick="sellProduct('${product.id}')" ${product.currentStock === 0 ? 'disabled' : ''}>
-                        Vinde 1 bucată
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // Render stock entries
-        function renderEntries() {
-            const container = document.getElementById('entriesList');
-            const categories = {};
-            
-            products.forEach(product => {
-                if (!categories[product.category]) {
-                    categories[product.category] = [];
-                }
-                categories[product.category].push(product);
-            });
-
-            container.innerHTML = Object.entries(categories).map(([category, categoryProducts]) => `
-                <div class="space-y-3">
-                    <h3 class="text-lg font-semibold">${categoryNames[category]}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        ${categoryProducts.map(product => `
-                            <div class="bg-gray-50 p-4 rounded-lg border">
-                                <div class="mb-3">
-                                    <h4 class="font-medium">${product.name}</h4>
-                                    <p class="text-sm text-gray-600">Stoc curent: ${product.currentStock} buc</p>
-                                </div>
-                                <div class="flex gap-2 mb-3">
-                                    <button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded text-sm transition-colors"
-                                            onclick="addStock('${product.id}', 5)">+5</button>
-                                    <button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded text-sm transition-colors"
-                                            onclick="addStock('${product.id}', 10)">+10</button>
-                                    <button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded text-sm transition-colors"
-                                            onclick="addStock('${product.id}', 20)">+20</button>
-                                </div>
-                                <div class="flex gap-2">
-                                    <input type="number" placeholder="Cantitate" class="flex-1 px-2 py-1 border rounded text-sm" id="custom-${product.id}">
-                                    <button class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded text-sm transition-colors"
-                                            onclick="addCustomStock('${product.id}')">Adaugă</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Render reports
-        function renderReports() {
+        function updateReportsDisplay() {
             // Category report
-            const categoryReport = document.getElementById('categoryReport');
+            const categoryReport = document.getElementById('category-report');
             const categories = {};
             
             products.forEach(product => {
@@ -405,10 +630,10 @@
             });
 
             categoryReport.innerHTML = Object.entries(categories).map(([category, data]) => `
-                <div class="flex items-center justify-between p-3 border rounded-lg">
+                <div class="flex items-center justify-between p-3 border rounded-lg mb-2" style="border-color: var(--border)">
                     <div>
-                        <p class="font-medium">${categoryNames[category]}</p>
-                        <p class="text-sm text-gray-500">${data.sold} bucăți vândute</p>
+                        <p class="font-medium">${getCategoryName(category)}</p>
+                        <p class="text-sm" style="color: var(--text-muted)">${data.sold} bucăți vândute</p>
                     </div>
                     <div class="text-right">
                         <p class="font-bold">${data.revenue} lei</p>
@@ -417,220 +642,27 @@
             `).join('');
 
             // Top products
-            const topProducts = document.getElementById('topProducts');
+            const topProducts = document.getElementById('top-products');
             const soldProducts = products.filter(p => p.sold > 0).sort((a, b) => b.sold - a.sold).slice(0, 10);
             
-            topProducts.innerHTML = soldProducts.map(product => `
-                <div class="flex items-center justify-between p-2 border rounded">
-                    <span class="font-medium">${product.name}</span>
-                    <div class="text-right">
-                        <div class="font-bold">${product.sold} buc</div>
-                        <div class="text-sm text-gray-500">${product.sold * product.price} lei</div>
-                    </div>
-                </div>
-            `).join('');
-
-            // History
-            const historyList = document.getElementById('historyList');
-            historyList.innerHTML = history.map(entry => `
-                <div class="p-3 bg-gray-50 rounded border-l-4 border-blue-500">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-medium">${entry.action}</p>
-                            <p class="text-sm text-gray-600">${entry.productName}</p>
-                            <p class="text-xs text-gray-500">${entry.details}</p>
+            if (soldProducts.length === 0) {
+                topProducts.innerHTML = '<p style="color: var(--text-muted)">Nu există vânzări înregistrate.</p>';
+            } else {
+                topProducts.innerHTML = soldProducts.map(product => `
+                    <div class="flex items-center justify-between p-2 border rounded mb-2" style="border-color: var(--border)">
+                        <span class="font-medium text-sm">${product.name}</span>
+                        <div class="text-right">
+                            <div class="font-bold text-sm">${product.sold} buc</div>
+                            <div class="text-xs" style="color: var(--text-muted)">${product.sold * product.price} lei</div>
                         </div>
-                        <span class="text-xs text-gray-400">${entry.timestamp}</span>
                     </div>
-                </div>
-            `).join('') || '<p class="text-gray-500 text-center py-4">Nu există istoric</p>';
-        }
-
-        // Update functions
-        function updateInitialStock(id, value) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                const oldValue = product.initialStock;
-                product.initialStock = parseInt(value) || 0;
-                addToHistory('Actualizare stoc inițial', product.name, `${oldValue} → ${product.initialStock}`);
-                saveData();
-                updateStats();
-                renderInventory();
+                `).join('');
             }
         }
 
-        function updateCurrentStock(id, value) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                const oldValue = product.currentStock;
-                product.currentStock = parseInt(value) || 0;
-                addToHistory('Actualizare stoc curent', product.name, `${oldValue} → ${product.currentStock}`);
-                saveData();
-                updateStats();
-                renderInventory();
-                renderSales();
-                renderEntries();
-            }
-        }
-
-        function sellProduct(id) {
-            const product = products.find(p => p.id === id);
-            if (product && product.currentStock > 0) {
-                product.currentStock--;
-                product.sold++;
-                addToHistory('Vânzare', product.name, `1 bucată - ${product.price} lei`);
-                saveData();
-                updateStats();
-                renderSales();
-                renderInventory();
-                renderEntries();
-            }
-        }
-
-        function addStock(id, amount) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                product.currentStock += amount;
-                addToHistory('Intrare marfă', product.name, `+${amount} bucăți`);
-                saveData();
-                updateStats();
-                renderEntries();
-                renderInventory();
-                renderSales();
-            }
-        }
-
-        function addCustomStock(id) {
-            const input = document.getElementById(`custom-${id}`);
-            const amount = parseInt(input.value) || 0;
-            if (amount > 0) {
-                addStock(id, amount);
-                input.value = '';
-            }
-        }
-
-        // Export PDF
-        function exportToPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            doc.setFontSize(20);
-            doc.text('Raport Inventar Bar', 20, 20);
-            
-            doc.setFontSize(12);
-            const date = new Date().toLocaleDateString('ro-RO');
-            doc.text(`Data: ${date}`, 20, 35);
-            
-            let y = 50;
-            
-            // Statistics
-            const totalRevenue = products.reduce((sum, product) => sum + (product.sold * product.price), 0);
-            const totalProducts = products.reduce((sum, product) => sum + product.currentStock, 0);
-            const totalSold = products.reduce((sum, product) => sum + product.sold, 0);
-            
-            doc.text(`Venituri totale: ${totalRevenue} lei`, 20, y);
-            doc.text(`Produse în stoc: ${totalProducts}`, 20, y + 10);
-            doc.text(`Produse vândute: ${totalSold}`, 20, y + 20);
-            
-            y += 40;
-            
-            // Products by category
-            const categories = {};
-            products.forEach(product => {
-                if (!categories[product.category]) {
-                    categories[product.category] = [];
-                }
-                categories[product.category].push(product);
-            });
-            
-            Object.entries(categories).forEach(([category, categoryProducts]) => {
-                if (y > 250) {
-                    doc.addPage();
-                    y = 20;
-                }
-                
-                doc.setFontSize(14);
-                doc.text(categoryNames[category], 20, y);
-                y += 10;
-                
-                doc.setFontSize(10);
-                categoryProducts.forEach(product => {
-                    if (y > 280) {
-                        doc.addPage();
-                        y = 20;
-                    }
-                    doc.text(`${product.name}: ${product.currentStock} buc (${product.sold} vândute)`, 25, y);
-                    y += 7;
-                });
-                
-                y += 5;
-            });
-            
-            doc.save('inventar-bar.pdf');
-        }
-
-        // Tab switching
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked button
-            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-            
-            // Render content based on tab
-            switch(tabName) {
-                case 'inventory':
-                    renderInventory();
-                    break;
-                case 'sales':
-                    renderSales();
-                    break;
-                case 'entries':
-                    renderEntries();
-                    break;
-                case 'reports':
-                    renderReports();
-                    break;
-            }
-        }
-
-        // Clear history
-        function clearHistory() {
-            if (confirm('Sigur vrei să ștergi istoricul?')) {
-                history = [];
-                saveData();
-                renderReports();
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            updateStats();
-            
-            // Tab event listeners
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    switchTab(button.dataset.tab);
-                });
-            });
-            
-            // Export PDF event listener
-            document.getElementById('exportPDF').addEventListener('click', exportToPDF);
-            
-            // Clear history event listener
-            document.getElementById('clearHistory').addEventListener('click', clearHistory);
-        });
+        // Initialize app
+        loadData();
+        updateDisplay();
     </script>
 </body>
 </html>
