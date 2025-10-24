@@ -4,8 +4,11 @@
   --fg:#eaf1ff; --muted:#9fb0d4; --accent:#7aa2ff; --accent2:#9bffe8;
   --good:#2f8f3a; --focus:#b2c4ff;
 }
+
+/* anti-zoom iOS pe inputs (>=16px), smooth scroll, inertia */
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
+html{scroll-behavior:smooth}
 body{
   margin:0; color:var(--fg);
   background:
@@ -13,44 +16,125 @@ body{
     radial-gradient(900px 600px at -10% 0, #09132a 0%, transparent 60%),
     linear-gradient(180deg,#060912,#0a1120);
   font:17px/1.65 ui-sans-serif,system-ui,Segoe UI,Roboto,Arial;
-  padding-bottom:76px;
+  /* spațiu pentru footer + safe area iOS */
+  padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+}
+.touch{ -webkit-overflow-scrolling: touch; }
+
+.top{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; gap:12px; justify-content:space-between;
+  padding: max(10px, env(safe-area-inset-top, 10px)) 14px 12px 14px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(7,10,18,.92),rgba(7,10,18,.7));
+  backdrop-filter: blur(6px);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .dot{
+  width:12px;height:12px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 12px var(--accent)
+}
+.brand h1{margin:0;font-size:18px;letter-spacing:.2px}
+
+/* Tabs: scroll orizontal cu snap, hit target mare */
+.tabs{
+  display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; margin-left:auto;
+  -webkit-overflow-scrolling: touch; scroll-snap-type:x proximity;
+  padding:6px 0 6px 6px;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:0 0 auto; scroll-snap-align:center;
+  border:1px solid var(--line); background:#0d152a; color:var(--muted);
+  padding:10px 14px; border-radius:14px; font-size:15px; line-height:1;
+  min-height:44px; display:flex; align-items:center;
+}
+.tab.active{
+  color:#fff; border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent)
 }
 
-/* header + tabs */
-.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;
-  justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);
-  background:linear-gradient(180deg,rgba(7,10,18,.85),rgba(7,10,18,.6))}
-.brand{display:flex;align-items:center;gap:10px}
-.brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 0 12px var(--accent)}
-.tabs{display:flex;gap:8px;overflow:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;border:1px solid var(--line);background:#0d152a;color:var(--muted);
-  padding:8px 12px;border-radius:14px}
-.tab.active{color:#fff;border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-
-/* layout */
-main{max-width:840px;margin:12px auto;padding:0 14px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 6px}
+/* layout principal */
+main{max-width:900px;margin:10px auto;padding:0 14px}
+.toolbar{
+  display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:center;
+  margin:12px 0 8px;
+}
 .select-wrap{display:flex;gap:6px;align-items:center}
 .lbl{color:var(--muted);font-size:14px}
-select{border:1px solid var(--line);background:#0c1322;color:#fff;padding:8px 12px;border-radius:12px}
-.ghost{background:#0b142b;border:1px solid var(--line);color:#fff;border-radius:12px;padding:10px 12px}
-.primary{background:var(--accent);border:1px solid var(--accent);color:#0b1220;border-radius:12px;padding:12px 14px;font-weight:700}
+select{
+  border:1px solid var(--line); background:#0c1322; color:#fff;
+  padding:12px 12px; border-radius:12px; font-size:16px; /* anti-zoom */
+  width:100%; min-height:44px;
+}
+.ghost, .primary{
+  border-radius:12px; padding:12px 14px; min-height:44px;
+  font-size:16px; line-height:1.1;
+}
+.ghost{background:#0b142b;border:1px solid var(--line);color:#fff}
+.primary{background:var(--accent);border:1px solid var(--accent);color:#0b1220;font-weight:700}
+.wide{width:100%}
 
 /* content */
-.content{display:grid;gap:10px}
-.block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;position:relative}
-.block .meta{display:flex;gap:10px;align-items:center;margin-bottom:6px;color:var(--muted);font-size:13px}
-.block .arg-badge{display:inline-block;font-size:12px;color:#0b1220;background:linear-gradient(90deg,var(--accent),#b8c6ff);
-  padding:2px 8px;border-radius:999px}
-.block .text{white-space:pre-wrap}
-.block.learned{outline:2px solid var(--good);box-shadow:0 0 0 2px rgba(47,143,58,.2) inset}
-.block .check{position:absolute;right:12px;top:12px}
+.content{display:grid;gap:12px}
+.block{
+  background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px;
+  position:relative;
+}
+.block .meta{
+  display:flex; gap:10px; align-items:center; justify-content:space-between;
+  margin-bottom:8px; color:var(--muted); font-size:13px;
+}
+.meta-left{display:flex;gap:10px;align-items:center}
+.block .arg-badge{
+  display:inline-block; font-size:12px; color:#0b1220;
+  background:linear-gradient(90deg,var(--accent),#b8c6ff);
+  padding:3px 10px; border-radius:999px
+}
+.block .text{white-space:pre-wrap; font-size:17px; line-height:1.7}
+.block.learned{outline:2px solid var(--good); box-shadow:0 0 0 2px rgba(47,143,58,.18) inset}
+.block .check{position:absolute; right:12px; top:12px}
+.block input[type=checkbox]{width:24px;height:24px}
+
+/* legend */
 .legend{margin:12px 0;color:var(--muted);font-size:14px}
-.pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;border:1px solid var(--line)}
 .pill.arg{background:linear-gradient(90deg,var(--accent),#b8c6ff);color:#0b1220;border:none}
 
-/* footer */
-.foot{position:fixed;inset:auto 0 0 0;background:linear-gradient(180deg,rgba(12,19,34,.7),rgba(12,19,34,.9));
-  border-top:1px solid var(--line);display:flex;gap:10px;justify-content:space-between;padding:10px 14px;backdrop-filter:blur(4px)}
+/* footer fix pentru safe area + butoane mari */
+.foot{
+  position:fixed; left:0; right:0; bottom:0; z-index:20;
+  background:linear-gradient(180deg,rgba(12,19,34,.7),rgba(12,19,34,.95));
+  border-top:1px solid var(--line);
+  display:flex; gap:10px; justify-content:space-between;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px;
+  backdrop-filter: blur(6px);
+}
+
+/* card-uri mai aerisite pe ecrane înguste */
+@media (max-width: 480px){
+  .brand h1{font-size:17px}
+  .tab{padding:10px 12px;font-size:14px}
+  .toolbar{grid-template-columns:1fr; gap:8px}
+  .content{gap:10px}
+  .block{padding:13px}
+  .block .text{font-size:17px; line-height:1.72}
+  main{padding:0 12px}
+}
+
+/* iPhone 14 Pro Max specific (430x932 @3x) – fine-tuning */
+@media (width: 430px) and (height: 932px){
+  .tab{min-height:46px}
+  select, .ghost, .primary{min-height:46px}
+  .block .text{font-size:18px}
+}
+
+/* focus vizibil, accesibilitate */
+:focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:10px}
+
+/* evita selectare accidentală la swipe */
+body, .tabs, .content{user-select:none}
+.block .text{user-select:text}
+
+/* ascunde scrollbars vizuale, dar păstrează scroll-ul */
+::-webkit-scrollbar{width:0;height:0}

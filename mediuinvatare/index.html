@@ -2,11 +2,15 @@
 <html lang="ro">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <!-- IMPORTANT pentru iPhone 14 Pro Max + safe areas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#070a12" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Kirby Full Trainer — Dark Premium</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="dark">
+<body class="dark touch">
   <header class="top">
     <div class="brand">
       <div class="dot"></div>
@@ -27,7 +31,7 @@
         <label class="lbl">Subcapitol:</label>
         <select id="groupSelect" aria-label="Alege subcapitol"></select>
       </div>
-      <button id="markAll" class="ghost">✓ Marchează tot subcapitolul ca învățat</button>
+      <button id="markAll" class="ghost wide">✓ Marchează tot subcapitolul ca învățat</button>
     </section>
 
     <section id="content" class="content">
@@ -40,8 +44,8 @@
   </main>
 
   <footer class="foot">
-    <button id="prevBtn" class="ghost">◀️ Înapoi</button>
-    <button id="nextBtn" class="primary">Următorul ▶️</button>
+    <button id="prevBtn" class="ghost wide">◀️ Înapoi</button>
+    <button id="nextBtn" class="primary wide">Următorul ▶️</button>
   </footer>
 
   <script src="app.js"></script>
