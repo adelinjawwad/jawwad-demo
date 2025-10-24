@@ -21,6 +21,7 @@
 
     <!-- Buton meniu (mobil) -->
     <button id="openMenu" class="ghost menu-btn" aria-label="Deschide capitole">☰ Capitole</button>
+    <button id="openQuiz" class="primary menu-btn" aria-label="Deschide test">🎯 Test</button>
   </header>
 
   <!-- Drawer mobil -->
@@ -37,6 +38,58 @@
       </footer>
     </div>
   </aside>
+
+  <!-- Drawer Test (chestionare) -->
+<aside id="quiz" class="drawer hidden" aria-hidden="true">
+  <div class="drawer-backdrop"></div>
+  <div class="drawer-sheet" role="dialog" aria-label="Test">
+    <header class="drawer-head">
+      <strong>Test rapid</strong>
+      <button id="closeQuiz" class="ghost">✕</button>
+    </header>
+
+    <div id="quizConfig" class="drawer-body">
+      <div class="cfg">
+        <label>Tip test</label>
+        <select id="quizMode">
+          <option value="args">Argumente (full)</option>
+          <option value="questions">Întrebări (full)</option>
+          <option value="mix">Mix (toate)</option>
+        </select>
+      </div>
+      <div class="cfg">
+        <label>Număr întrebări</label>
+        <select id="quizCount">
+          <option>5</option><option selected>10</option><option>15</option><option>20</option>
+        </select>
+      </div>
+      <button id="startQuiz" class="primary wide">Începe testul</button>
+    </div>
+
+    <div id="quizPlay" class="drawer-body hidden">
+      <div class="q-head">
+        <div id="qProgress">1/10</div>
+        <div id="qTag" class="pill">—</div>
+      </div>
+      <div id="qPrompt" class="q-prompt"></div>
+
+      <label class="q-label">Scrie replica (integral sau cât poți):</label>
+      <textarea id="qInput" rows="6" placeholder="Scrie aici replica…"></textarea>
+
+      <div class="q-actions">
+        <button id="revealBtn" class="ghost">Afișează răspunsul</button>
+        <button id="checkBtn" class="primary">Verifică</button>
+      </div>
+
+      <div id="qResult" class="q-result hidden"></div>
+
+      <footer class="drawer-foot">
+        <button id="nextQ" class="primary wide">Următoarea</button>
+      </footer>
+    </div>
+  </div>
+</aside>
+
 
   <main>
     <section class="toolbar">

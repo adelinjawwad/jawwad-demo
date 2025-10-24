@@ -113,3 +113,26 @@ select{border:1px solid var(--line);background:#0c1322;color:#fff;padding:12px;b
 body,.tabs,.drawer-body,.content{user-select:none}
 .block .text{user-select:text}
 ::-webkit-scrollbar{width:0;height:0}
+
+/* ---- QUIZ ---- */
+.cfg{display:grid;gap:6px;margin:8px 0 12px}
+.cfg label{color:var(--muted);font-size:14px}
+#quiz select{border:1px solid var(--line);background:#0c1322;color:#fff;padding:12px;border-radius:12px;font-size:16px;min-height:44px;width:100%}
+
+.q-head{display:flex;justify-content:space-between;align-items:center;margin:8px 0 10px}
+#qProgress{font-weight:700}
+.q-prompt{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;white-space:pre-wrap;
+  font-size:16px;line-height:1.6;margin-bottom:10px
+}
+.q-label{display:block;margin:8px 0 6px;color:var(--muted)}
+#qInput{
+  width:100%;border:1px solid var(--line);background:#0c1322;color:#fff;border-radius:12px;padding:12px;
+  font-size:16px;line-height:1.5;min-height:120px;resize:vertical
+}
+.q-actions{display:flex;gap:10px;justify-content:space-between;margin:10px 0}
+.q-result{
+  margin:6px 0 0;background:#0b142b;border:1px solid var(--line);border-radius:12px;padding:10px;white-space:pre-wrap
+}
+.q-result.ok{border-color:var(--good)}
+.hidden{display:none}

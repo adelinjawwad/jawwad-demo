@@ -211,9 +211,7 @@ const SCRIPT = [
   }
 ];
 
-/* ========== APLICAȚIE (fără TTS, fără checkbox-uri) ========== */
-
-const STORAGE_KEY = "Kirby_full_trainer_progress_v2";
+const STORAGE_KEY = "kirby_full_trainer_progress_v2";
 let state = { chapter: SCRIPT[0].id, group: SCRIPT[0].groups[0].id };
 
 const $  = sel => document.querySelector(sel);
@@ -314,7 +312,7 @@ function prev(){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-/* ----- Drawer mobil (meniul cu capitole & subcapitole) ----- */
+/* ----- Drawer mobil (capitole & subcapitole) ----- */
 const drawer             = $('#drawer');
 const drawerBody         = $('#drawerBody');
 const openMenuBtn        = $('#openMenu');
@@ -353,7 +351,177 @@ closeMenuBtn?.addEventListener('click', closeDrawer);
 drawerCloseBottom?.addEventListener('click', closeDrawer);
 drawer?.querySelector('.drawer-backdrop')?.addEventListener('click', closeDrawer);
 
-/* ----- Util ----- */
+/* ==========================
+   QUIZ (chestionare)
+========================== */
+
+// colectăm toate blocurile într-o listă plată
+function flattenBlocks(){
+  const out = [];
+  for (const chap of SCRIPT){
+    for (const grp of chap.groups){
+      for (const b of grp.blocks){
+        out.push({
+          chapterId: chap.id, chapterTitle: chap.title,
+          groupId: grp.id, groupTitle: grp.title,
+          text: b.text, arg: !!b.arg
+        });
+      }
+    }
+  }
+  return out;
+}
+
+// filtre
+function onlyArgs(list){ return list.filter(x=>x.arg); }
+function onlyQuestions(list){ return list.filter(x=>x.text.includes('?')); }
+
+// util: normalizare (fără diacritice/punctuație/spații multiple)
+function normalize(s){
+  return s
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"") // remove diacritics
+    .replace(/[^a-z0-9ăâîșşșțţ \n]/gi,' ')           // keep letters/digits/spaces
+    .replace(/\s+/g,' ')                              // collapse spaces
+    .trim();
+}
+
+// Levenshtein similarity (0..1)
+function similarity(a,b){
+  const s = normalize(a), t = normalize(b);
+  const m = s.length, n = t.length;
+  if (!m && !n) return 1;
+  if (!m || !n) return 0;
+  const dp = Array.from({length:m+1},()=>Array(n+1).fill(0));
+  for (let i=0;i<=m;i++) dp[i][0] = i;
+  for (let j=0;j<=n;j++) dp[0][j] = j;
+  for (let i=1;i<=m;i++){
+    for (let j=1;j<=n;j++){
+      const cost = s[i-1] === t[j-1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i-1][j] + 1,
+        dp[i][j-1] + 1,
+        dp[i-1][j-1] + cost
+      );
+    }
+  }
+  const dist = dp[m][n];
+  return 1 - dist / Math.max(m,n);
+}
+
+// starea testului
+const quizDrawer   = $('#quiz');
+const openQuizBtn  = $('#openQuiz');
+const closeQuizBtn = $('#closeQuiz');
+const startQuizBtn = $('#startQuiz');
+
+const quizConfig   = $('#quizConfig');
+const quizPlay     = $('#quizPlay');
+const quizModeSel  = $('#quizMode');
+const quizCountSel = $('#quizCount');
+
+const qProgress = $('#qProgress');
+const qTag      = $('#qTag');
+const qPrompt   = $('#qPrompt');
+const qInput    = $('#qInput');
+const qResult   = $('#qResult');
+const revealBtn = $('#revealBtn');
+const checkBtn  = $('#checkBtn');
+const nextQBtn  = $('#nextQ');
+
+let quizPool = [];     // întrebările alese (array de blocuri)
+let quizIdx  = 0;      // index curent
+let quizOK   = 0;      // răspunsuri considerate corecte
+
+function openQuiz(){ quizDrawer.classList.remove('hidden'); quizDrawer.setAttribute('aria-hidden','false'); }
+function closeQuiz(){
+  quizDrawer.classList.add('hidden'); quizDrawer.setAttribute('aria-hidden','true');
+  // reset simplu
+  quizConfig.classList.remove('hidden');
+  quizPlay.classList.add('hidden');
+  qInput.value = ''; qResult.classList.add('hidden'); qResult.innerHTML = '';
+}
+
+function startQuiz(){
+  const mode  = quizModeSel.value;       // args | questions | mix
+  const count = parseInt(quizCountSel.value,10);
+
+  let list = flattenBlocks();
+  if (mode === 'args') list = onlyArgs(list);
+  if (mode === 'questions') list = onlyQuestions(list);
+
+  // amestecăm
+  list = shuffle(list).slice(0, Math.min(count, list.length));
+
+  quizPool = list; quizIdx = 0; quizOK = 0;
+
+  quizConfig.classList.add('hidden');
+  quizPlay.classList.remove('hidden');
+
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const item = quizPool[quizIdx];
+  qProgress.textContent = `${quizIdx+1}/${quizPool.length}`;
+  qTag.textContent = `${item.chapterTitle} • ${item.groupTitle}${item.arg?' • ARGUMENT':''}`;
+
+  // prompt: cerem „Scrie replica integrală…”
+  qPrompt.textContent = `Scrie replica integrală pentru blocul din: ${item.groupTitle}.\n\nSugestie: începe cu primele cuvinte:\n“${item.text.split(/\s+/).slice(0,6).join(' ')}...”`;
+
+  qInput.value = '';
+  qInput.focus();
+  qResult.classList.add('hidden');
+  qResult.innerHTML = '';
+}
+
+function revealAnswer(){
+  const item = quizPool[quizIdx];
+  qResult.classList.remove('hidden');
+  qResult.classList.remove('ok');
+  qResult.innerHTML = `Răspuns (textul complet):\n\n${escapeHtml(item.text)}`;
+}
+
+function checkAnswer(){
+  const item = quizPool[quizIdx];
+  const user = qInput.value || '';
+  const score = Math.round(similarity(user, item.text)*100);
+  const ok = score >= 85; // prag
+  if (ok) quizOK++;
+
+  qResult.classList.remove('hidden');
+  qResult.classList.toggle('ok', ok);
+  qResult.innerHTML =
+    `Potrivire: ${score}% ${ok?'✅ Corect':'❌ Mai exersează'}\n\n` +
+    `Replica ta:\n${escapeHtml(user)}\n\n—\nTextul corect:\n${escapeHtml(item.text)}`;
+}
+
+function nextQuestion(){
+  if (quizIdx < quizPool.length - 1){
+    quizIdx++;
+    renderQuestion();
+  } else {
+    // final
+    const pct = Math.round(quizOK / quizPool.length * 100);
+    qPrompt.textContent = 'Test încheiat 👏';
+    qResult.classList.remove('hidden');
+    qResult.classList.add('ok');
+    qResult.innerHTML =
+      `Scor final: ${quizOK}/${quizPool.length} — ${pct}%\n\n` +
+      `Poți închide fereastra sau porni alt test.`;
+    quizPlay.querySelector('.drawer-foot').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+// utilitare
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i=a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 function escapeHtml(s){
   return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 }
@@ -366,3 +534,13 @@ renderContent();
 
 $('#nextBtn').onclick = next;
 $('#prevBtn').onclick = prev;
+
+// quiz listeners
+openQuizBtn?.addEventListener('click', openQuiz);
+closeQuizBtn?.addEventListener('click', closeQuiz);
+quizDrawer?.querySelector('.drawer-backdrop')?.addEventListener('click', closeQuiz);
+
+startQuizBtn?.addEventListener('click', startQuiz);
+revealBtn?.addEventListener('click', revealAnswer);
+checkBtn?.addEventListener('click', checkAnswer);
+nextQBtn?.addEventListener('click', nextQuestion);
