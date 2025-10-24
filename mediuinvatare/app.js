@@ -171,7 +171,7 @@ const SCRIPT = [
           { text: "Când s-a aspirat ultima oară covorul?" },
           { text: "Dna/Dl X, sunt 2 motive pentru care noi am găsit acest praf, unul ar fi acela că a trecut ceva timp de la ultima aspirare sau poate că nu am avut timp să insistăm suficient, sau al doilea aspiratorul dvs nu-şi mai face datoria.", arg:true },
           { text: "Aş vrea sa va întreb cine se ocupă de curăţenie în casa dvs. Aveti pe cineva sau dvs?" },
-          { text: "O să delimitez un m2 de covor, şi o să vă rog să aspiraţi această suprafaţă până consideraţi dvs că este curată. De obicei daţi aşa mult pe o suprafaţă aşa mică? O să dau şi eu acum de 100 de ori să fim siguri că aspiratorul dvs a făcut tot posibilul pe această suprafaţă" },
+          { text: "O să delimitez un m2 de covor, şi o să vă rog să aspiraţi această suprafaţă până consideraţi dvs că este curată.\nDe obicei daţi aşa mult pe o suprafaţă aşa mică?\nO să dau şi eu acum de 100 de ori să fim siguri că aspiratorul dvs a făcut tot posibilul pe această suprafaţă" },
           { text: "Eu acum o să pun un filtru curat, şi o să aspir cu kirby această suprafaţă, unde am dat înainte de 100 de ori cu aspiratorul dvs." },
           { text: "Dacă kirby nu mai găseşte praf înseamnă că aspiratorul dvs îşi face treaba doar că trebuie instat foarte mult." , arg:true},
           { text: "Daca kirby găseşte praf, ştim unde este problema, aspiratorul dvs. nu-şi mai face datoria şi trebuie schimbat.", arg:true },
@@ -189,7 +189,7 @@ const SCRIPT = [
         title: "Recapitulare & decizie",
         blocks: [
           { text: "Negociere şi vânzare\nArgumentăm şi recapitulăm, mai devreme ce am făcut dl/dna x, am depus efort, am consumat curent, energie, timp şi sănătate, şi rezultatul este acela de pe filtru.", arg:true },
-          { text: "Acum v-aţi hotărât să îl punem pe kirby la treabă?\nPractic avem aceeaşi curaţenie şi unde am aspirator de 100 de ori, şi unde nu am aspirator, merităm rezultate mai bune? cum vreţi să-l achiziţionaţi? integral sau în rate?", arg:true },
+          { text: "Acum v-aţi hotărât să îl punem pe kirby la treabă?\nPractic avem aceeaşi curaţenie şi unde am aspirat de 100 de ori, şi unde nu am aspirat, merităm rezultate mai bune? cum vreţi să-l achiziţionaţi? integral sau în rate?", arg:true },
           { text: "Facem testul pe loc şi-l dăm clientului să-l folosească, să vadă că e uşor de folosit." },
           { text: "V-aţi decis cum vreti să-l achiziţionaţi? Găsim o soluţie ca eu să plec cu praful şi acarienii şi cu punctele pentru concurs şi dvs să ramâneţi cu kirby să vă rezoltaţi problema?" , arg:true}
         ]
