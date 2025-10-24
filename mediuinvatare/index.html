@@ -2,7 +2,6 @@
 <html lang="ro">
 <head>
   <meta charset="utf-8" />
-  <!-- IMPORTANT pentru iPhone 14 Pro Max + safe areas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
   <meta name="theme-color" content="#070a12" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -16,10 +15,28 @@
       <div class="dot"></div>
       <h1>Kirby Full Trainer</h1>
     </div>
-    <nav class="tabs" role="tablist" aria-label="Secțiuni">
-      <!-- tabs generate din JS -->
-    </nav>
+
+    <!-- Tabs (desktop) -->
+    <nav class="tabs" role="tablist" aria-label="Secțiuni"></nav>
+
+    <!-- Buton meniu (mobil) -->
+    <button id="openMenu" class="ghost menu-btn" aria-label="Deschide capitole">☰ Capitole</button>
   </header>
+
+  <!-- Drawer mobil -->
+  <aside id="drawer" class="drawer hidden" aria-hidden="true">
+    <div class="drawer-backdrop"></div>
+    <div class="drawer-sheet" role="dialog" aria-label="Capitole">
+      <header class="drawer-head">
+        <strong>Capitole</strong>
+        <button id="closeMenu" class="ghost">✕</button>
+      </header>
+      <div id="drawerBody" class="drawer-body"></div>
+      <footer class="drawer-foot">
+        <button id="drawerCloseBottom" class="ghost wide">Închide</button>
+      </footer>
+    </div>
+  </aside>
 
   <main>
     <section class="toolbar">
@@ -31,12 +48,9 @@
         <label class="lbl">Subcapitol:</label>
         <select id="groupSelect" aria-label="Alege subcapitol"></select>
       </div>
-      <button id="markAll" class="ghost wide">✓ Marchează tot subcapitolul ca învățat</button>
     </section>
 
-    <section id="content" class="content">
-      <!-- conținut randat din JS -->
-    </section>
+    <section id="content" class="content"></section>
 
     <section class="legend">
       <span class="pill arg">ARGUMENT</span> = motiv/replică de vânzare pe care vrei s-o reții.
