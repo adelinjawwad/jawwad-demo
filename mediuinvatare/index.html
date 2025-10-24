@@ -2,134 +2,48 @@
 <html lang="ro">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Kirby Trainer — Premium</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Kirby Full Trainer — Dark Premium</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="dark">
-<header class="top">
-  <div class="brand">
-    <div class="dot"></div>
-    <h1>Kirby Trainer</h1>
-  </div>
-  <div class="actions">
-    <button id="ttsBtn" aria-label="Citește cu voce">▶️</button>
-    <button id="stopTTSBtn" aria-label="Stop voce">⏹️</button>
-    <button id="themeBtn" aria-label="Schimbă tema">🌗</button>
-  </div>
-</header>
+  <header class="top">
+    <div class="brand">
+      <div class="dot"></div>
+      <h1>Kirby Full Trainer</h1>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Secțiuni">
+      <!-- tabs generate din JS -->
+    </nav>
+  </header>
 
-<nav class="tabs sticky">
-  <button class="tab active" data-tab="study">📖 Script</button>
-  <button class="tab" data-tab="flash">🃏 Flash</button>
-  <button class="tab" data-tab="quiz">📝 Quiz</button>
-  <button class="tab" data-tab="neg">🤝 Negociere</button>
-  <button class="tab" data-tab="notes">🗒️ Notițe</button>
-  <button class="tab" data-tab="stats">📊 Progres</button>
-</nav>
-
-<main>
-  <!-- STUDY -->
-  <section id="tab-study" class="panel shown">
-    <div class="section-head">
-      <h2 id="moduleTitle">Script complet</h2>
+  <main>
+    <section class="toolbar">
       <div class="select-wrap">
-        <select id="moduleSelect" aria-label="Alege etapa"></select>
+        <label class="lbl">Capitol:</label>
+        <select id="chapterSelect" aria-label="Alege capitol"></select>
       </div>
-    </div>
-    <div id="reader" class="reader"></div>
-    <div class="floating-cta">
-      <button id="nextChunk" class="pill">Următorul ▷</button>
-    </div>
-  </section>
-
-  <!-- FLASH -->
-  <section id="tab-flash" class="panel">
-    <div class="section-head">
-      <h2>Flashcards</h2>
-      <div class="row">
-        <select id="deckFilter"></select>
-        <button id="shuffleBtn" class="ghost">🔀</button>
-        <button id="editBtn" class="ghost">✏️</button>
+      <div class="select-wrap">
+        <label class="lbl">Subcapitol:</label>
+        <select id="groupSelect" aria-label="Alege subcapitol"></select>
       </div>
-    </div>
-    <div class="flash">
-      <div id="flashCard" class="card">
-        <div id="flashFront" class="front"></div>
-        <div id="flashBack" class="back hide"></div>
-      </div>
-      <div class="row center">
-        <button id="showBtn" class="primary">Arată răspuns</button>
-        <button id="againBtn" class="ghost">Din nou</button>
-        <button id="goodBtn" class="ghost">Știut</button>
-      </div>
-      <p id="flashInfo" class="muted center"></p>
-    </div>
-  </section>
+      <button id="markAll" class="ghost">✓ Marchează tot subcapitolul ca învățat</button>
+    </section>
 
-  <!-- QUIZ -->
-  <section id="tab-quiz" class="panel">
-    <div class="section-head">
-      <h2>Quiz</h2>
-      <div class="row">
-        <label class="inline">Întrebări:
-          <input id="quizCount" type="number" min="4" max="40" value="12" inputmode="numeric">
-        </label>
-        <select id="quizFilter"></select>
-        <button id="startQuizBtn" class="primary">Start</button>
-      </div>
-    </div>
-    <div id="quizArea"></div>
-  </section>
+    <section id="content" class="content">
+      <!-- conținut randat din JS -->
+    </section>
 
-  <!-- NEGOTIATION -->
-  <section id="tab-neg" class="panel">
-    <div class="section-head">
-      <h2>Negociere & Obiecții</h2>
-      <div class="row">
-        <select id="negFilter"></select>
-        <button id="newScenario" class="primary">Scenariu nou</button>
-      </div>
-    </div>
-    <div id="negArea" class="neg"></div>
-  </section>
+    <section class="legend">
+      <span class="pill arg">ARGUMENT</span> = motiv/replică de vânzare pe care vrei s-o reții.
+    </section>
+  </main>
 
-  <!-- NOTES -->
-  <section id="tab-notes" class="panel">
-    <h2>Notițe</h2>
-    <textarea id="notesBox" placeholder="Idei, hook-uri, formulări personale…"></textarea>
-    <div class="right">
-      <button id="saveNotesBtn" class="primary">Salvează</button>
-    </div>
-  </section>
+  <footer class="foot">
+    <button id="prevBtn" class="ghost">◀️ Înapoi</button>
+    <button id="nextBtn" class="primary">Următorul ▶️</button>
+  </footer>
 
-  <!-- STATS -->
-  <section id="tab-stats" class="panel">
-    <h2>Progres</h2>
-    <div class="stats">
-      <div class="stat"><div class="lbl">Carduri totale</div><div id="statTotal" class="val">0</div></div>
-      <div class="stat"><div class="lbl">Stăpânite</div><div id="statMastered" class="val">0</div></div>
-      <div class="progress"><div id="progressBar"></div></div>
-      <div class="legend">
-        <span class="dot d0"></span> Nou
-        <span class="dot d1"></span> 1h
-        <span class="dot d2"></span> 1d
-        <span class="dot d3"></span> 3d+
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- Editor modal -->
-<div id="modal" class="modal hide">
-  <div class="box">
-    <header><h3>Editează set</h3><button id="closeModal">✖</button></header>
-    <textarea id="editor" spellcheck="false"></textarea>
-    <footer><button id="saveSetBtn" class="primary">Salvează</button></footer>
-  </div>
-</div>
-
-<script src="data.js"></script>
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

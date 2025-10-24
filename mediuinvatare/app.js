@@ -1,272 +1,354 @@
-/* ====== STATE ====== */
-const STORAGE_KEY = "kirby_premium_v1";
-let state = {
-  deck: [],           // flashcards with spaced repetition meta
-  notes: "",
-  activeModule: MODULES[0].id,
-  chunkIndex: 0
-};
+/* ========== DATE: Scriptul tău 1:1, organizat pe capitole/subcapitole ========== */
+/* Marcăm cu arg:true paragrafele pe care le-ai etichetat explicit „argument:” sau sunt clar motive. */
 
-/* ====== UTIL ====== */
+const SCRIPT = [
+  {
+    id: "intro",
+    title: "1) Introducere & scopul vizitei",
+    groups: [
+      {
+        id: "intro-core",
+        title: "Introducere",
+        blocks: [
+          { text: "Am venit astăzi la dumneavoastră să vi-l prezint pe kirby şi să facem o mică curăţenie, dvs. nu aveţi nicio obligaţie, nu vă costă nimic, dar la final dacă consideraţi că este util şi necesar acesta poate fi şi achiziţionat." },
+          { text: "Kirby este un produs american, este pe piaţă de mai bine de 100 de ani, el este pentru persoanele care apreciează calitatea, fiabilitatea şi performanţa" , arg:true},
+          { text: "Are cel mai mare grad de filtrare, Magic Micron Hepa Filtration, adică filtare până la ultimul micron, orice intră în sacul Kirby acolo rămâne, sacul are 7 straturi şi 4 cusături", arg:true },
+          { text: "Kirby este un produs exclusivist, el se vinde doar prin cadrul acestor prezentări, cum sunt şi eu astăzi la dumneavoastră, orice alt fel de reclamă este interzisă.", arg:true },
+          { text: "Am venit astăzi la dumneavostră cu 2 motive, unul să îl fac pe kirby cât mai cunoscut în casele românilor, şi eu împreună cu colegii mei din toată românia suntem înscrişi într-un concurs cu plecare în grand canaria unde ajung doar campionii diviziei, unde îmi doresc şi eu să fiu, iar dumneavostră m-aţi ajuta foarte mult dacă la finalul prezentării îmi puteţi oferii contacte, rude, prieteni, familii la fel de serioase ca şi dumneavostră la care să merg să le fac o prezentare gratuită" },
+          { text: "Înainte de a începe prezentarea trebuie să îl sun pe domnul manager să-l anunţ că am ajuns la dumneavostră şi că începem prezentarea." },
+          { text: "O rugăminte aş mai avea la final să-mi spuneţi concret dacă aţi vrea să îl achiziţionaţi pe Kirby, da sau nu." }
+        ]
+      }
+    ]
+  },
+  {
+    id: "base",
+    title: "2) Aparatul de bază & tehnic",
+    groups: [
+      {
+        id: "materiale",
+        title: "Materiale & siguranță",
+        blocks: [
+          { text: "Kirby este produs din duraluminiu, un material foarte rezistent, care mai este folosit şi în industria aeronautică, de aici şi forma asta mai din viitor" , arg:true},
+          { text: "Kirby are 2 turbine, 1 frontală pentru aspirare directă şi eficientă, una în lateral care ajută la racirea motorului, îl puteţi folosi pe kirby 24/7 acesta nu se supra încălzeşte, de aici şi durata de viaţă între 25-30 de ani şi o garanţie de 13 ani dacă îl achiziţionaţi de la un distribuitor autorizat" , arg:true},
+          { text: "Are aceste 2 micro-întrerupătoare, ele sunt pentru protecţia noastră, a copiilor, dacă ceva nu este montat bine Kirby nu porneşte, nu se poate arde." , arg:true},
+          { text: "Roţile învelite în cauciuc siliconat pentru a proteja suprafaţa pe care este folosit" },
+          { text: "LED frontal pentru a ilumina spaţiile întunecate" },
+          { text: "Cutie de viteze în spate, cu 2 trepte, normal şi drive, funcţia drive preia 80% din efort, practic merge singur.", arg:true },
+          { text: "Cablu lung de 10 metri care ne permite o aspirare eficientă cu o singură priză\nConsum între 450 şi 520 de waţi" },
+          { text: "În prezentarea de astăzi vom folosi un vizualizator pentru a vedea în timp real eficienţa lui kirby, dvs. nu veti primii nici acest vizualizator, nici aceste filtre, veţi primii direct sacul kirby cu cel mai mare grad de filtrare." }
+        ]
+      }
+    ]
+  },
+  {
+    id: "access",
+    title: "3) Accesorii & perii",
+    groups: [
+      {
+        id: "furtun-tevi",
+        title: "Furtun + țevi + cot mobil",
+        blocks: [
+          { text: "Primul mod de aspirare este cel clasic cu furtunul, furtul are undeva la 210 centimetrii, este foarte rezistent, nu se rupe şi mereu revine la forma iniţială" },
+          { text: "Cu aceste 2 ţevi din plastic uşoare şi rezistente, lucioase pe interior pentru a nu reţine praf, şi cu cotul mobil, o invenţie patentată kirby, putem avea poziţia de aspirare clasică, pozitiă de aspirare a suprafeţelor înalte, şi unghiul de 45 de grade care ne permite aspirarea în profunzime a mobilierului, sub pat, etc" , arg:true}
+        ]
+      },
+      {
+        id: "peria-dure",
+        title: "Peria suprafețe dure (gresie/parchet)",
+        blocks: [
+          { text: "Prima perie pe care vreau să v-o arăt, este peria pentru suprafeţe dure, gresie parchet\n- aspiră pe toată suprafaţa ei, nu ca periile clasice doar 2-3 centimetrii\n- are roţile învelite în cauciuc la fel pentru a proteja suprafaţa unde e folosită\n- are aceste 2 orifcii de aspirare, nu fac vid\n- peria interioară permite scoterea prafului de la rosturi în timp ce aspiraţi" },
+          { text: "argument:\ncând umblăm în şosete prin casă ne murdărim, iar dacă curăţăm podeaua cu mopul clasic e ca şi cum ne-am da cu cremă de mâini înainte să ne spălăm pe mâini, acesta este motivul pentru care se pătează chitul gresiei", arg:true }
+        ]
+      },
+      {
+        id: "peria-inalte",
+        title: "Peria suprafețe înalte (perdele/draperii/tavan/pereți/AC)",
+        blocks: [
+          { text: "A doua perie este cea pentru suprafeţe înalte(perdele, draperii, tavan, pereţi, deasupra AC-ului)" },
+          { text: "argument: \nde obicei le spălăm de 2 ori pe an, între sărbători, perdelele şi draperiile sunt filtrul casei, atunci când le băgăm la maşina de spălat ele se deterioează, se îngălbenesc pentru că au praf în ele\ncu această perie le putem aspira şi spăla direct pe verticală", arg:true }
+        ]
+      },
+      {
+        id: "peria-zip",
+        title: "Peria Zipp (textile profunde)",
+        blocks: [
+          { text: "Peria Zipp\n- bate perie şi aspiră de 3600 de ori pe minut\n- aspiră în profunzime până la 15 cm" },
+          { text: "argument:\nîn canapea şi în materialele textile se află aproximativ 80% din praf, pe acesta îl vedem în razele solare şi ne deteriorează suprafeţele şi ne deranjează vizual\n\n- când ne aşezăm pe canapea, ridicăm praful în aer, îl inhalăm şi ajungem la probleme de sănătate, alergii, diferite boli, pe care le dobândim în timp, nu ne naştem cu ele\n\n-nu ar trebui să cadă suc, vin sau sos pe canapea, este suficient să ne cadă apa care în combinaţie cu praful se transformă în nămol, de accea este foarte important sa aspiram foarte bine praful\n\n- peria zip se foloseste pentru scaune tapiţate, canapele, paltoane, jucării de pluş, perne, prosoape, etc", arg:true }
+        ]
+      },
+      {
+        id: "alte-accesorii",
+        title: "Accesorii utile",
+        blocks: [
+          { text: "Peria pentru suprafeţe înguste, colţuri, plinte, şifoniere culisabile, calorifer" },
+          { text: "Ţesala pentru animale, haine de blană care face şi masaj capilar" },
+          { text: "Compresor, dispozitiv pentru a umfla/dezumflat orice articol gonflabil, putem sufla praf din zone greu accesibile" },
+          { text: "Pistol pulverizant, puteţi pune în recipient balsam, şampon, parfum, pentru a reimprospăta mirosul draperiilor, sau pentru a scoate pete" }
+        ]
+      },
+      {
+        id: "peria-carpa",
+        title: "Peria cârpă (păr de cămilă)",
+        blocks: [
+          { text: "Peria cârpă\n- confecţionată din păr de cămilă, fină la atingere\n- nu reţine praf şi nu zgârie suprafaţa" },
+          { text: "- cămila trăind în deşert, dacă ar reţine praf, ea nu s-ar mai putea ridica şi nu ar mai putea merge", arg:true },
+          { text: "- nu mai este necesar să cheltuiţi bani pe şerveţele, lavete, cârpe, soluţii, etc\n- o laventă are o rată de eficienţă de 20%, restul de 80% îl inhalăm sau se depune înapoi pe suprafaţă, de accea este foarte importat să fie depozitat", arg:true }
+        ]
+      },
+      {
+        id: "turbo",
+        title: "Turbo adaptorul",
+        blocks: [
+          { text: "Turbo adaptorul\n- puteţi şlefuii\n- puteţi degresa\n- puteţi să vă faceţi masaj\n\nare 3600 de degresări pe minut, este foarte eficient, ca o periuţă de dinţi electrică, care este mai bună decât una normală", arg:true }
+        ]
+      }
+    ]
+  },
+  {
+    id: "mattress",
+    title: "4) Salteaua — Cârpa 1–4 (focus maxim)",
+    groups: [
+      {
+        id: "saltea-intro",
+        title: "De ce salteaua",
+        blocks: [
+          { text: "Salteaua\n5 minute dacă aş avea la dispoziţie să vă arăt ce face kirby mai importat, doar aşa vi l-aş fi arătat\nAcesta este principalul motiv pentru care clientii cumpăra kirby", arg:true },
+          { text: "Întrebare: Ce spuneţi, daca nu avem furtun sau ţevi la un aspirator, aceasta mai poate fi folosit?\nSunt convins că chiar şi dvs. dacă o să luaţi decizia de a-l cumpăra pe kirby astăzi de la mine sau nu, ce vedeţi acum o să ţineţi minte toată viaţă" },
+          { text: "Peria bătător sau peria regină cum îi mai spunem noi\n- aspiră, bate şi perie pe toată suprafaţa ei de 38 de cm\n- aspira până la 40 cm în profunzime\n- ea se montează la 1mm de motor, pentru o aspirare cât mai profundă şi eficientă (una e să bem apă cu paiul şi alta e să bem direct din pahar)", arg:true }
+        ]
+      },
+      {
+        id: "carpa1",
+        title: "Cârpa 1 — acarieni & sănătate",
+        blocks: [
+          { text: "Prima cârpă (ştiţi ce se află aici?) Praf, scame, dar şi acarieni, aţi auzit de ei?" },
+          { text: "Acarienii trăiesc între 2-4 luni\nrezidurile şi excrementele lor lăsate în saltele şi perne sunt cele care dăunează sistemului respirator, dau alergii şi unele boli ale aparatului respirator (astm, eczeme, inflamaţii ale mucoasei nazale)\nAu mediul prielnic să se dezolte, căldură întuneric şi umiditate", arg:true },
+          { text: "Un adult pierde într-o zi 1,5g de piele, aceasta este suficientă pentru a hrănii 1 milion de acarieni, iar un singur acarian poate produce reziduri de 200 de ori decât greutatea lor", arg:true },
+          { text: "De-asta oamenii se decid să cumpere kirby, văd pe ce se doarme, iar alte alternative nu avem, nu există nici curăţătorii de saltele şi nici alte aparate", arg:true },
+          { text: "V-aţi hotărât să luaţi un kirby? Batem palma?" , arg:true},
+          { text: "Pentru ce vedeţi aici unii oameni se îmbolnăvesc, copiii sunt cei mai predispuşi să se îmbolnăvească, dar şi adulţii, nimeni nu este imun la aşa ceva." , arg:true},
+          { text: "Presupun că la dvs. nu este problemă cu alergiile, după cum vedeţi kirby este o necesitate nu un moft, nu-i aşa?" , arg:true},
+          { text: "Presupun că nu mai e nevoie să vă întreb dacă aveţi nevoie de un kirby în casă sau nu." , arg:true}
+        ]
+      },
+      {
+        id: "carpa2",
+        title: "Cârpa 2 — întreținere & opțiuni",
+        blocks: [
+          { text: "A doua cârpă\nPentru început trebuie să insistăm 15-20 de minute, iar întreţinerea se face în timp, 5 minute o dată la 2 luni este suficient pentru a dormi pe o saltea curată.", arg:true },
+          { text: "Sunt două metode prin care puteţi scăpa de aşa ceva din saltele, prima ar fi să ascultăm sfatul unui medic alergolog şi să schimbăm salteaua o dată la 2 luni, sau să avem un kirby acasă să le putem întreţine.", arg:true },
+          { text: "Saltele sunt cele mai murdare locuri din casă, mult mai murdare decât podelele, le folosim mai des şi le curăţăm cel mai rar, Un sfert din viaţa noastră o putrecem pe saltea, domnule/doamna X, unde trebuie să fie mai curat? unde stăm cu picioarele sau unde punem capul?" , arg:true}
+        ]
+      },
+      {
+        id: "carpa3",
+        title: "Cârpa 3 — întrebarea de cuplu",
+        blocks: [
+          { text: "A treia cârpă\nCredeţi că dacă eu astazi eram aici doar cu soţul/soţia dvs. şi după toate cele vazute de către dânsa/dânsul l-ar fi cumpărat pe kirby astăzi de la mine v-ar fi deranjat? Nici soţul/soţia dvs nu are de ce sa se supere dacă îl cumpăraţi.", arg:true }
+        ]
+      },
+      {
+        id: "carpa4",
+        title: "Cârpa 4 — prioritate & momentul deciziei",
+        blocks: [
+          { text: "A patra cârpă\nPână acum nu aţi ştiut ce se află în salteaua dvs. şi kirby nu a fost o prioritate pentru dvs. dar acum că ştiţi şi vedeţi pe ce dormiţi seară de seară, presupun că ar trebui să fie o prioritate, nu?" , arg:true},
+          { text: "V-aţi hotărât să îl folosiţi pe Kirby? Când credeţi că este cel mai bun momentan să schimbăm ce găsim pe cârpe?" , arg:true},
+          { text: "Când ne întoarcem în sufragerie, punem cârpele lângă filtre şi facem prima încercare de vânzare pe fişa reporter, dl/dna popescu, să ştiţi că în cadrul prezentării noi avem nişte condiţii mai uşoare de achiziţie\nintegral şi 5% discount\n1500 avans şi 12 rate" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "rug",
+    title: "5) Covorul — test comparativ",
+    groups: [
+      {
+        id: "covor-demo",
+        title: "Demo & comparație",
+        blocks: [
+          { text: "Covorul\nPrezentăm mânerul vertical\n- acum îl transformăm pe kirby într-un aspirator vertical, noi numim acest mâner protecţia coloanei\n- nu trebuie să vă mai aplecaţi când daţi cu aspiratorul, staţi cu spatele drept şi cu mânerul în dreptul buzunarului, pentru că mânerul se reglează în funcţie de înălţimea fiecăruia" },
+          { text: "Când s-a aspirat ultima oară covorul?" },
+          { text: "Dna/Dl X, sunt 2 motive pentru care noi am găsit acest praf, unul ar fi acela că a trecut ceva timp de la ultima aspirare sau poate că nu am avut timp să insistăm suficient, sau al doilea aspiratorul dvs nu-şi mai face datoria.", arg:true },
+          { text: "Aş vrea sa va întreb cine se ocupă de curăţenie în casa dvs. Aveti pe cineva sau dvs?" },
+          { text: "O să delimitez un m2 de covor, şi o să vă rog să aspiraţi această suprafaţă până consideraţi dvs că este curată. De obicei daţi aşa mult pe o suprafaţă aşa mică? O să dau şi eu acum de 100 de ori să fim siguri că aspiratorul dvs a făcut tot posibilul pe această suprafaţă" },
+          { text: "Eu acum o să pun un filtru curat, şi o să aspir cu kirby această suprafaţă, unde am dat înainte de 100 de ori cu aspiratorul dvs." },
+          { text: "Dacă kirby nu mai găseşte praf înseamnă că aspiratorul dvs îşi face treaba doar că trebuie instat foarte mult." , arg:true},
+          { text: "Daca kirby găseşte praf, ştim unde este problema, aspiratorul dvs. nu-şi mai face datoria şi trebuie schimbat.", arg:true },
+          { text: "După ce aspir, o să vă dau acest filtru şi să-mi spuneţi care este diferenţa între suprafaţă aspirată şi cea neaspirată." }
+        ]
+      }
+    ]
+  },
+  {
+    id: "close",
+    title: "6) Negociere & vânzare",
+    groups: [
+      {
+        id: "inchidere",
+        title: "Recapitulare & decizie",
+        blocks: [
+          { text: "Negociere şi vânzare\nArgumentăm şi recapitulăm, mai devreme ce am făcut dl/dna x, am depus efort, am consumat curent, energie, timp şi sănătate, şi rezultatul este acela de pe filtru.", arg:true },
+          { text: "Acum v-aţi hotărât să îl punem pe kirby la treabă?\nPractic avem aceeaşi curaţenie şi unde am aspirator de 100 de ori, şi unde nu am aspirator, merităm rezultate mai bune? cum vreţi să-l achiziţionaţi? integral sau în rate?", arg:true },
+          { text: "Facem testul pe loc şi-l dăm clientului să-l folosească, să vadă că e uşor de folosit." },
+          { text: "V-aţi decis cum vreti să-l achiziţionaţi? Găsim o soluţie ca eu să plec cu praful şi acarienii şi cu punctele pentru concurs şi dvs să ramâneţi cu kirby să vă rezoltaţi problema?" , arg:true}
+        ]
+      }
+    ]
+  },
+  {
+    id: "follow",
+    title: "7) Follow-up",
+    groups: [
+      {
+        id: "final",
+        title: "Final & recomandări",
+        blocks: [
+          { text: "dl/dna X — la final un răspuns concret: Da sau Nu. Mulțumiri pentru timp și sprijin. Dacă v-a plăcut prezentarea, mă ajută mult 3–5 contacte (rude/prieteni/familii) pentru o prezentare gratuită, în cadrul concursului." }
+        ]
+      }
+    ]
+  }
+];
+
+/* ========== APP LOGIC (fără TTS) ========== */
+const STORAGE_KEY = "kirby_full_trainer_progress_v1";
+let state = { chapter: SCRIPT[0].id, group: SCRIPT[0].groups[0].id, learned: {} };
+
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
-const uid = () => Math.random().toString(36).slice(2,9);
-const now = () => new Date();
-const isFuture = iso => new Date(iso) > now();
 
-/* ====== PERSIST ====== */
-function save(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    deck: state.deck, notes: $('#notesBox').value || state.notes,
-    activeModule: state.activeModule, chunkIndex: state.chunkIndex
-  }));
-  renderStats();
-}
 function load(){
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if(!raw) return;
   try {
-    const d = JSON.parse(raw);
-    state.deck = d.deck || [];
-    state.notes = d.notes || "";
-    state.activeModule = d.activeModule || MODULES[0].id;
-    state.chunkIndex = d.chunkIndex || 0;
-  } catch {}
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw){
+      const d = JSON.parse(raw);
+      state = { ...state, ...d };
+    }
+  } catch(e){}
+}
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-/* ====== INIT DECK ====== */
-function ensureDeck(){
-  if(state.deck.length) return;
-  state.deck = CARDS.map(c=>({
-    id: uid(), q: c.q, a: c.a, module: guessModule(c),
-    level: 0, due: new Date().toISOString()
-  }));
+function currentChapter(){ return SCRIPT.find(c=>c.id===state.chapter) || SCRIPT[0]; }
+function currentGroup(){
+  const chap = currentChapter();
+  return chap.groups.find(g=>g.id===state.group) || chap.groups[0];
 }
 
-/* ====== TABS ====== */
-function switchTab(id){
-  $$('.tab').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
-  $$('.panel').forEach(p=>p.classList.remove('shown'));
-  $('#tab-'+id).classList.add('shown');
-}
-$$('.tab').forEach(b=> b.addEventListener('click', ()=> switchTab(b.dataset.tab)));
-
-/* ====== STUDY ====== */
-function fillModuleSelect(){
-  const s = $('#moduleSelect');
-  s.innerHTML = MODULES.map(m=> `<option value="${m.id}">${m.title}</option>`).join('');
-  s.value = state.activeModule;
-  s.onchange = ()=>{ state.activeModule = s.value; state.chunkIndex = 0; renderReader(); save(); };
-}
-function renderReader(){
-  const m = MODULES.find(x=>x.id===state.activeModule) || MODULES[0];
-  $('#moduleTitle').textContent = m.title;
-  const html = m.parts.map((txt,i)=>`
-    <div class="chunk">
-      <div class="tag">Bucata ${i+1}/${m.parts.length}</div>
-      <div>${txt}</div>
-    </div>`).join('');
-  $('#reader').innerHTML = html;
-  highlightChunk();
-}
-function highlightChunk(){
-  const chunks = $$('#reader .chunk');
-  chunks.forEach((c,i)=> c.style.outline = (i===state.chunkIndex?'2px solid var(--accent)':'none'));
-}
-$('#nextChunk').addEventListener('click', ()=>{
-  const m = MODULES.find(x=>x.id===state.activeModule) || MODULES[0];
-  state.chunkIndex = (state.chunkIndex+1) % m.parts.length;
-  highlightChunk(); speakChunk();
-  save();
-});
-
-/* ====== TTS ====== */
-let voices=[];
-function loadVoices(){
-  voices = speechSynthesis.getVoices();
-}
-if('speechSynthesis' in window){
-  speechSynthesis.onvoiceschanged = loadVoices; loadVoices();
-}
-function speakChunk(){
-  speechSynthesis.cancel();
-  const m = MODULES.find(x=>x.id===state.activeModule);
-  const text = m.parts[state.chunkIndex];
-  if(!text) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.rate = 1.02;
-  speechSynthesis.speak(u);
-}
-$('#ttsBtn').addEventListener('click', speakChunk);
-$('#stopTTSBtn').addEventListener('click', ()=> speechSynthesis.cancel());
-$('#themeBtn').addEventListener('click', ()=> document.body.classList.toggle('dark'));
-
-/* ====== FLASH ====== */
-let pool=[], idx=0;
-function fillFilters(){
-  const opts = [{id:'all',name:'Toate'}, ...MODULES.map(m=>({id:m.id,name:m.title}))];
-  ['deckFilter','quizFilter'].forEach(id=>{
-    const s = $('#'+id); s.innerHTML = opts.map(o=>`<option value="${o.id}">${o.name}</option>`).join('');
-  });
-  // neg filter
-  const cats = ['Toate', ...Array.from(new Set(NEG.map(n=>n.cat)))];
-  $('#negFilter').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
-}
-function buildPool(filter){
-  let arr = [...state.deck];
-  if(filter && filter!=='all') arr = arr.filter(c=>c.module===filter);
-  const due = arr.filter(c=>!isFuture(c.due));
-  pool = due.length ? due : arr;
-  idx = 0;
-}
-function renderFlash(){
-  if(!pool.length){ $('#flashFront').textContent='Nu există carduri.'; $('#flashBack').textContent=''; return; }
-  const c = pool[idx];
-  $('#flashFront').textContent = c.q;
-  $('#flashBack').textContent = c.a;
-  $('#flashBack').classList.add('hide');
-  $('#showBtn').textContent='Arată răspuns';
-  $('#flashInfo').textContent = `Card ${idx+1}/${pool.length} • level ${c.level}`;
-}
-function schedule(card, grade){
-  const steps=[{m:10},{h:1},{d:1},{d:3},{d:7}];
-  if(grade==='good') card.level = Math.min(card.level+1, steps.length-1);
-  else card.level = Math.max(0, card.level-1);
-  const d = new Date();
-  const s = steps[card.level];
-  if(s.m) d.setMinutes(d.getMinutes()+s.m);
-  if(s.h) d.setHours(d.getHours()+s.h);
-  if(s.d) d.setDate(d.getDate()+s.d);
-  card.due = d.toISOString();
-}
-$('#flashCard').addEventListener('click', ()=>{
-  const b = $('#flashBack'); b.classList.toggle('hide');
-  $('#showBtn').textContent = b.classList.contains('hide')?'Arată răspuns':'Ascunde';
-});
-$('#showBtn').addEventListener('click', ()=> $('#flashCard').click());
-$('#againBtn').addEventListener('click', ()=> { const c=pool[idx]; schedule(c,'again'); save(); idx=(idx+1)%pool.length; renderFlash(); });
-$('#goodBtn').addEventListener('click',  ()=> { const c=pool[idx]; schedule(c,'good');  save(); idx=(idx+1)%pool.length; renderFlash(); });
-$('#deckFilter').addEventListener('change', e=>{ buildPool(e.target.value); renderFlash(); });
-$('#shuffleBtn').addEventListener('click', ()=>{ pool.sort(()=>Math.random()-0.5); idx=0; renderFlash(); });
-
-/* Editor */
-$('#editBtn').addEventListener('click', ()=>{
-  const f = $('#deckFilter').value;
-  const set = state.deck.filter(c=> f==='all' ? true : c.module===f);
-  $('#editor').value = set.map(c=>`Q: ${c.q}\nA: ${c.a}\n---`).join('\n');
-  $('#modal').classList.remove('hide');
-});
-$('#closeModal').addEventListener('click', ()=> $('#modal').classList.add('hide'));
-$('#saveSetBtn').addEventListener('click', ()=>{
-  const f = $('#deckFilter').value;
-  const groups = $('#editor').value.trim().split(/\n-{3,}\s*/).map(s=>s.trim()).filter(Boolean);
-  const fresh = groups.map(g=>{
-    const q=(g.match(/(^|\n)Q:\s*([\s\S]*?)(\nA:|$)/i)||[])[2]?.trim();
-    const a=(g.match(/\nA:\s*([\s\S]*)$/i)||[])[1]?.trim();
-    if(!q||!a) return null;
-    return {id:uid(),q,a,module:f==='all'?guessModule({q,a}):f,level:0,due:new Date().toISOString()};
-  }).filter(Boolean);
-  state.deck = state.deck.filter(c=> f==='all' ? false : c.module!==f).concat(fresh);
-  save(); $('#modal').classList.add('hide');
-  buildPool(f); renderFlash();
-});
-
-/* ====== QUIZ ====== */
-$('#startQuizBtn').addEventListener('click', startQuiz);
-function startQuiz(){
-  const n = Math.max(4, Math.min(parseInt($('#quizCount').value||'12',10), 40));
-  const f = $('#quizFilter').value;
-  let arr = [...state.deck]; if(f!=='all') arr = arr.filter(c=>c.module===f);
-  if(arr.length<4){ $('#quizArea').innerHTML = `<p class="muted">Nu sunt suficiente carduri.</p>`; return; }
-  arr.sort(()=>Math.random()-0.5);
-  const pick = arr.slice(0, Math.min(n, arr.length));
-  let i=0, score=0;
-  const area = $('#quizArea');
-  function render(){
-    const it = pick[i];
-    const opts = [it.a, ...arr.filter(x=>x.id!==it.id).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.a)].sort(()=>Math.random()-0.5);
-    area.innerHTML = `
-      <div class="quiz q">
-        <div class="muted">Întrebarea ${i+1}/${pick.length}</div>
-        <div class="front">${it.q}</div>
-        ${opts.map(o=>`<button class="opt">${o}</button>`).join('')}
-        <div class="muted right">Scor: ${score}</div>
-      </div>`;
-    area.querySelectorAll('.opt').forEach(b=>{
-      b.onclick = ()=>{
-        const ok = b.textContent===it.a;
-        b.classList.add(ok?'correct':'wrong');
-        if(ok) score++;
-        setTimeout(()=>{ i++; if(i>=pick.length){
-          area.innerHTML = `<div class="q"><div class="front">Gata! Scor: ${score}/${pick.length}</div><button id="againQuiz" class="primary" style="margin-top:10px">Reia</button></div>`;
-          $('#againQuiz').onclick = startQuiz;
-        } else render(); }, 500);
-      };
-    });
-  }
-  render();
-}
-
-/* ====== NEGOTIATION SIM ====== */
-$('#newScenario').addEventListener('click', newScenario);
-function newScenario(){
-  const cat = $('#negFilter').value;
-  let pool = [...NEG];
-  if(cat!=='Toate') pool = pool.filter(n=>n.cat===cat);
-  const sc = pool[Math.floor(Math.random()*pool.length)];
-  const area = $('#negArea');
-  const choices = [sc.good, ...sc.bad].sort(()=>Math.random()-0.5);
-  area.innerHTML = `
-    <div class="bubble"><b>Client:</b> „${sc.client}”</div>
-    <div class="bubble">
-      ${choices.map(c=>`<button class="reply">${c}</button>`).join('')}
-    </div>`;
-  area.querySelectorAll('.reply').forEach(btn=>{
+function renderTabs(){
+  const nav = document.querySelector('.tabs');
+  nav.innerHTML = SCRIPT.map(c=>`
+    <button class="tab ${c.id===state.chapter?'active':''}" data-id="${c.id}">${c.title}</button>
+  `).join('');
+  nav.querySelectorAll('.tab').forEach(btn=>{
     btn.onclick = ()=>{
-      const ok = btn.textContent===sc.good;
-      btn.classList.add(ok?'ok':'no');
-      setTimeout(newScenario, 700);
+      state.chapter = btn.dataset.id;
+      state.group = (SCRIPT.find(x=>x.id===state.chapter).groups[0].id);
+      save(); fillSelectors(); renderContent(); renderTabs();
     };
   });
 }
 
-/* ====== NOTES & STATS ====== */
-$('#saveNotesBtn').addEventListener('click', ()=>{ state.notes = $('#notesBox').value; save(); alert('Notițe salvate!'); });
-function renderStats(){
-  const total = state.deck.length || 1;
-  const mastered = state.deck.filter(c=>c.level>=3).length;
-  $('#statTotal').textContent = total;
-  $('#statMastered').textContent = mastered;
-  $('#progressBar').style.width = Math.round(mastered*100/total)+'%';
+function fillSelectors(){
+  const chapSel = $('#chapterSelect');
+  chapSel.innerHTML = SCRIPT.map(c=> `<option value="${c.id}">${c.title}</option>`).join('');
+  chapSel.value = state.chapter;
+  chapSel.onchange = ()=> {
+    state.chapter = chapSel.value;
+    state.group = (SCRIPT.find(x=>x.id===state.chapter).groups[0].id);
+    save(); fillSelectors(); renderContent(); renderTabs();
+  };
+
+  const grpSel = $('#groupSelect');
+  const chap = currentChapter();
+  grpSel.innerHTML = chap.groups.map(g=> `<option value="${g.id}">${g.title}</option>`).join('');
+  grpSel.value = state.group;
+  grpSel.onchange = ()=> { state.group = grpSel.value; save(); renderContent(); };
 }
 
-/* ====== INIT ====== */
-function buildPool(filter){ /* shadowing fixed below */ }
-(function(){
-  // fix shadowed function (already declared earlier)
-})();
-function init(){
-  load(); ensureDeck();
-  fillModuleSelect(); renderReader();
-  fillFilters();
-  // build pool default
-  const f = $('#deckFilter').value || 'all';
-  // redefine buildPool (typo guard)
-  window.buildPool = function(filter){
-    let arr = [...state.deck];
-    if(filter && filter!=='all') arr = arr.filter(c=>c.module===filter);
-    const due = arr.filter(c=>!isFuture(c.due));
-    pool = due.length ? due : arr;
-    idx = 0;
-  };
-  buildPool(f); renderFlash();
-  $('#notesBox').value = state.notes;
-  renderStats();
-  // hotkeys mobile-safe: Enter = good, Space = again
-  document.addEventListener('keydown', (e)=>{
-    if(e.target.matches('input,textarea')) return;
-    if(e.key==='Enter'){ e.preventDefault(); $('#goodBtn').click(); }
-    if(e.key===' '){ e.preventDefault(); $('#againBtn').click(); }
+function isLearned(blockId){ return !!state.learned[blockId]; }
+function toggleLearned(blockId, val){
+  state.learned[blockId] = val;
+  save();
+}
+
+function renderContent(){
+  const cont = $('#content');
+  const grp = currentGroup();
+  cont.innerHTML = grp.blocks.map((b, idx)=>{
+    const id = `${state.chapter}::${state.group}::${idx}`;
+    const learned = isLearned(id);
+    return `
+      <article class="block ${learned?'learned':''}" data-id="${id}">
+        <div class="meta">
+          <span>${grp.title}</span>
+          ${b.arg?'<span class="arg-badge">ARGUMENT</span>':''}
+          <label class="check"><input type="checkbox" ${learned?'checked':''} /></label>
+        </div>
+        <div class="text">${escapeHtml(b.text)}</div>
+      </article>
+    `;
+  }).join('');
+
+  // bind checks
+  $$('#content .block').forEach(block=>{
+    const id = block.dataset.id;
+    const cb = block.querySelector('input[type=checkbox]');
+    cb.onchange = ()=> {
+      toggleLearned(id, cb.checked);
+      block.classList.toggle('learned', cb.checked);
+    };
   });
 }
-init();
+
+function next(){
+  const chap = currentChapter();
+  const gi = chap.groups.findIndex(g=>g.id===state.group);
+  if (gi < chap.groups.length - 1){
+    state.group = chap.groups[gi+1].id;
+  } else {
+    const ci = SCRIPT.findIndex(c=>c.id===state.chapter);
+    const nextChap = SCRIPT[ci+1] || SCRIPT[0];
+    state.chapter = nextChap.id;
+    state.group = nextChap.groups[0].id;
+  }
+  save(); fillSelectors(); renderContent(); renderTabs();
+}
+function prev(){
+  const chap = currentChapter();
+  const gi = chap.groups.findIndex(g=>g.id===state.group);
+  if (gi > 0){
+    state.group = chap.groups[gi-1].id;
+  } else {
+    const ci = SCRIPT.findIndex(c=>c.id===state.chapter);
+    const prevChap = SCRIPT[ci-1] || SCRIPT[SCRIPT.length-1];
+    state.chapter = prevChap.id;
+    state.group = prevChap.groups[prevChap.groups.length-1].id;
+  }
+  save(); fillSelectors(); renderContent(); renderTabs();
+}
+
+function markAllInGroup(){
+  const grp = currentGroup();
+  grp.blocks.forEach((_, idx)=>{
+    const id = `${state.chapter}::${state.group}::${idx}`;
+    toggleLearned(id, true);
+  });
+  renderContent();
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+}
+
+/* init */
+load();
+renderTabs();
+fillSelectors();
+renderContent();
+
+$('#nextBtn').onclick = next;
+$('#prevBtn').onclick = prev;
+$('#markAll').onclick = markAllInGroup;
