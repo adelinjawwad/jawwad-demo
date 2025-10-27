@@ -11,20 +11,46 @@
 </head>
 <body class="dark touch">
   <header class="top">
+    <button id="prevBtn" class="nav-btn nav-prev" aria-label="Înapoi" title="Înapoi">◀</button>
+    
     <div class="brand">
       <div class="dot"></div>
       <h1>Kirby Full Trainer</h1>
     </div>
 
-    <!-- Tabs (desktop) -->
     <nav class="tabs" role="tablist" aria-label="Secțiuni"></nav>
 
-    <!-- Buton meniu (mobil) -->
+    <!-- Removed voice selector dropdown - only Romanian voice will be used -->
+    <button id="audioBtn" class="audio-btn" aria-label="Ascultă textul" title="Ascultă textul">🔊</button>
+
     <button id="openMenu" class="ghost menu-btn" aria-label="Deschide capitole">☰ Capitole</button>
     <button id="openQuiz" class="primary menu-btn" aria-label="Deschide test">🎯 Test</button>
+    
+    <button id="nextBtn" class="nav-btn nav-next" aria-label="Următorul" title="Următorul">▶</button>
   </header>
 
-  <!-- Drawer mobil -->
+  <!-- Removed voice selector from audio player -->
+  <div id="audioPlayer" class="audio-player hidden">
+    <div class="audio-controls">
+      <button id="audioPlayPause" class="audio-control-btn" aria-label="Play/Pause">▶</button>
+      <button id="audioStop" class="audio-control-btn" aria-label="Stop">■</button>
+      <div class="audio-info">
+        <span id="audioStatus">Gata de redare</span>
+      </div>
+      <div class="audio-speed">
+        <label>Viteză:</label>
+        <select id="audioSpeed">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+      <button id="audioClose" class="audio-close" aria-label="Închide">✕</button>
+    </div>
+  </div>
+
   <aside id="drawer" class="drawer hidden" aria-hidden="true">
     <div class="drawer-backdrop"></div>
     <div class="drawer-sheet" role="dialog" aria-label="Capitole">
@@ -39,57 +65,55 @@
     </div>
   </aside>
 
-  <!-- Drawer Test (chestionare) -->
-<aside id="quiz" class="drawer hidden" aria-hidden="true">
-  <div class="drawer-backdrop"></div>
-  <div class="drawer-sheet" role="dialog" aria-label="Test">
-    <header class="drawer-head">
-      <strong>Test rapid</strong>
-      <button id="closeQuiz" class="ghost">✕</button>
-    </header>
+  <aside id="quiz" class="drawer hidden" aria-hidden="true">
+    <div class="drawer-backdrop"></div>
+    <div class="drawer-sheet" role="dialog" aria-label="Test">
+      <header class="drawer-head">
+        <strong>Test rapid</strong>
+        <button id="closeQuiz" class="ghost">✕</button>
+      </header>
 
-    <div id="quizConfig" class="drawer-body">
-      <div class="cfg">
-        <label>Tip test</label>
-        <select id="quizMode">
-          <option value="args">Argumente (full)</option>
-          <option value="questions">Întrebări (full)</option>
-          <option value="mix">Mix (toate)</option>
-        </select>
+      <div id="quizConfig" class="drawer-body">
+        <div class="cfg">
+          <label>Tip test</label>
+          <select id="quizMode">
+            <option value="args">Argumente (full)</option>
+            <option value="questions">Întrebări (full)</option>
+            <option value="mix">Mix (toate)</option>
+          </select>
+        </div>
+        <div class="cfg">
+          <label>Număr întrebări</label>
+          <select id="quizCount">
+            <option>5</option><option selected>10</option><option>15</option><option>20</option>
+          </select>
+        </div>
+        <button id="startQuiz" class="primary wide">Începe testul</button>
       </div>
-      <div class="cfg">
-        <label>Număr întrebări</label>
-        <select id="quizCount">
-          <option>5</option><option selected>10</option><option>15</option><option>20</option>
-        </select>
+
+      <div id="quizPlay" class="drawer-body hidden">
+        <div class="q-head">
+          <div id="qProgress">1/10</div>
+          <div id="qTag" class="pill">—</div>
+        </div>
+        <div id="qPrompt" class="q-prompt"></div>
+
+        <label class="q-label">Scrie replica (integral sau cât poți):</label>
+        <textarea id="qInput" rows="6" placeholder="Scrie aici replica…"></textarea>
+
+        <div class="q-actions">
+          <button id="revealBtn" class="ghost">Afișează răspunsul</button>
+          <button id="checkBtn" class="primary">Verifică</button>
+        </div>
+
+        <div id="qResult" class="q-result hidden"></div>
+
+        <footer class="drawer-foot">
+          <button id="nextQ" class="primary wide">Următoarea</button>
+        </footer>
       </div>
-      <button id="startQuiz" class="primary wide">Începe testul</button>
     </div>
-
-    <div id="quizPlay" class="drawer-body hidden">
-      <div class="q-head">
-        <div id="qProgress">1/10</div>
-        <div id="qTag" class="pill">—</div>
-      </div>
-      <div id="qPrompt" class="q-prompt"></div>
-
-      <label class="q-label">Scrie replica (integral sau cât poți):</label>
-      <textarea id="qInput" rows="6" placeholder="Scrie aici replica…"></textarea>
-
-      <div class="q-actions">
-        <button id="revealBtn" class="ghost">Afișează răspunsul</button>
-        <button id="checkBtn" class="primary">Verifică</button>
-      </div>
-
-      <div id="qResult" class="q-result hidden"></div>
-
-      <footer class="drawer-foot">
-        <button id="nextQ" class="primary wide">Următoarea</button>
-      </footer>
-    </div>
-  </div>
-</aside>
-
+  </aside>
 
   <main>
     <section class="toolbar">
@@ -109,11 +133,6 @@
       <span class="pill arg">ARGUMENT</span> = motiv/replică de vânzare pe care vrei s-o reții.
     </section>
   </main>
-
-  <footer class="foot">
-    <button id="prevBtn" class="ghost wide">◀️ Înapoi</button>
-    <button id="nextBtn" class="primary wide">Următorul ▶️</button>
-  </footer>
 
   <script src="app.js"></script>
 </body>
