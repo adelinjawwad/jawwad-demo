@@ -1,52 +1,5 @@
 [
   {
-    "title": "Antaras",
-    "tags": [
-      "Weapon",
-      "No Icons"
-    ],
-    "img": "assets/img/antaras_weapons.jpg",
-    "download": "assets/downloads/antaras_weapons.rar"
-  },
-  {
-    "title": "Dynasty",
-    "tags": [
-      "Weapon",
-      "No Icons"
-    ],
-    "img": "assets/img/dynasty_weapons.jpg",
-    "download": "assets/downloads/dynasty_weapons.rar",
-    "extra": "jawwad@wk"
-  },
-  {
-    "title": "Silver Hunter",
-    "tags": [
-      "Weapon",
-      "No Icons"
-    ],
-    "img": "assets/img/silver_hunter_weapons.jpg",
-    "download": "assets/downloads/silver_hunter_weapons.rar",
-    "preview": "https://vimeo.com/534330489"
-  },
-  {
-    "title": "God Awakening",
-    "tags": [
-      "Weapon",
-      "No Icons"
-    ],
-    "img": "assets/img/god_awakening_weapons.jpg",
-    "download": "assets/downloads/god_awakening_weapons.rar"
-  },
-  {
-    "title": "Dark Crystal",
-    "tags": [
-      "Weapon",
-      "No Icons"
-    ],
-    "img": "assets/img/dark_crystal_weapons.jpg",
-    "download": "assets/downloads/dark_crystal_weapons.rar"
-  },
-  {
     "title": "Gift Metinstone - Stone 2",
     "tags": [
       "NPC",
@@ -86,14 +39,5 @@
     "img": "https://metin2.download/picture/07Tzg21fAFcvhD5CgVZVz75Np3Yf1FVu/.gif",
     "download": "https://mega.nz/file/MuB0QCLC#1u-jkDu8Tkg7mr1_S1H7ieQVdi9et5GfEl-CTv-7arg",
     "extra": "jaw"
-  },
-  {
-    "title": "Azrael Weapons",
-    "tags": [
-      "Full Set",
-      "No Icons"
-    ],
-    "img": "assets/img/azrael_weapons.png",
-    "download": "assets/downloads/azrael_weapons.rar"
   }
 ]
